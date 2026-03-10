@@ -1,0 +1,2270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bold — Healthy Aging, Your Way</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Skip to main content — keyboard accessibility -->
+  <a href="#mainContent" class="skip-link">Skip to main content</a>
+
+  <!-- ============================================================ -->
+  <!-- VIEW TOGGLE (for prototype review — switch views)            -->
+  <!-- ============================================================ -->
+  <div class="view-toggle" id="viewToggle">
+    <div class="view-toggle__group">
+      <span class="view-toggle__group-label">Today's Plan</span>
+      <div class="view-toggle__buttons">
+        <button class="view-toggle__btn active" data-view="day1">Day 1</button>
+        <button class="view-toggle__btn" data-view="fresh">Fresh Week</button>
+        <button class="view-toggle__btn" data-view="comeback">Comeback</button>
+        <button class="view-toggle__btn" data-view="day2">Day 2+</button>
+        <button class="view-toggle__btn" data-view="checkin">Check-in</button>
+        <button class="view-toggle__btn" data-view="completed">Complete</button>
+      </div>
+    </div>
+    <div class="view-toggle__group">
+      <span class="view-toggle__group-label">Pages</span>
+      <div class="view-toggle__buttons">
+        <button class="view-toggle__btn" data-view="profile">Profile</button>
+        <button class="view-toggle__btn" data-view="care">Care</button>
+        <button class="view-toggle__btn" data-view="discover">Discover</button>
+        <button class="view-toggle__btn" data-view="notifications">Notifications</button>
+      </div>
+    </div>
+    <div class="view-toggle__group" id="timeGroup">
+      <span class="view-toggle__group-label">Time</span>
+      <div class="view-toggle__buttons">
+        <button class="view-toggle__time active" data-time="morning">🌅 AM</button>
+        <button class="view-toggle__time" data-time="afternoon">☀️ PM</button>
+        <button class="view-toggle__time" data-time="evening">🌇 Eve</button>
+        <button class="view-toggle__time" data-time="night">🌙 Night</button>
+      </div>
+    </div>
+  </div>
+
+    <!-- ============================================================ -->
+  <!-- SIDEBAR NAVIGATION (desktop)                                 -->
+  <!-- ============================================================ -->
+  <aside class="sidebar" id="sidebar" role="navigation" aria-label="Main navigation">
+    <div class="sidebar__top">
+      <a href="#" class="sidebar__logo" aria-label="Bold home">
+        <img src="logo/bold-logo.svg" alt="Bold" style="height: 24px; width: auto;">
+      </a>
+    </div>
+
+    <nav class="sidebar__nav">
+      <a href="#" class="sidebar__link sidebar__link--active" aria-current="page" data-nav="today">
+        <svg width="20" height="20" viewBox="0 0 18 18" fill="none"><path d="M2.25 6.75L9 1.5L15.75 6.75V15C15.75 15.3978 15.592 15.7794 15.3107 16.0607C15.0294 16.342 14.6478 16.5 14.25 16.5H3.75C3.35218 16.5 2.97064 16.342 2.68934 16.0607C2.40804 15.7794 2.25 15.3978 2.25 15V6.75Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Today</span>
+      </a>
+      <a href="#" class="sidebar__link" data-nav="care">
+        <svg width="20" height="20" viewBox="0 0 18 18" fill="none"><path d="M15.63 3.96a4.125 4.125 0 00-5.835 0L9 4.755l-.795-.795a4.126 4.126 0 00-5.835 5.835l.795.795L9 16.425l5.835-5.835.795-.795a4.125 4.125 0 000-5.835z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Care</span>
+      </a>
+      <a href="#" class="sidebar__link" data-nav="discover">
+        <svg width="20" height="20" viewBox="0 0 18 18" fill="none"><circle cx="8" cy="8" r="5.5" stroke="currentColor" stroke-width="1.5"/><path d="M12.5 12.5L16 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <span>Discover</span>
+      </a>
+      <a href="#" class="sidebar__link" data-nav="profile">
+        <svg width="20" height="20" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="6.75" r="3.375" stroke="currentColor" stroke-width="1.5"/><path d="M3.375 16.5c0-3.107 2.518-5.625 5.625-5.625s5.625 2.518 5.625 5.625" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <span>Profile</span>
+      </a>
+      <a href="#" class="sidebar__link" data-nav="notifications">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M15 6.667a5 5 0 10-10 0c0 5.833-2.5 7.5-2.5 7.5h15S15 12.5 15 6.667z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M11.442 17.5a1.667 1.667 0 01-2.884 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Notifications</span>
+        <span class="sidebar__badge">3</span>
+      </a>
+    </nav>
+
+    <div class="sidebar__bottom">
+      <button class="sidebar__item" id="streakBtn" aria-label="Bold Streak view progress">
+        <span class="sidebar__item-icon">&#x1F525;</span>
+        <span>Bold Streak</span>
+      </button>
+
+      <button class="sidebar__item" id="settingsBtn" aria-label="Settings">
+        <svg class="sidebar__item-icon" width="20" height="20" viewBox="0 0 22 22" fill="none"><path d="M11 14a3 3 0 100-6 3 3 0 000 6z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.73 13.73a1.5 1.5 0 00.3 1.65l.05.05a1.82 1.82 0 11-2.57 2.57l-.05-.05a1.5 1.5 0 00-1.65-.3 1.5 1.5 0 00-.91 1.37v.15a1.82 1.82 0 11-3.64 0v-.08a1.5 1.5 0 00-.98-1.37 1.5 1.5 0 00-1.65.3l-.05.05a1.82 1.82 0 11-2.57-2.57l.05-.05a1.5 1.5 0 00.3-1.65 1.5 1.5 0 00-1.37-.91h-.15a1.82 1.82 0 110-3.64h.08a1.5 1.5 0 001.37-.98 1.5 1.5 0 00-.3-1.65l-.05-.05A1.82 1.82 0 016.18 4.93l.05.05a1.5 1.5 0 001.65.3h.07a1.5 1.5 0 00.91-1.37v-.15a1.82 1.82 0 013.64 0v.08a1.5 1.5 0 00.91 1.37 1.5 1.5 0 001.65-.3l.05-.05a1.82 1.82 0 112.57 2.57l-.05.05a1.5 1.5 0 00-.3 1.65v.07a1.5 1.5 0 001.37.91h.15a1.82 1.82 0 010 3.64h-.08a1.5 1.5 0 00-1.37.91z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>Settings</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- ============================================================ -->
+  <!-- MOBILE TOP BAR (visible < 1024px)                            -->
+  <!-- ============================================================ -->
+  <header class="mobile-topbar" id="mobileTopbar">
+    <a href="#" class="mobile-topbar__logo" aria-label="Bold home">
+      <img src="logo/bold-logo.svg" alt="Bold" style="height: 22px; width: auto;">
+    </a>
+    <div class="mobile-topbar__right">
+      <button class="mobile-topbar__btn" id="mobileNotifBtn" aria-label="Notifications">
+        <svg width="22" height="22" viewBox="0 0 20 20" fill="none"><path d="M15 6.667a5 5 0 10-10 0c0 5.833-2.5 7.5-2.5 7.5h15S15 12.5 15 6.667z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M11.442 17.5a1.667 1.667 0 01-2.884 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="mobile-topbar__badge">3</span>
+      </button>
+      <button class="mobile-topbar__btn mobile-topbar__hamburger" id="hamburgerBtn" aria-label="Open menu" aria-expanded="false">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- ============================================================ -->
+  <!-- MOBILE SLIDE-OUT MENU                                        -->
+  <!-- ============================================================ -->
+  <div class="mobile-menu-overlay hidden" id="mobileMenuOverlay" role="dialog" aria-modal="true" aria-label="Navigation menu">
+    <div class="mobile-menu" id="mobileMenu">
+      <div class="mobile-menu__header">
+        <a href="#" aria-label="Bold home">
+          <img src="logo/bold-logo.svg" alt="Bold" style="height: 24px; width: auto;">
+        </a>
+        <button class="mobile-menu__close" id="mobileMenuClose" aria-label="Close menu">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M6 6L18 18M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <nav class="mobile-menu__nav">
+        <a href="#" class="mobile-menu__link mobile-menu__link--active" data-nav="today">
+          <svg width="20" height="20" viewBox="0 0 18 18" fill="none"><path d="M2.25 6.75L9 1.5L15.75 6.75V15C15.75 15.3978 15.592 15.7794 15.3107 16.0607C15.0294 16.342 14.6478 16.5 14.25 16.5H3.75C3.35218 16.5 2.97064 16.342 2.68934 16.0607C2.40804 15.7794 2.25 15.3978 2.25 15V6.75Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Today
+        </a>
+        <a href="#" class="mobile-menu__link" data-nav="care">
+          <svg width="20" height="20" viewBox="0 0 18 18" fill="none"><path d="M15.63 3.96a4.125 4.125 0 00-5.835 0L9 4.755l-.795-.795a4.126 4.126 0 00-5.835 5.835l.795.795L9 16.425l5.835-5.835.795-.795a4.125 4.125 0 000-5.835z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Care
+        </a>
+        <a href="#" class="mobile-menu__link" data-nav="discover">
+          <svg width="20" height="20" viewBox="0 0 18 18" fill="none"><circle cx="8" cy="8" r="5.5" stroke="currentColor" stroke-width="1.5"/><path d="M12.5 12.5L16 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          Discover
+        </a>
+        <a href="#" class="mobile-menu__link" data-nav="profile">
+          <svg width="20" height="20" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="6.75" r="3.375" stroke="currentColor" stroke-width="1.5"/><path d="M3.375 16.5c0-3.107 2.518-5.625 5.625-5.625s5.625 2.518 5.625 5.625" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          Profile
+        </a>
+        <a href="#" class="mobile-menu__link" data-nav="notifications">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M15 6.667a5 5 0 10-10 0c0 5.833-2.5 7.5-2.5 7.5h15S15 12.5 15 6.667z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M11.442 17.5a1.667 1.667 0 01-2.884 0" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Notifications
+          <span class="mobile-menu__badge">3</span>
+        </a>
+      </nav>
+      <div class="mobile-menu__divider"></div>
+      <div class="mobile-menu__extras">
+        <button class="mobile-menu__item" id="mobileStreakBtn">
+          <span>&#x1F525;</span> Bold Streak
+        </button>
+        <button class="mobile-menu__item" id="mobileSettingsBtn">
+          <svg width="20" height="20" viewBox="0 0 22 22" fill="none"><path d="M11 14a3 3 0 100-6 3 3 0 000 6z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M17.73 13.73a1.5 1.5 0 00.3 1.65l.05.05a1.82 1.82 0 11-2.57 2.57l-.05-.05a1.5 1.5 0 00-1.65-.3 1.5 1.5 0 00-.91 1.37v.15a1.82 1.82 0 11-3.64 0v-.08a1.5 1.5 0 00-.98-1.37 1.5 1.5 0 00-1.65.3l-.05.05a1.82 1.82 0 11-2.57-2.57l.05-.05a1.5 1.5 0 00.3-1.65 1.5 1.5 0 00-1.37-.91h-.15a1.82 1.82 0 110-3.64h.08a1.5 1.5 0 001.37-.98 1.5 1.5 0 00-.3-1.65l-.05-.05A1.82 1.82 0 016.18 4.93l.05.05a1.5 1.5 0 001.65.3h.07a1.5 1.5 0 00.91-1.37v-.15a1.82 1.82 0 013.64 0v.08a1.5 1.5 0 00.91 1.37 1.5 1.5 0 001.65-.3l.05-.05a1.82 1.82 0 112.57 2.57l-.05.05a1.5 1.5 0 00-.3 1.65v.07a1.5 1.5 0 001.37.91h.15a1.82 1.82 0 010 3.64h-.08a1.5 1.5 0 00-1.37.91z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Settings
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- MAIN CONTENT                                                 -->
+  <!-- ============================================================ -->
+  <main class="main" id="mainContent">
+
+    <!-- ======== DAY 1 VIEW ======== -->
+    <div class="view" id="day1View">
+
+      <!-- COMPACT TODAY HEADER — Day 1 -->
+      <section class="today-compact" aria-label="Today's plan">
+        <div class="today-compact__header">
+          <div class="today-compact__trainer-bar">
+            <img class="today-compact__trainer-photo" src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=200&h=200&fit=crop&crop=face" alt="Amanda, your Bold trainer">
+            <div class="today-compact__greeting">
+              <h1 class="today-compact__heading">Welcome to Bold, June! 👋</h1>
+              <p class="today-compact__sub">I'm Amanda — I'll be guiding your program. We've created a personalized plan just for you.</p>
+            </div>
+          </div>
+          <div class="today-compact__date-pill">
+            <span class="today-compact__date-month plan-hero__calendar-month">FEB</span>
+            <span class="today-compact__date-day plan-hero__calendar-day">17</span>
+          </div>
+        </div>
+        <!-- Onboarding progress — compact -->
+        <div class="today-compact__strip">
+          <div class="today-compact__onboard-steps">
+            <span class="today-compact__onboard-step today-compact__onboard-step--done">✓ Access confirmed</span>
+            <span class="today-compact__onboard-step today-compact__onboard-step--done">✓ Plan ready</span>
+            <span class="today-compact__onboard-step today-compact__onboard-step--active">→ Try your first class</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Action cards — Day 1 -->
+      <section class="today-actions" aria-label="Your first exercise">
+        <h2 class="sr-only">Your exercise</h2>
+        <div class="today-card today-card--primary">
+          <div class="today-card__step-badge">Let's go</div>
+          <div class="today-card__body">
+            <div class="today-card__info">
+              <div class="today-card__tags">
+                <span class="tag tag--blue">Move <span class="tag__info">ⓘ</span></span>
+                <span class="tag tag--grey">14 min</span>
+              </div>
+              <h3 class="today-card__title class-title--tod" data-morning="Bold Talks: Exercise for Fall Prevention" data-afternoon="Bold Talks: Exercise for Fall Prevention" data-evening="Gentle Evening Balance & Stretch" data-night="Relaxing Seated Stretch for Sleep">Bold Talks: Exercise for Fall Prevention</h3>
+              <p class="today-card__trainer">with Alicia Estrada</p>
+              <p class="today-card__why">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1L8.5 4.5L12.5 5L9.75 7.5L10.5 11.5L7 9.5L3.5 11.5L4.25 7.5L1.5 5L5.5 4.5L7 1Z" fill="#D97706"/></svg>
+                We picked something gentle to get you started
+              </p>
+              <div class="today-card__actions">
+                <button class="btn btn--primary btn--full">Start class</button>
+              </div>
+            </div>
+            <div class="today-card__thumb">
+              <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=600&h=400&fit=crop&crop=center" alt="Instructor leading an exercise class" loading="lazy">
+              <button class="today-card__save" aria-label="Save class">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 2h10v12l-5-3.5L3 14V2z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+
+    <!-- ======== FIRST SESSION THIS WEEK (no activity yet) ======== -->
+    <div class="view hidden" id="freshView">
+
+      <!-- COMPACT TODAY HEADER — Fresh week -->
+      <section class="today-compact" aria-label="Today's plan">
+        <div class="today-compact__header">
+          <div class="today-compact__trainer-bar">
+            <img class="today-compact__trainer-photo" src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=200&h=200&fit=crop&crop=face" alt="Amanda, your Bold trainer">
+            <div class="today-compact__greeting">
+              <h1 class="today-compact__heading chat-welcome__heading--tod" data-morning="Good morning, June! 🌱" data-afternoon="Good afternoon, June! 🌿" data-evening="Good evening, June! 🌱" data-night="Good night, June! 🌙">Good morning, June! 🌱</h1>
+              <p class="today-compact__sub chat-welcome__body--tod" data-morning="A fresh start — one gentle class to ease you in." data-afternoon="There's still time — I've picked something light for you." data-evening="A gentle class to wind down your evening." data-night="Even a few minutes before bed can help.">A fresh start — one gentle class to ease you in.</p>
+            </div>
+          </div>
+          <div class="today-compact__date-pill">
+            <span class="today-compact__date-month plan-hero__calendar-month">FEB</span>
+            <span class="today-compact__date-day plan-hero__calendar-day">17</span>
+          </div>
+        </div>
+        <div class="today-compact__strip">
+          <div class="today-compact__quick-actions">
+            <button class="today-compact__action-pill mood-trigger-btn" aria-label="How are you feeling?">
+              😊 How are you feeling?
+            </button>
+            <details class="today-compact__log-toggle">
+              <summary class="today-compact__log-summary">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                Log your day
+              </summary>
+              <div class="today-compact__log-btns">
+                <button class="today-log__chip" data-log="meal">🥗 Meal</button>
+                <button class="today-log__chip" data-log="sleep">😴 Sleep</button>
+                <button class="today-log__chip" data-log="exercise">🚶 Exercise</button>
+                <button class="today-log__chip" data-log="water">💧 Water</button>
+              </div>
+            </details>
+          </div>
+        </div>
+        <!-- Mood response -->
+        <div class="today-compact__mood-response hidden">
+          <img class="today-compact__resp-photo" src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=200&h=200&fit=crop&crop=face" alt="Amanda">
+          <p class="today-compact__resp-text">Thanks for sharing!</p>
+        </div>
+      </section>
+
+      <!-- Encouragement nudge -->
+      <div class="today-compact__nudge">
+        <span class="today-compact__nudge-icon">✓</span>
+        <span><strong>Just showing up is a win.</strong> Even one session a week supports balance and reduces fall risk.</span>
+      </div>
+
+      <!-- Action card — Fresh week -->
+      <section class="today-actions" aria-label="Your session today">
+        <h2 class="sr-only">Your session</h2>
+        <div class="today-card today-card--primary">
+          <div class="today-card__step-badge">Your session</div>
+          <div class="today-card__body">
+            <div class="today-card__info">
+              <div class="today-card__tags">
+                <span class="tag tag--blue">Move <span class="tag__info">ⓘ</span></span>
+                <span class="tag tag--grey">Easy · 10 min</span>
+              </div>
+              <h3 class="today-card__title">Gentle Balance: Getting Started</h3>
+              <p class="today-card__trainer">with Chris Litten</p>
+              <p class="today-card__why">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1L8.5 4.5L12.5 5L9.75 7.5L10.5 11.5L7 9.5L3.5 11.5L4.25 7.5L1.5 5L5.5 4.5L7 1Z" fill="#D97706"/></svg>
+                Short, seated-and-standing — a perfect way to start your week
+              </p>
+              <div class="today-card__actions">
+                <button class="btn btn--primary">Start class</button>
+                <button class="btn btn--secondary btn--switch-class">Adjust class</button>
+              </div>
+            </div>
+            <div class="today-card__thumb">
+              <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=400&fit=crop&crop=center" alt="Gentle balance exercise" loading="lazy">
+              <button class="today-card__save" aria-label="Save class">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 2h10v12l-5-3.5L3 14V2z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Live Classes -->
+      <section class="live-classes" aria-label="Upcoming live classes">
+        <div class="live-classes__header">
+          <h2 class="live-classes__title">Live Classes</h2>
+          <a href="#" class="live-classes__link">See all</a>
+        </div>
+        <div class="live-classes__scroll">
+          <div class="live-class-card">
+            <div class="live-class-card__badge">LIVE · Today 2:00 PM</div>
+            <div class="live-class-card__body">
+              <img class="live-class-card__thumb" src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=180&fit=crop&crop=center" alt="Gentle Morning Balance" loading="lazy">
+              <h3 class="live-class-card__name">Gentle Morning Balance</h3>
+              <p class="live-class-card__trainer">with Chris Litten</p>
+              <div class="live-class-card__meta">
+                <span class="tag tag--grey">30 min</span>
+                <span class="live-class-card__spots">12 spots left</span>
+              </div>
+              <button class="btn btn--primary btn--sm">Join live</button>
+            </div>
+          </div>
+          <div class="live-class-card">
+            <div class="live-class-card__badge live-class-card__badge--upcoming">Tomorrow 10:00 AM</div>
+            <div class="live-class-card__body">
+              <img class="live-class-card__thumb" src="https://images.unsplash.com/photo-1552196563-55cd4e45efb3?w=300&h=180&fit=crop&crop=center" alt="Seated Stretch & Breathe" loading="lazy">
+              <h3 class="live-class-card__name">Seated Stretch & Breathe</h3>
+              <p class="live-class-card__trainer">with Amanda Rees</p>
+              <div class="live-class-card__meta">
+                <span class="tag tag--grey">20 min</span>
+                <span class="live-class-card__spots">8 spots left</span>
+              </div>
+              <button class="btn btn--secondary btn--sm">Reserve spot</button>
+            </div>
+          </div>
+          <div class="live-class-card">
+            <div class="live-class-card__badge live-class-card__badge--upcoming">Thu 1:00 PM</div>
+            <div class="live-class-card__body">
+              <img class="live-class-card__thumb" src="https://images.unsplash.com/photo-1518459031867-a89b944bffe4?w=300&h=180&fit=crop&crop=center" alt="Balance & Strength Flow" loading="lazy">
+              <h3 class="live-class-card__name">Balance & Strength Flow</h3>
+              <p class="live-class-card__trainer">with Alicia Estrada</p>
+              <div class="live-class-card__meta">
+                <span class="tag tag--grey">25 min</span>
+                <span class="live-class-card__spots">15 spots left</span>
+              </div>
+              <button class="btn btn--secondary btn--sm">Reserve spot</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+
+    <!-- ======== BACK AFTER A BREAK ======== -->
+    <div class="view hidden" id="comebackView">
+
+      <!-- COMPACT TODAY HEADER — Comeback -->
+      <section class="today-compact" aria-label="Today's plan">
+        <div class="today-compact__header">
+          <div class="today-compact__trainer-bar">
+            <img class="today-compact__trainer-photo" src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=200&h=200&fit=crop&crop=face" alt="Amanda, your Bold trainer">
+            <div class="today-compact__greeting">
+              <h1 class="today-compact__heading">Welcome back, June! 💜</h1>
+              <p class="today-compact__sub">It's been a little while — that's okay. I've kept it simple for a comfortable restart.</p>
+            </div>
+          </div>
+          <div class="today-compact__date-pill">
+            <span class="today-compact__date-month plan-hero__calendar-month">FEB</span>
+            <span class="today-compact__date-day plan-hero__calendar-day">17</span>
+          </div>
+        </div>
+        <div class="today-compact__strip">
+          <div class="today-compact__quick-actions">
+            <button class="today-compact__action-pill mood-trigger-btn" aria-label="How are you feeling?">
+              😊 How are you feeling?
+            </button>
+            <details class="today-compact__log-toggle">
+              <summary class="today-compact__log-summary">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                Log your day
+              </summary>
+              <div class="today-compact__log-btns">
+                <button class="today-log__chip" data-log="meal">🥗 Meal</button>
+                <button class="today-log__chip" data-log="sleep">😴 Sleep</button>
+                <button class="today-log__chip" data-log="exercise">🚶 Exercise</button>
+                <button class="today-log__chip" data-log="water">💧 Water</button>
+              </div>
+            </details>
+          </div>
+        </div>
+        <!-- Mood response -->
+        <div class="today-compact__mood-response hidden">
+          <img class="today-compact__resp-photo" src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=200&h=200&fit=crop&crop=face" alt="Amanda">
+          <p class="today-compact__resp-text">Thanks for sharing!</p>
+        </div>
+      </section>
+
+      <!-- Context card — what we remember -->
+      <div class="today-compact__nudge today-compact__nudge--context">
+        <span class="today-compact__nudge-icon">🕐</span>
+        <span>Last session <strong>12 days ago</strong> — balance & gentle strength. We've adjusted today's plan to be easier.</span>
+      </div>
+
+      <!-- Action card — Comeback -->
+      <section class="today-actions" aria-label="Your session today">
+        <h2 class="sr-only">Your session</h2>
+        <div class="today-card today-card--primary">
+          <div class="today-card__step-badge">Welcome back</div>
+          <div class="today-card__body">
+            <div class="today-card__info">
+              <div class="today-card__tags">
+                <span class="tag tag--blue">Move <span class="tag__info">ⓘ</span></span>
+                <span class="tag tag--grey">Easy · 8 min</span>
+                <span class="tag tag--amber">Seated</span>
+              </div>
+              <h3 class="today-card__title">Gentle Seated Stretch & Balance</h3>
+              <p class="today-card__trainer">with Alicia Estrada</p>
+              <p class="today-card__why">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1L8.5 4.5L12.5 5L9.75 7.5L10.5 11.5L7 9.5L3.5 11.5L4.25 7.5L1.5 5L5.5 4.5L7 1Z" fill="#D97706"/></svg>
+                Seated and low-impact — a comfortable way to restart
+              </p>
+              <div class="today-card__actions">
+                <button class="btn btn--primary">Start class</button>
+                <button class="btn btn--secondary btn--switch-class">Adjust class</button>
+              </div>
+            </div>
+            <div class="today-card__thumb">
+              <img src="https://images.unsplash.com/photo-1552196563-55cd4e45efb3?w=600&h=400&fit=crop&crop=center" alt="Seated gentle stretch" loading="lazy">
+              <button class="today-card__save" aria-label="Save class">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 2h10v12l-5-3.5L3 14V2z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Encouragement -->
+      <div class="today-compact__nudge">
+        <span class="today-compact__nudge-icon">💛</span>
+        <span><strong>Coming back is the hardest part — and you just did it.</strong> Every session stands on its own.</span>
+      </div>
+    </div>
+
+
+    <!-- ======== DAY 2+ VIEW ======== -->
+    <div class="view hidden" id="day2View">
+
+      <!-- COMPACT TODAY HEADER — Trainer + mood + log integrated -->
+      <section class="today-compact" aria-label="Today's plan">
+        <div class="today-compact__header">
+          <div class="today-compact__trainer-bar">
+            <img class="today-compact__trainer-photo" src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=200&h=200&fit=crop&crop=face" alt="Amanda, your Bold trainer">
+            <div class="today-compact__greeting">
+              <h1 class="today-compact__heading chat-welcome__heading--tod" data-morning="Good morning, June ☀️" data-afternoon="Good afternoon, June 🌤️" data-evening="Good evening, June 🌅" data-night="Good night, June 🌙">Good morning, June ☀️</h1>
+              <p class="today-compact__sub chat-welcome__body--tod" data-morning="3-week streak! Today's balance class builds on Monday." data-afternoon="Keep the momentum — afternoon session is ready." data-evening="Wind down with a gentle balance session." data-night="A short, calming class before bed.">3-week streak! Today's balance class builds on Monday.</p>
+            </div>
+          </div>
+          <div class="today-compact__date-pill">
+            <span class="today-compact__date-month plan-hero__calendar-month">FEB</span>
+            <span class="today-compact__date-day plan-hero__calendar-day">17</span>
+          </div>
+        </div>
+        <!-- Mood + Log — single low-profile strip -->
+        <div class="today-compact__strip">
+          <div class="today-compact__quick-actions">
+            <button class="today-compact__action-pill mood-trigger-btn" aria-label="How are you feeling?">
+              😊 How are you feeling?
+            </button>
+            <details class="today-compact__log-toggle">
+              <summary class="today-compact__log-summary">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                Log your day
+              </summary>
+              <div class="today-compact__log-btns">
+                <button class="today-log__chip" data-log="meal">🥗 Meal</button>
+                <button class="today-log__chip" data-log="sleep">😴 Sleep</button>
+                <button class="today-log__chip" data-log="exercise">🚶 Exercise</button>
+                <button class="today-log__chip" data-log="water">💧 Water</button>
+              </div>
+            </details>
+          </div>
+        </div>
+        <!-- Mood response (hidden until mood is selected) -->
+        <div class="today-compact__mood-response hidden" id="moodResponse">
+          <img class="today-compact__resp-photo" src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=200&h=200&fit=crop&crop=face" alt="Amanda">
+          <p class="today-compact__resp-text" id="moodResponseText">Thanks for sharing! I've adjusted your plan to match how you're feeling.</p>
+        </div>
+      </section>
+
+      <!-- Action cards -->
+      <section class="today-actions" aria-label="Your exercises for today">
+        <h2 class="sr-only">Your exercises</h2>
+        <div class="today-card today-card--primary">
+          <div class="today-card__step-badge">Up next</div>
+          <div class="today-card__body">
+            <div class="today-card__info">
+              <div class="today-card__tags">
+                <span class="tag tag--blue">Move <span class="tag__info">ⓘ</span></span>
+                <span class="tag tag--grey">12 min</span>
+              </div>
+              <h3 class="today-card__title class-title--tod" data-morning="Find Your Balance II" data-afternoon="Find Your Balance II" data-evening="Evening Gentle Balance & Stretch" data-night="Relaxing Seated Stretch">Find Your Balance II</h3>
+              <p class="today-card__trainer">with Chris Litten</p>
+              <p class="today-card__why">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1L8.5 4.5L12.5 5L9.75 7.5L10.5 11.5L7 9.5L3.5 11.5L4.25 7.5L1.5 5L5.5 4.5L7 1Z" fill="#D97706"/></svg>
+                Continues your standing balance focus from Monday
+              </p>
+              <div class="today-card__actions">
+                <button class="btn btn--primary">Start class</button>
+                <button class="btn btn--secondary btn--switch-class">Adjust class</button>
+              </div>
+            </div>
+            <div class="today-card__thumb">
+              <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&h=400&fit=crop&crop=center" alt="Balance exercise class" loading="lazy">
+              <button class="today-card__save" aria-label="Save class">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 2h10v12l-5-3.5L3 14V2z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="today-card today-card--queued">
+          <div class="today-card__step-badge today-card__step-badge--muted">Then</div>
+          <div class="today-card__body">
+            <div class="today-card__info">
+              <div class="today-card__tags">
+                <span class="tag tag--green">Learn <span class="tag__info">ⓘ</span></span>
+                <span class="tag tag--grey">2 min read</span>
+              </div>
+              <h3 class="today-card__title">Bold Talks: What keeps us balanced?</h3>
+              <p class="today-card__trainer">with Amanda Rees</p>
+              <p class="today-card__why">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1L8.5 4.5L12.5 5L9.75 7.5L10.5 11.5L7 9.5L3.5 11.5L4.25 7.5L1.5 5L5.5 4.5L7 1Z" fill="#D97706"/></svg>
+                A quick look at the science behind your balance exercises
+              </p>
+              <div class="today-card__actions">
+                <button class="btn btn--secondary">Read</button>
+              </div>
+            </div>
+            <div class="today-card__thumb">
+              <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&h=400&fit=crop&crop=center" alt="Health education talk" loading="lazy">
+              <button class="today-card__save" aria-label="Save class">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 2h10v12l-5-3.5L3 14V2z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Live Classes -->
+      <section class="live-classes" aria-label="Upcoming live classes">
+        <div class="live-classes__header">
+          <h2 class="live-classes__title">Live Classes</h2>
+          <a href="#" class="live-classes__link">See all</a>
+        </div>
+        <div class="live-classes__scroll">
+          <div class="live-class-card">
+            <div class="live-class-card__badge">LIVE · Today 2:00 PM</div>
+            <div class="live-class-card__body">
+              <img class="live-class-card__thumb" src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=180&fit=crop&crop=center" alt="Gentle Morning Balance" loading="lazy">
+              <h3 class="live-class-card__name">Gentle Morning Balance</h3>
+              <p class="live-class-card__trainer">with Chris Litten</p>
+              <div class="live-class-card__meta">
+                <span class="tag tag--grey">30 min</span>
+                <span class="live-class-card__spots">12 spots left</span>
+              </div>
+              <button class="btn btn--primary btn--sm">Join live</button>
+            </div>
+          </div>
+          <div class="live-class-card">
+            <div class="live-class-card__badge live-class-card__badge--upcoming">Tomorrow 10:00 AM</div>
+            <div class="live-class-card__body">
+              <img class="live-class-card__thumb" src="https://images.unsplash.com/photo-1552196563-55cd4e45efb3?w=300&h=180&fit=crop&crop=center" alt="Seated Stretch & Breathe" loading="lazy">
+              <h3 class="live-class-card__name">Seated Stretch & Breathe</h3>
+              <p class="live-class-card__trainer">with Amanda Rees</p>
+              <div class="live-class-card__meta">
+                <span class="tag tag--grey">20 min</span>
+                <span class="live-class-card__spots">8 spots left</span>
+              </div>
+              <button class="btn btn--secondary btn--sm">Reserve spot</button>
+            </div>
+          </div>
+          <div class="live-class-card">
+            <div class="live-class-card__badge live-class-card__badge--upcoming">Thu 1:00 PM</div>
+            <div class="live-class-card__body">
+              <img class="live-class-card__thumb" src="https://images.unsplash.com/photo-1518459031867-a89b944bffe4?w=300&h=180&fit=crop&crop=center" alt="Balance & Strength Flow" loading="lazy">
+              <h3 class="live-class-card__name">Balance & Strength Flow</h3>
+              <p class="live-class-card__trainer">with Alicia Estrada</p>
+              <div class="live-class-card__meta">
+                <span class="tag tag--grey">25 min</span>
+                <span class="live-class-card__spots">15 spots left</span>
+              </div>
+              <button class="btn btn--secondary btn--sm">Reserve spot</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+
+    <!-- ======== CHECK-IN DUE VIEW ======== -->
+    <div class="view hidden" id="checkinView">
+
+      <!-- COMPACT TODAY HEADER — Check-in due -->
+      <section class="today-compact" aria-label="Today's plan">
+        <div class="today-compact__header">
+          <div class="today-compact__trainer-bar">
+            <img class="today-compact__trainer-photo" src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=200&h=200&fit=crop&crop=face" alt="Amanda, your Bold trainer">
+            <div class="today-compact__greeting">
+              <h1 class="today-compact__heading chat-welcome__heading--tod" data-morning="Good morning, June! 📋" data-afternoon="Good afternoon, June! 📋" data-evening="Good evening, June! 📋" data-night="Good night, June! 📋">Good morning, June! 📋</h1>
+              <p class="today-compact__sub">You've been doing great! Quick check-in before today's class — it helps me fine-tune your plan.</p>
+            </div>
+          </div>
+          <div class="today-compact__date-pill">
+            <span class="today-compact__date-month plan-hero__calendar-month">FEB</span>
+            <span class="today-compact__date-day plan-hero__calendar-day">17</span>
+          </div>
+        </div>
+        <!-- Simple check-in entry point -->
+        <div class="today-compact__strip">
+          <button class="checkin-entry" id="checkinEntryBtn">
+            <span class="checkin-entry__icon">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M15 4.5L6.75 12.75 3 9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span class="checkin-entry__text">
+              <strong>Quick check-in</strong>
+              <span>~2 min · helps me fine-tune your plan</span>
+            </span>
+            <span class="checkin-entry__arrow">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4L10 8L6 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Action cards — Check-in due -->
+      <section class="today-actions" aria-label="Your exercises for today">
+        <h2 class="sr-only">Your exercises</h2>
+        <div class="today-card today-card--primary">
+          <div class="today-card__step-badge">Up next</div>
+          <div class="today-card__body">
+            <div class="today-card__info">
+              <div class="today-card__tags">
+                <span class="tag tag--blue">Move <span class="tag__info">ⓘ</span></span>
+                <span class="tag tag--grey">12 min</span>
+              </div>
+              <h3 class="today-card__title">Find Your Balance II</h3>
+              <p class="today-card__trainer">with Chris Litten</p>
+              <p class="today-card__why">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1L8.5 4.5L12.5 5L9.75 7.5L10.5 11.5L7 9.5L3.5 11.5L4.25 7.5L1.5 5L5.5 4.5L7 1Z" fill="#D97706"/></svg>
+                Continues your standing balance focus this week
+              </p>
+              <div class="today-card__actions">
+                <button class="btn btn--primary">Start class</button>
+                <button class="btn btn--secondary btn--switch-class">Adjust class</button>
+              </div>
+            </div>
+            <div class="today-card__thumb">
+              <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&h=400&fit=crop&crop=center" alt="Balance exercise class" loading="lazy">
+              <button class="today-card__save" aria-label="Save class">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 2h10v12l-5-3.5L3 14V2z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="today-card today-card--queued">
+          <div class="today-card__step-badge today-card__step-badge--muted">Then</div>
+          <div class="today-card__body">
+            <div class="today-card__info">
+              <div class="today-card__tags">
+                <span class="tag tag--green">Learn <span class="tag__info">ⓘ</span></span>
+                <span class="tag tag--grey">2 min read</span>
+              </div>
+              <h3 class="today-card__title">Bold Talks: What keeps us balanced?</h3>
+              <p class="today-card__trainer">with Amanda Rees</p>
+              <p class="today-card__why">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1L8.5 4.5L12.5 5L9.75 7.5L10.5 11.5L7 9.5L3.5 11.5L4.25 7.5L1.5 5L5.5 4.5L7 1Z" fill="#D97706"/></svg>
+                A quick look at the science behind your balance exercises
+              </p>
+              <div class="today-card__actions">
+                <button class="btn btn--secondary">Read</button>
+              </div>
+            </div>
+            <div class="today-card__thumb">
+              <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&h=400&fit=crop&crop=center" alt="Health education talk" loading="lazy">
+              <button class="today-card__save" aria-label="Save class">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 2h10v12l-5-3.5L3 14V2z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Live Classes -->
+      <section class="live-classes" aria-label="Upcoming live classes">
+        <div class="live-classes__header">
+          <h2 class="live-classes__title">Live Classes</h2>
+          <a href="#" class="live-classes__link">See all</a>
+        </div>
+        <div class="live-classes__scroll">
+          <div class="live-class-card">
+            <div class="live-class-card__badge">LIVE · Today 2:00 PM</div>
+            <div class="live-class-card__body">
+              <img class="live-class-card__thumb" src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=180&fit=crop&crop=center" alt="Gentle Morning Balance" loading="lazy">
+              <h3 class="live-class-card__name">Gentle Morning Balance</h3>
+              <p class="live-class-card__trainer">with Chris Litten</p>
+              <div class="live-class-card__meta">
+                <span class="tag tag--grey">30 min</span>
+                <span class="live-class-card__spots">12 spots left</span>
+              </div>
+              <button class="btn btn--primary btn--sm">Join live</button>
+            </div>
+          </div>
+          <div class="live-class-card">
+            <div class="live-class-card__badge live-class-card__badge--upcoming">Tomorrow 10:00 AM</div>
+            <div class="live-class-card__body">
+              <img class="live-class-card__thumb" src="https://images.unsplash.com/photo-1552196563-55cd4e45efb3?w=300&h=180&fit=crop&crop=center" alt="Seated Stretch & Breathe" loading="lazy">
+              <h3 class="live-class-card__name">Seated Stretch & Breathe</h3>
+              <p class="live-class-card__trainer">with Amanda Rees</p>
+              <div class="live-class-card__meta">
+                <span class="tag tag--grey">20 min</span>
+                <span class="live-class-card__spots">8 spots left</span>
+              </div>
+              <button class="btn btn--secondary btn--sm">Reserve spot</button>
+            </div>
+          </div>
+          <div class="live-class-card">
+            <div class="live-class-card__badge live-class-card__badge--upcoming">Thu 1:00 PM</div>
+            <div class="live-class-card__body">
+              <img class="live-class-card__thumb" src="https://images.unsplash.com/photo-1518459031867-a89b944bffe4?w=300&h=180&fit=crop&crop=center" alt="Balance & Strength Flow" loading="lazy">
+              <h3 class="live-class-card__name">Balance & Strength Flow</h3>
+              <p class="live-class-card__trainer">with Alicia Estrada</p>
+              <div class="live-class-card__meta">
+                <span class="tag tag--grey">25 min</span>
+                <span class="live-class-card__spots">15 spots left</span>
+              </div>
+              <button class="btn btn--secondary btn--sm">Reserve spot</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+
+    <!-- ======== DAY COMPLETE VIEW ======== -->
+    <div class="view hidden" id="completedView">
+
+      <!-- Compact header — celebratory -->
+      <section class="today-compact today-compact--completed" aria-label="Day complete">
+        <div class="today-compact__header">
+          <div class="today-compact__trainer-bar">
+            <img class="today-compact__trainer-photo" src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=200&h=200&fit=crop&crop=face" alt="Amanda, your Bold trainer">
+            <div class="today-compact__greeting">
+              <h1 class="today-compact__heading">Great work today, June! 🎉</h1>
+              <p class="today-compact__sub">You completed everything on your plan. Take a moment to feel proud — consistency is what matters most.</p>
+            </div>
+          </div>
+          <div class="today-compact__date-pill today-compact__date-pill--done">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 10L8.5 13.5L15 6.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+        <!-- Log — progressive disclosure -->
+        <div class="today-compact__strip">
+          <details class="today-compact__log-toggle">
+            <summary class="today-compact__log-summary">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              Log your day
+            </summary>
+            <div class="today-compact__log-btns">
+              <button class="today-log__chip" data-log="meal">🥗 Meal</button>
+              <button class="today-log__chip" data-log="sleep">😴 Sleep</button>
+              <button class="today-log__chip" data-log="exercise">🚶 Exercise</button>
+              <button class="today-log__chip" data-log="water">💧 Water</button>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <!-- Completed cards — both done -->
+      <section class="today-actions" aria-label="Completed exercises">
+        <h2 class="sr-only">Completed exercises</h2>
+        <div class="today-card today-card--done">
+          <div class="today-card__step-badge today-card__step-badge--done">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7L6 10L11 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Completed
+          </div>
+          <div class="today-card__body">
+            <div class="today-card__info">
+              <div class="today-card__tags">
+                <span class="tag tag--blue">Move <span class="tag__info">ⓘ</span></span>
+                <span class="tag tag--grey">12 min</span>
+              </div>
+              <h3 class="today-card__title">Find Your Balance II</h3>
+              <p class="today-card__trainer">with Chris Litten</p>
+              <div class="today-card__completed-meta">
+                <span class="today-card__completed-stat">⏱ 12 min</span>
+                <span class="today-card__completed-stat">🎯 100%</span>
+              </div>
+            </div>
+            <div class="today-card__thumb">
+              <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&h=400&fit=crop&crop=center" alt="Balance exercise class" loading="lazy">
+              <div class="today-card__thumb-overlay">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M6 12L10.5 16.5L18 7.5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="today-card today-card--done">
+          <div class="today-card__step-badge today-card__step-badge--done">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7L6 10L11 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Completed
+          </div>
+          <div class="today-card__body">
+            <div class="today-card__info">
+              <div class="today-card__tags">
+                <span class="tag tag--green">Learn <span class="tag__info">ⓘ</span></span>
+                <span class="tag tag--grey">2 min</span>
+              </div>
+              <h3 class="today-card__title">Bold Talks: What keeps us balanced?</h3>
+              <p class="today-card__trainer">with Amanda Rees</p>
+              <div class="today-card__completed-meta">
+                <span class="today-card__completed-stat">⏱ 2 min</span>
+                <span class="today-card__completed-stat">🎯 100%</span>
+              </div>
+            </div>
+            <div class="today-card__thumb">
+              <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=600&h=400&fit=crop&crop=center" alt="Health education talk" loading="lazy">
+              <div class="today-card__thumb-overlay">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M6 12L10.5 16.5L18 7.5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Day summary -->
+      <section class="day-summary" aria-label="Today's summary">
+        <h3 class="day-summary__title">Today's Summary</h3>
+        <div class="day-summary__grid">
+          <div class="day-summary__item">
+            <span class="day-summary__value">14</span>
+            <span class="day-summary__label">Minutes active</span>
+          </div>
+          <div class="day-summary__item">
+            <span class="day-summary__value">2</span>
+            <span class="day-summary__label">Classes completed</span>
+          </div>
+          <div class="day-summary__item">
+            <span class="day-summary__value">4</span>
+            <span class="day-summary__label">Week streak</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Encouragement + next day -->
+      <div class="today-compact__nudge">
+        <span class="today-compact__nudge-icon">💜</span>
+        <span><strong>Every session adds up.</strong> You're building strength, balance, and confidence — one day at a time.</span>
+      </div>
+
+      <!-- What's next suggestion -->
+      <section class="today-actions" aria-label="What's next">
+        <h3 class="today-actions__next-title">If you're feeling up for more…</h3>
+        <div class="today-card today-card--queued">
+          <div class="today-card__step-badge today-card__step-badge--muted">Bonus</div>
+          <div class="today-card__body">
+            <div class="today-card__info">
+              <div class="today-card__tags">
+                <span class="tag tag--purple">Move <span class="tag__info">ⓘ</span></span>
+                <span class="tag tag--grey">8 min</span>
+              </div>
+              <h3 class="today-card__title">Cool-Down Stretch & Breathe</h3>
+              <p class="today-card__trainer">with Amanda Rees</p>
+              <p class="today-card__why">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 1L8.5 4.5L12.5 5L9.75 7.5L10.5 11.5L7 9.5L3.5 11.5L4.25 7.5L1.5 5L5.5 4.5L7 1Z" fill="#D97706"/></svg>
+                A gentle wind-down after today's session
+              </p>
+              <div class="today-card__actions">
+                <button class="btn btn--ghost">Start bonus class</button>
+              </div>
+            </div>
+            <div class="today-card__thumb">
+              <img src="https://images.unsplash.com/photo-1552196563-55cd4e45efb3?w=600&h=400&fit=crop&crop=center" alt="Stretching class" loading="lazy">
+              <button class="today-card__save" aria-label="Save class">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 2h10v12l-5-3.5L3 14V2z" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Live Classes -->
+      <section class="live-classes" aria-label="Upcoming live classes">
+        <div class="live-classes__header">
+          <h2 class="live-classes__title">Live Classes</h2>
+          <a href="#" class="live-classes__link">See all</a>
+        </div>
+        <div class="live-classes__scroll">
+          <div class="live-class-card">
+            <div class="live-class-card__badge">LIVE · Today 2:00 PM</div>
+            <div class="live-class-card__body">
+              <img class="live-class-card__thumb" src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=180&fit=crop&crop=center" alt="Gentle Morning Balance" loading="lazy">
+              <h3 class="live-class-card__name">Gentle Morning Balance</h3>
+              <p class="live-class-card__trainer">with Chris Litten</p>
+              <div class="live-class-card__meta">
+                <span class="tag tag--grey">30 min</span>
+                <span class="live-class-card__spots">12 spots left</span>
+              </div>
+              <button class="btn btn--primary btn--sm">Join live</button>
+            </div>
+          </div>
+          <div class="live-class-card">
+            <div class="live-class-card__badge live-class-card__badge--upcoming">Tomorrow 10:00 AM</div>
+            <div class="live-class-card__body">
+              <img class="live-class-card__thumb" src="https://images.unsplash.com/photo-1552196563-55cd4e45efb3?w=300&h=180&fit=crop&crop=center" alt="Seated Stretch & Breathe" loading="lazy">
+              <h3 class="live-class-card__name">Seated Stretch & Breathe</h3>
+              <p class="live-class-card__trainer">with Amanda Rees</p>
+              <div class="live-class-card__meta">
+                <span class="tag tag--grey">20 min</span>
+                <span class="live-class-card__spots">8 spots left</span>
+              </div>
+              <button class="btn btn--secondary btn--sm">Reserve spot</button>
+            </div>
+          </div>
+          <div class="live-class-card">
+            <div class="live-class-card__badge live-class-card__badge--upcoming">Thu 1:00 PM</div>
+            <div class="live-class-card__body">
+              <img class="live-class-card__thumb" src="https://images.unsplash.com/photo-1518459031867-a89b944bffe4?w=300&h=180&fit=crop&crop=center" alt="Balance & Strength Flow" loading="lazy">
+              <h3 class="live-class-card__name">Balance & Strength Flow</h3>
+              <p class="live-class-card__trainer">with Alicia Estrada</p>
+              <div class="live-class-card__meta">
+                <span class="tag tag--grey">25 min</span>
+                <span class="live-class-card__spots">15 spots left</span>
+              </div>
+              <button class="btn btn--secondary btn--sm">Reserve spot</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+
+    <!-- ======== PROFILE VIEW ======== -->
+    <div class="view hidden" id="profileView">
+
+      <!-- Profile Header — initials only, no photo -->
+      <section class="profile-header">
+        <div class="profile-header__inner">
+          <div class="profile-header__avatar">JC</div>
+          <div class="profile-header__info">
+            <h1 class="profile-header__name">June Carter</h1>
+            <p class="profile-header__plan">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1L10 5.5L15 6L11.5 9.5L12.5 14.5L8 12L3.5 14.5L4.5 9.5L1 6L6 5.5L8 1Z" fill="#F59E0B"/></svg>
+              UnitedHealthcare · Member since Oct 2025
+            </p>
+            <div class="profile-header__tags">
+              <span class="tag tag--blue">Balance focus</span>
+              <span class="tag tag--green">Active member</span>
+            </div>
+          </div>
+          <button class="btn btn--secondary btn--sm profile-header__edit">Edit profile</button>
+        </div>
+      </section>
+
+      <!-- Progress: Continuity + Capability + Confidence -->
+      <section class="profile-progress" id="profileProgress" aria-label="Your progress">
+        <h2 class="profile-progress__title">Your progress</h2>
+        <p class="profile-progress__subtitle">Progress is about staying engaged and building confidence over time.</p>
+
+        <!-- Continuity -->
+        <div class="progress-card">
+          <div class="progress-card__header">
+            <div class="progress-card__icon progress-card__icon--continuity">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 8V12L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+            <div>
+              <h3 class="progress-card__title">Continuity</h3>
+              <p class="progress-card__desc">Staying engaged over time</p>
+            </div>
+          </div>
+          <div class="progress-card__body">
+            <div class="progress-card__metric">
+              <span class="progress-card__metric-value">3</span>
+              <span class="progress-card__metric-label">Week streak</span>
+            </div>
+            <div class="progress-card__metric">
+              <span class="progress-card__metric-value">13</span>
+              <span class="progress-card__metric-label">Days this month</span>
+            </div>
+            <div class="progress-card__metric">
+              <span class="progress-card__metric-value">47</span>
+              <span class="progress-card__metric-label">Total classes</span>
+            </div>
+          </div>
+          <div class="progress-card__narrative">
+            <p>You've been practicing consistently for 3 weeks. That kind of regularity is what builds lasting habits — you're doing great.</p>
+          </div>
+        </div>
+
+        <!-- Movements (was Capability) — movement mastery & comfort -->
+        <div class="progress-card">
+          <div class="progress-card__header">
+            <div class="progress-card__icon progress-card__icon--capability">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" stroke="currentColor" stroke-width="2"/><path d="M8 14s1.5 2 4 2 4-2 4-2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M9 9h.01M15 9h.01" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+            </div>
+            <div>
+              <h3 class="progress-card__title">Movements</h3>
+              <p class="progress-card__desc">Movement mastery &amp; comfort</p>
+            </div>
+          </div>
+          <div class="progress-card__body">
+            <div class="progress-card__metric">
+              <span class="progress-card__metric-value">Balance</span>
+              <span class="progress-card__metric-label">Current focus</span>
+            </div>
+            <div class="progress-card__metric">
+              <span class="progress-card__metric-value">6 of 8</span>
+              <span class="progress-card__metric-label">Movements practiced</span>
+            </div>
+            <div class="progress-card__metric">
+              <span class="progress-card__metric-value">Growing</span>
+              <span class="progress-card__metric-label">Overall comfort</span>
+            </div>
+          </div>
+          <div class="progress-card__narrative">
+            <p>You started with seated-only balance classes and have naturally moved into standing exercises. That shift happened because you kept showing up.</p>
+          </div>
+
+          <!-- Movement mastery grid (from onboarding) -->
+          <div class="movements-grid">
+            <h4 class="movements-grid__title">Your movement comfort</h4>
+            <div class="movements-grid__list">
+              <div class="movement-item">
+                <div class="movement-item__info">
+                  <span class="movement-item__name">Sit to Stand</span>
+                  <span class="movement-item__status movement-item__status--comfortable">Comfortable</span>
+                </div>
+                <div class="movement-item__bar">
+                  <div class="movement-item__fill" style="width: 90%"></div>
+                </div>
+              </div>
+              <div class="movement-item">
+                <div class="movement-item__info">
+                  <span class="movement-item__name">Marches</span>
+                  <span class="movement-item__status movement-item__status--comfortable">Comfortable</span>
+                </div>
+                <div class="movement-item__bar">
+                  <div class="movement-item__fill" style="width: 85%"></div>
+                </div>
+              </div>
+              <div class="movement-item">
+                <div class="movement-item__info">
+                  <span class="movement-item__name">Squats (no weight)</span>
+                  <span class="movement-item__status movement-item__status--building">Building</span>
+                </div>
+                <div class="movement-item__bar">
+                  <div class="movement-item__fill movement-item__fill--building" style="width: 60%"></div>
+                </div>
+              </div>
+              <div class="movement-item">
+                <div class="movement-item__info">
+                  <span class="movement-item__name">Stand to Floor</span>
+                  <span class="movement-item__status movement-item__status--building">Building</span>
+                </div>
+                <div class="movement-item__bar">
+                  <div class="movement-item__fill movement-item__fill--building" style="width: 45%"></div>
+                </div>
+              </div>
+              <div class="movement-item">
+                <div class="movement-item__info">
+                  <span class="movement-item__name">Single Leg Balance</span>
+                  <span class="movement-item__status movement-item__status--new">New</span>
+                </div>
+                <div class="movement-item__bar">
+                  <div class="movement-item__fill movement-item__fill--new" style="width: 25%"></div>
+                </div>
+              </div>
+              <div class="movement-item">
+                <div class="movement-item__info">
+                  <span class="movement-item__name">Bodywork</span>
+                  <span class="movement-item__status movement-item__status--comfortable">Comfortable</span>
+                </div>
+                <div class="movement-item__bar">
+                  <div class="movement-item__fill" style="width: 80%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="progress-card__journey">
+            <div class="journey-step journey-step--done">
+              <div class="journey-step__dot"></div>
+              <div class="journey-step__line"></div>
+              <span class="journey-step__text">Seated balance</span>
+              <span class="journey-step__when">Oct '25</span>
+            </div>
+            <div class="journey-step journey-step--done">
+              <div class="journey-step__dot"></div>
+              <div class="journey-step__line"></div>
+              <span class="journey-step__text">Seated + standing</span>
+              <span class="journey-step__when">Nov '25</span>
+            </div>
+            <div class="journey-step journey-step--done">
+              <div class="journey-step__dot"></div>
+              <div class="journey-step__line"></div>
+              <span class="journey-step__text">Standing balance focus</span>
+              <span class="journey-step__when">Jan '26</span>
+            </div>
+            <div class="journey-step journey-step--current">
+              <div class="journey-step__dot"></div>
+              <span class="journey-step__text">Balance + gentle strength</span>
+              <span class="journey-step__when">Now</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Confidence -->
+        <div class="progress-card">
+          <div class="progress-card__header">
+            <div class="progress-card__icon progress-card__icon--confidence">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 000-7.78z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div>
+              <h3 class="progress-card__title">Confidence</h3>
+              <p class="progress-card__desc">How you feel about your movement</p>
+            </div>
+          </div>
+          <div class="progress-card__body">
+            <div class="progress-card__metric">
+              <span class="progress-card__metric-value">😊</span>
+              <span class="progress-card__metric-label">Last check-in mood</span>
+            </div>
+            <div class="progress-card__metric">
+              <span class="progress-card__metric-value">4/5</span>
+              <span class="progress-card__metric-label">Balance confidence</span>
+            </div>
+            <div class="progress-card__metric">
+              <span class="progress-card__metric-value">3</span>
+              <span class="progress-card__metric-label">Check-ins completed</span>
+            </div>
+          </div>
+          <div class="progress-card__narrative">
+            <p>In your last check-in, you said you feel more steady when walking. That kind of confidence is exactly what we're building together.</p>
+          </div>
+          <div class="progress-card__link">
+            <a href="#" class="btn btn--text btn--sm" onclick="document.querySelector('.profile-checkins').scrollIntoView({behavior:'smooth'});return false;">
+              View all check-ins ↓
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ======== CHECK-INS SECTION — Simplified, progressive disclosure ======== -->
+      <section class="profile-checkins" aria-label="Your check-ins">
+        <h2 class="profile-checkins__title">Your check-ins</h2>
+        <p class="profile-checkins__subtitle">We use these to personalize your experience and keep your program feeling right for you.</p>
+
+        <!-- ---- Card 1: Mood & Wellbeing ---- -->
+        <div class="checkins-card">
+          <div class="checkins-card__header">
+            <div class="checkins-card__icon checkins-card__icon--mood">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M8 14s1.5 2 4 2 4-2 4-2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="9" cy="9" r="1" fill="currentColor"/><circle cx="15" cy="9" r="1" fill="currentColor"/></svg>
+            </div>
+            <div>
+              <h3 class="checkins-card__title">How you've been feeling</h3>
+              <p class="checkins-card__desc">Your daily mood check-ins</p>
+            </div>
+            <span class="checkins-card__emoji-peek">😊 😄 😊</span>
+          </div>
+
+          <!-- Summary — always visible -->
+          <div class="checkins-card__summary">
+            <p>You've been feeling mostly <strong>good</strong> this month with an upward trend — you've had more "great" days since starting balance classes. On days you felt tired, we adjusted your plan to be gentler.</p>
+          </div>
+
+          <div class="checkins-card__highlights">
+            <div class="checkins-card__highlight">
+              <span class="checkins-card__highlight-emoji">😊</span>
+              <span class="checkins-card__highlight-text">Most common mood</span>
+            </div>
+            <div class="checkins-card__highlight">
+              <span class="checkins-card__highlight-emoji">↗</span>
+              <span class="checkins-card__highlight-text">Trending up</span>
+            </div>
+            <div class="checkins-card__highlight">
+              <span class="checkins-card__highlight-emoji">11</span>
+              <span class="checkins-card__highlight-text">This month</span>
+            </div>
+          </div>
+
+          <!-- Expandable detail -->
+          <details class="checkins-card__details">
+            <summary class="checkins-card__expand">See recent check-ins</summary>
+            <div class="checkins-card__detail-content">
+              <div class="checkins-card__entry">
+                <span class="checkins-card__entry-date">Today</span>
+                <span class="checkins-card__entry-emoji">😊</span>
+                <span class="checkins-card__entry-label">Good</span>
+              </div>
+              <div class="checkins-card__entry">
+                <span class="checkins-card__entry-date">Feb 14</span>
+                <span class="checkins-card__entry-emoji">😄</span>
+                <span class="checkins-card__entry-label">Great</span>
+              </div>
+              <div class="checkins-card__entry">
+                <span class="checkins-card__entry-date">Feb 12</span>
+                <span class="checkins-card__entry-emoji">😊</span>
+                <span class="checkins-card__entry-label">Good</span>
+              </div>
+              <div class="checkins-card__entry">
+                <span class="checkins-card__entry-date">Feb 10</span>
+                <span class="checkins-card__entry-emoji">😄</span>
+                <span class="checkins-card__entry-label">Great</span>
+              </div>
+              <div class="checkins-card__entry">
+                <span class="checkins-card__entry-date">Feb 6</span>
+                <span class="checkins-card__entry-emoji">😴</span>
+                <span class="checkins-card__entry-label">Tired — we gave you a gentler plan</span>
+              </div>
+            </div>
+          </details>
+        </div>
+
+        <!-- ---- Card 2: Progress check-ins ---- -->
+        <div class="checkins-card">
+          <div class="checkins-card__header">
+            <div class="checkins-card__icon checkins-card__icon--clinical">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M22 12h-4l-3 9L9 3l-3 9H2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div>
+              <h3 class="checkins-card__title">How you're progressing</h3>
+              <p class="checkins-card__desc">Balance, comfort, and how things feel</p>
+            </div>
+            <span class="checkins-card__badge-mini">3 completed</span>
+          </div>
+
+          <!-- Summary — always visible -->
+          <div class="checkins-card__summary">
+            <p>Your balance confidence has gone from <strong>"less steady"</strong> to <strong>"more steady"</strong> since January. The knee stiffness you mentioned last month resolved after we adjusted your plan. Your classes feel just right.</p>
+          </div>
+
+          <div class="checkins-card__highlights">
+            <div class="checkins-card__highlight">
+              <span class="checkins-card__highlight-emoji">😊</span>
+              <span class="checkins-card__highlight-text">Feeling more steady</span>
+            </div>
+            <div class="checkins-card__highlight">
+              <span class="checkins-card__highlight-emoji">👍</span>
+              <span class="checkins-card__highlight-text">Classes feel right</span>
+            </div>
+            <div class="checkins-card__highlight">
+              <span class="checkins-card__highlight-emoji">✓</span>
+              <span class="checkins-card__highlight-text">No concerns</span>
+            </div>
+          </div>
+
+          <!-- Expandable detail -->
+          <details class="checkins-card__details">
+            <summary class="checkins-card__expand">See past check-ins</summary>
+            <div class="checkins-card__detail-content">
+              <div class="checkins-card__progress-entry">
+                <div class="checkins-card__progress-date">
+                  <span>Feb 10</span>
+                  <span class="checkins-card__progress-badge checkins-card__progress-badge--latest">Latest</span>
+                </div>
+                <p class="checkins-card__progress-note">Balance: More steady · Classes: Just right · No concerns</p>
+              </div>
+              <div class="checkins-card__progress-entry">
+                <div class="checkins-card__progress-date"><span>Jan 27</span></div>
+                <p class="checkins-card__progress-note">Balance: About the same · Classes: Just right · "Mild knee stiffness in the mornings"</p>
+              </div>
+              <div class="checkins-card__progress-entry">
+                <div class="checkins-card__progress-date"><span>Jan 13</span></div>
+                <p class="checkins-card__progress-note">Balance: Less steady · Classes: A bit challenging · "Still getting used to the exercises"</p>
+              </div>
+            </div>
+          </details>
+
+          <div class="checkins-card__footer">
+            <div class="checkins-card__next-checkin">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 4V8L10.5 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/></svg>
+              <span>Next one: <strong>Feb 24</strong> · Takes about 2 minutes</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- ---- Card 3: Health & Wellness Assessment ---- -->
+        <div class="checkins-card">
+          <div class="checkins-card__header">
+            <div class="checkins-card__icon checkins-card__icon--access">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 000-7.78z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div>
+              <h3 class="checkins-card__title">Health & wellness review</h3>
+              <p class="checkins-card__desc">A bigger-picture look at how Bold is helping you</p>
+            </div>
+            <span class="checkins-card__badge-mini">Jan 2026</span>
+          </div>
+
+          <!-- Summary — always visible -->
+          <div class="checkins-card__summary">
+            <p>Since starting Bold, you're steadier on your feet, more active, and feeling more confident about moving. Your fall risk has improved, and you told us the program feels like it's working — that's what matters most.</p>
+          </div>
+
+          <div class="checkins-card__highlights">
+            <div class="checkins-card__highlight checkins-card__highlight--positive">
+              <span class="checkins-card__highlight-emoji">🛡️</span>
+              <span class="checkins-card__highlight-text">Fall risk: Low <small>(was moderate)</small></span>
+            </div>
+            <div class="checkins-card__highlight checkins-card__highlight--positive">
+              <span class="checkins-card__highlight-emoji">💪</span>
+              <span class="checkins-card__highlight-text">Getting stronger</span>
+            </div>
+            <div class="checkins-card__highlight checkins-card__highlight--positive">
+              <span class="checkins-card__highlight-emoji">😊</span>
+              <span class="checkins-card__highlight-text">Feeling great about it</span>
+            </div>
+          </div>
+
+          <!-- Expandable detail -->
+          <details class="checkins-card__details">
+            <summary class="checkins-card__expand">See what we measured</summary>
+            <div class="checkins-card__detail-content">
+              <div class="checkins-card__measure">
+                <div class="checkins-card__measure-row">
+                  <span class="checkins-card__measure-label">Fall risk</span>
+                  <span class="checkins-card__measure-value checkins-card__measure-value--good">Low</span>
+                </div>
+                <span class="checkins-card__measure-change">Improved from moderate — nice work</span>
+              </div>
+              <div class="checkins-card__measure">
+                <div class="checkins-card__measure-row">
+                  <span class="checkins-card__measure-label">How active you are</span>
+                  <span class="checkins-card__measure-value">Getting better</span>
+                </div>
+                <span class="checkins-card__measure-change">Up from where you started in October</span>
+              </div>
+              <div class="checkins-card__measure">
+                <div class="checkins-card__measure-row">
+                  <span class="checkins-card__measure-label">Confidence in movement</span>
+                  <span class="checkins-card__measure-value">Growing</span>
+                </div>
+                <span class="checkins-card__measure-change">You feel more sure on your feet</span>
+              </div>
+              <div class="checkins-card__measure">
+                <div class="checkins-card__measure-row">
+                  <span class="checkins-card__measure-label">Pain getting in the way</span>
+                  <span class="checkins-card__measure-value checkins-card__measure-value--good">Not much</span>
+                </div>
+                <span class="checkins-card__measure-change">Staying steady — great news</span>
+              </div>
+              <div class="checkins-card__measure">
+                <div class="checkins-card__measure-row">
+                  <span class="checkins-card__measure-label">How you feel about Bold</span>
+                  <span class="checkins-card__measure-value">Really positive</span>
+                </div>
+                <span class="checkins-card__measure-change">That makes us happy too</span>
+              </div>
+
+              <div class="checkins-card__history-note">
+                <p>Previous review: <strong>Oct 2025</strong> (when you first started)</p>
+              </div>
+            </div>
+          </details>
+
+          <div class="checkins-card__footer">
+            <div class="checkins-card__next-checkin">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 4V8L10.5 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="8" r="6.5" stroke="currentColor" stroke-width="1.5"/></svg>
+              <span>Next review: <strong>Apr 2026</strong> · Every few months</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Transparency note — brief and warm -->
+        <div class="checkins-transparency">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7.5" stroke="currentColor" stroke-width="1.5"/><path d="M9 6v4M9 12h.01" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <p>Your mood and progress check-ins stay between you and Bold. Health reviews are shared with your plan to make sure you keep getting access to the program. <a href="#">Learn more</a></p>
+        </div>
+      </section>
+
+      <!-- Program Section — Updated: focus, exercise duration, movements -->
+      <section class="profile-section" aria-label="Your program">
+        <h2 class="profile-section__title">Your program</h2>
+        <div class="profile-cards-grid">
+          <div class="profile-info-card">
+            <div class="profile-info-card__icon">🎯</div>
+            <h3 class="profile-info-card__title">Focus area</h3>
+            <p class="profile-info-card__value">Balance & Fall Prevention</p>
+            <p class="profile-info-card__sub">Updated Jan 2026</p>
+          </div>
+          <div class="profile-info-card">
+            <div class="profile-info-card__icon">⏱</div>
+            <h3 class="profile-info-card__title">Exercise duration</h3>
+            <p class="profile-info-card__value">10 – 15 min</p>
+            <p class="profile-info-card__sub"><a href="#">Adjust preference</a></p>
+          </div>
+          <div class="profile-info-card">
+            <div class="profile-info-card__icon">🤸</div>
+            <h3 class="profile-info-card__title">Movements</h3>
+            <p class="profile-info-card__value">6 practiced · 2 new</p>
+            <p class="profile-info-card__sub"><a href="#">View movement details</a></p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+
+    <!-- ======== CARE VIEW — Telehealth (Empty State / Pre-Signup) ======== -->
+    <div class="view hidden" id="careView">
+
+      <!-- Care Hero — Aspirational, warm introduction -->
+      <section class="care-hero" aria-label="Bold Care telehealth">
+        <div class="care-hero__inner">
+          <div class="care-hero__badge">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M17.37 3.84a4.58 4.58 0 00-6.48 0L10 4.73l-.89-.89a4.58 4.58 0 00-6.48 6.48L10 17.69l7.37-7.37a4.58 4.58 0 000-6.48z" fill="#E8D5FA" stroke="#5200D4" stroke-width="1.2"/></svg>
+            Bold Care
+          </div>
+          <h1 class="care-hero__title">Feel better. Live bolder.</h1>
+          <p class="care-hero__subtitle">Improve your health with daily lifestyle changes guided by experts.</p>
+        </div>
+      </section>
+
+      <!-- Value Proposition -->
+      <section class="care-value" aria-label="Why Bold Care">
+        <div class="care-value__card">
+          <div class="care-value__icon">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="#5200D4" stroke-width="1.5" fill="#F7F3FE"/><path d="M20 12v8l5 5" stroke="#5200D4" stroke-width="2" stroke-linecap="round"/></svg>
+          </div>
+          <div class="care-value__content">
+            <h2 class="care-value__title">Easy access to specially trained providers</h2>
+            <p class="care-value__body">
+              Every-day actions are the foundations of aging well, accounting for <strong>80% of our longevity.</strong><sup>1</sup>
+              Bold's expert providers offer ongoing support for nutrition, exercise, sleep, stress and more — helping you age gracefully.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- What You Get — Feature cards -->
+      <section class="care-features" aria-label="Care features">
+        <h2 class="care-features__title">What Bold Care includes</h2>
+        <div class="care-features__grid">
+          <div class="care-feature-card">
+            <div class="care-feature-card__icon">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="10" r="5" stroke="currentColor" stroke-width="1.5"/><path d="M4 25c0-5.523 4.477-10 10-10s10 4.477 10 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </div>
+            <h3 class="care-feature-card__title">Your personal physician</h3>
+            <p class="care-feature-card__desc">A dedicated provider who knows your health history and goals — no repeating yourself.</p>
+          </div>
+          <div class="care-feature-card">
+            <div class="care-feature-card__icon">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="4" y="6" width="20" height="16" rx="3" stroke="currentColor" stroke-width="1.5"/><circle cx="14" cy="14" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M10 6V4M18 6V4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </div>
+            <h3 class="care-feature-card__title">Virtual visits, your schedule</h3>
+            <p class="care-feature-card__desc">Book video or phone sessions that work around your life — from the comfort of home.</p>
+          </div>
+          <div class="care-feature-card">
+            <div class="care-feature-card__icon">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M14 3L17 9.5L24 10.3L19 15.1L20.2 22L14 18.7L7.8 22L9 15.1L4 10.3L11 9.5L14 3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+            </div>
+            <h3 class="care-feature-card__title">Expert health guidance</h3>
+            <p class="care-feature-card__desc">Ongoing support for nutrition, exercise, sleep, stress management, and overall wellness.</p>
+          </div>
+          <div class="care-feature-card">
+            <div class="care-feature-card__icon">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M22 14H6M14 6v16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><rect x="4" y="4" width="20" height="20" rx="4" stroke="currentColor" stroke-width="1.5"/></svg>
+            </div>
+            <h3 class="care-feature-card__title">Connected to your Bold program</h3>
+            <p class="care-feature-card__desc">Your Care team works alongside your exercise program for a unified health experience.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- How It Works — Simple steps -->
+      <section class="care-steps" aria-label="How it works">
+        <h2 class="care-steps__title">Getting started is simple</h2>
+        <div class="care-steps__list">
+          <div class="care-step">
+            <div class="care-step__number">1</div>
+            <div class="care-step__content">
+              <h3 class="care-step__title">Book your first session</h3>
+              <p class="care-step__desc">Choose a time that works for you — we'll match you with a provider who specializes in healthy aging.</p>
+            </div>
+          </div>
+          <div class="care-step">
+            <div class="care-step__number">2</div>
+            <div class="care-step__content">
+              <h3 class="care-step__title">Meet your provider</h3>
+              <p class="care-step__desc">Share your goals, concerns, and health history in a comfortable, private video visit.</p>
+            </div>
+          </div>
+          <div class="care-step">
+            <div class="care-step__number">3</div>
+            <div class="care-step__content">
+              <h3 class="care-step__title">Get ongoing support</h3>
+              <p class="care-step__desc">Your provider stays with you — adjusting recommendations as you progress through your Bold journey.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA — Book your first session -->
+      <section class="care-cta" aria-label="Sign up for Bold Care">
+        <div class="care-cta__inner">
+          <div class="care-cta__text">
+            <h2 class="care-cta__title">Ready to meet your health team?</h2>
+            <p class="care-cta__subtitle">Your first session is included with your Bold membership. No extra cost, no commitments.</p>
+          </div>
+          <button class="btn btn--primary btn--lg care-cta__btn">Book your first session</button>
+        </div>
+      </section>
+
+      <!-- Source footnote -->
+      <p class="care-footnote"><sup>1</sup> Based on research from the CDC and National Institutes of Health on lifestyle factors and longevity.</p>
+    </div>
+
+
+    <!-- ======== DISCOVER VIEW ======== -->
+    <div class="view hidden" id="discoverView">
+
+      <!-- Search + Hero -->
+      <section class="discover-hero" aria-label="Discover content">
+        <h1 class="discover-hero__title">Discover</h1>
+        <p class="discover-hero__subtitle">Classes, content, and inspiration — tailored to your program.</p>
+        <div class="discover-search">
+          <svg class="discover-search__icon" width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M14 14L18 18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <input type="search" class="discover-search__input" placeholder="Search classes, trainers, topics…" aria-label="Search classes, trainers, topics">
+        </div>
+      </section>
+
+      <!-- Filters -->
+      <section class="discover-filters" aria-label="Filter content">
+        <div class="discover-filters__scroll">
+          <button class="discover-filter active" data-filter="all">All</button>
+          <button class="discover-filter" data-filter="recommended">Recommended</button>
+          <button class="discover-filter" data-filter="on-demand">On-Demand</button>
+          <button class="discover-filter" data-filter="live">Live Classes</button>
+          <button class="discover-filter" data-filter="blog">Blog</button>
+          <button class="discover-filter" data-filter="audio">Audio</button>
+          <button class="discover-filter" data-filter="meditation">Meditation</button>
+        </div>
+      </section>
+
+      <!-- Your Trainer — Amanda's Picks -->
+      <section class="discover-section" aria-label="Your trainer's picks">
+        <div class="discover-section__header">
+          <div>
+            <h2 class="discover-section__title">Amanda's Picks for You</h2>
+            <p class="discover-section__desc">Handpicked based on your balance program</p>
+          </div>
+          <a href="#" class="discover-section__link">See all</a>
+        </div>
+        <div class="discover-row">
+          <div class="discover-card discover-card--trainer-pick">
+            <div class="discover-card__badge">⭐ Trainer Pick</div>
+            <div class="discover-card__thumb">
+              <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=240&fit=crop&crop=center" alt="Gentle balance class" loading="lazy">
+              <span class="discover-card__duration">12 min</span>
+            </div>
+            <div class="discover-card__body">
+              <div class="discover-card__tags">
+                <span class="tag tag--blue">Move</span>
+                <span class="tag tag--grey">Easy</span>
+              </div>
+              <h3 class="discover-card__title">Find Your Balance II</h3>
+              <p class="discover-card__trainer">Chris Litten</p>
+              <p class="discover-card__why">Matches your balance focus this week</p>
+            </div>
+          </div>
+          <div class="discover-card discover-card--trainer-pick">
+            <div class="discover-card__badge">⭐ Trainer Pick</div>
+            <div class="discover-card__thumb">
+              <img src="https://images.unsplash.com/photo-1552196563-55cd4e45efb3?w=400&h=240&fit=crop&crop=center" alt="Seated stretch class" loading="lazy">
+              <span class="discover-card__duration">10 min</span>
+            </div>
+            <div class="discover-card__body">
+              <div class="discover-card__tags">
+                <span class="tag tag--blue">Move</span>
+                <span class="tag tag--grey">Easy</span>
+              </div>
+              <h3 class="discover-card__title">Gentle Seated Stretch & Balance</h3>
+              <p class="discover-card__trainer">Alicia Estrada</p>
+              <p class="discover-card__why">Great for building confidence</p>
+            </div>
+          </div>
+          <div class="discover-card discover-card--trainer-pick">
+            <div class="discover-card__badge">⭐ Trainer Pick</div>
+            <div class="discover-card__thumb">
+              <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&h=240&fit=crop&crop=center" alt="Fall prevention talk" loading="lazy">
+              <span class="discover-card__duration">14 min</span>
+            </div>
+            <div class="discover-card__body">
+              <div class="discover-card__tags">
+                <span class="tag tag--green">Learn</span>
+              </div>
+              <h3 class="discover-card__title">Bold Talks: Exercise for Fall Prevention</h3>
+              <p class="discover-card__trainer">Alicia Estrada</p>
+              <p class="discover-card__why">Build knowledge on your focus area</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- On-Demand Classes — Matching Your Program -->
+      <section class="discover-section" aria-label="On-demand classes">
+        <div class="discover-section__header">
+          <div>
+            <h2 class="discover-section__title">On-Demand Classes</h2>
+            <p class="discover-section__desc">Matching your balance & fall prevention program</p>
+          </div>
+          <a href="#" class="discover-section__link">See all</a>
+        </div>
+        <div class="discover-grid">
+          <div class="discover-card">
+            <div class="discover-card__thumb">
+              <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=400&h=240&fit=crop&crop=center" alt="Standing balance" loading="lazy">
+              <span class="discover-card__duration">12 min</span>
+            </div>
+            <div class="discover-card__body">
+              <div class="discover-card__tags">
+                <span class="tag tag--blue">Move</span>
+                <span class="tag tag--grey">Moderate</span>
+              </div>
+              <h3 class="discover-card__title">Standing Balance: Next Steps</h3>
+              <p class="discover-card__trainer">Chris Litten</p>
+            </div>
+          </div>
+          <div class="discover-card">
+            <div class="discover-card__thumb">
+              <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=400&h=240&fit=crop&crop=center" alt="Strength class" loading="lazy">
+              <span class="discover-card__duration">15 min</span>
+            </div>
+            <div class="discover-card__body">
+              <div class="discover-card__tags">
+                <span class="tag tag--blue">Move</span>
+                <span class="tag tag--grey">Easy</span>
+              </div>
+              <h3 class="discover-card__title">Gentle Strength: Chair Supported</h3>
+              <p class="discover-card__trainer">Amanda Rees</p>
+            </div>
+          </div>
+          <div class="discover-card">
+            <div class="discover-card__thumb">
+              <img src="https://images.unsplash.com/photo-1518459031867-a89b944bffe4?w=400&h=240&fit=crop&crop=center" alt="Balance exercise" loading="lazy">
+              <span class="discover-card__duration">8 min</span>
+            </div>
+            <div class="discover-card__body">
+              <div class="discover-card__tags">
+                <span class="tag tag--blue">Move</span>
+                <span class="tag tag--grey">Easy</span>
+              </div>
+              <h3 class="discover-card__title">Balance Basics: Sit to Stand</h3>
+              <p class="discover-card__trainer">Alysha Findley</p>
+            </div>
+          </div>
+          <div class="discover-card">
+            <div class="discover-card__thumb">
+              <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=400&h=240&fit=crop&crop=center" alt="Flexibility class" loading="lazy">
+              <span class="discover-card__duration">10 min</span>
+            </div>
+            <div class="discover-card__body">
+              <div class="discover-card__tags">
+                <span class="tag tag--green">Learn</span>
+              </div>
+              <h3 class="discover-card__title">Bold Talks: What Keeps Us Balanced?</h3>
+              <p class="discover-card__trainer">Jane Doe</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Live Classes -->
+      <section class="discover-section" aria-label="Live classes">
+        <div class="discover-section__header">
+          <div>
+            <h2 class="discover-section__title">Upcoming Live Classes</h2>
+            <p class="discover-section__desc">Join a group session with real-time coaching</p>
+          </div>
+          <a href="#" class="discover-section__link">See schedule</a>
+        </div>
+        <div class="discover-live-grid">
+          <div class="discover-live-card">
+            <div class="discover-live-card__time">
+              <span class="discover-live-card__dot"></span>
+              <span class="discover-live-card__when">Today · 2:30 PM EST</span>
+              <span class="discover-live-card__type">LIVE</span>
+            </div>
+            <div class="discover-live-card__content">
+              <div class="discover-live-card__avatar">
+                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop&crop=face" alt="Melissa Kirkwood" loading="lazy">
+              </div>
+              <div class="discover-live-card__info">
+                <h3 class="discover-live-card__name">30 min Balance & Flexibility Live</h3>
+                <p class="discover-live-card__trainer">Melissa Kirkwood</p>
+                <span class="tag tag--grey">Easy</span>
+              </div>
+            </div>
+            <button class="btn btn--secondary btn--full">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3V13M3 8H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              Add to schedule
+            </button>
+          </div>
+          <div class="discover-live-card">
+            <div class="discover-live-card__time">
+              <span class="discover-live-card__when">Tomorrow · 10:00 AM EST</span>
+              <span class="discover-live-card__type discover-live-card__type--rerun">RERUN</span>
+            </div>
+            <div class="discover-live-card__content">
+              <div class="discover-live-card__avatar">
+                <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?w=100&h=100&fit=crop&crop=face" alt="Amanda Rees" loading="lazy">
+              </div>
+              <div class="discover-live-card__info">
+                <h3 class="discover-live-card__name">45 min Gentle Strength & Stretch</h3>
+                <p class="discover-live-card__trainer">Amanda Rees</p>
+                <span class="tag tag--grey">Easy</span>
+              </div>
+            </div>
+            <button class="btn btn--secondary btn--full">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3V13M3 8H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              Add to schedule
+            </button>
+          </div>
+          <div class="discover-live-card">
+            <div class="discover-live-card__time">
+              <span class="discover-live-card__when">Wed · 3:00 PM EST</span>
+              <span class="discover-live-card__type">LIVE</span>
+            </div>
+            <div class="discover-live-card__content">
+              <div class="discover-live-card__avatar">
+                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=100&h=100&fit=crop&crop=face" alt="Chris Litten" loading="lazy">
+              </div>
+              <div class="discover-live-card__info">
+                <h3 class="discover-live-card__name">30 min Balance Workshop</h3>
+                <p class="discover-live-card__trainer">Chris Litten</p>
+                <span class="tag tag--grey">Moderate</span>
+              </div>
+            </div>
+            <button class="btn btn--secondary btn--full">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 3V13M3 8H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              Add to schedule
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Blog & Articles -->
+      <section class="discover-section" aria-label="Blog and articles">
+        <div class="discover-section__header">
+          <div>
+            <h2 class="discover-section__title">Blog & Articles</h2>
+            <p class="discover-section__desc">Expert insights for your health journey</p>
+          </div>
+          <a href="#" class="discover-section__link">See all</a>
+        </div>
+        <div class="discover-blog-grid">
+          <a href="#" class="discover-blog-card">
+            <div class="discover-blog-card__thumb">
+              <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=500&h=280&fit=crop&crop=center" alt="Healthy aging article" loading="lazy">
+              <span class="discover-blog-card__tag">Balance</span>
+            </div>
+            <div class="discover-blog-card__body">
+              <h3 class="discover-blog-card__title">5 Simple Exercises to Improve Balance at Home</h3>
+              <p class="discover-blog-card__meta">By Dr. Sarah Kim · 6 min read</p>
+              <p class="discover-blog-card__excerpt">Everyday movements you can do at home to improve stability and reduce fall risk, no equipment needed.</p>
+            </div>
+          </a>
+          <a href="#" class="discover-blog-card">
+            <div class="discover-blog-card__thumb">
+              <img src="https://images.unsplash.com/photo-1516726817505-f5ed825624d8?w=500&h=280&fit=crop&crop=center" alt="Nutrition article" loading="lazy">
+              <span class="discover-blog-card__tag">Nutrition</span>
+            </div>
+            <div class="discover-blog-card__body">
+              <h3 class="discover-blog-card__title">How Protein Supports Muscle Health After 60</h3>
+              <p class="discover-blog-card__meta">By Dr. Michael Torres · 5 min read</p>
+              <p class="discover-blog-card__excerpt">Learn why protein is especially important for maintaining muscle strength and how to get enough daily.</p>
+            </div>
+          </a>
+          <a href="#" class="discover-blog-card">
+            <div class="discover-blog-card__thumb">
+              <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=500&h=280&fit=crop&crop=center" alt="Consistency article" loading="lazy">
+              <span class="discover-blog-card__tag">Motivation</span>
+            </div>
+            <div class="discover-blog-card__body">
+              <h3 class="discover-blog-card__title">The Science of Habit: Why Consistency Beats Intensity</h3>
+              <p class="discover-blog-card__meta">By Amanda Rees · 4 min read</p>
+              <p class="discover-blog-card__excerpt">Why showing up regularly matters more than working out hard, and tips for making exercise stick.</p>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <!-- Audio & Meditation -->
+      <section class="discover-section" aria-label="Audio and meditation">
+        <div class="discover-section__header">
+          <div>
+            <h2 class="discover-section__title">Audio & Meditation</h2>
+            <p class="discover-section__desc">Calm your mind, restore your body</p>
+          </div>
+          <a href="#" class="discover-section__link">See all</a>
+        </div>
+        <div class="discover-audio-grid">
+          <div class="discover-audio-card">
+            <div class="discover-audio-card__icon discover-audio-card__icon--meditation">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="11" stroke="currentColor" stroke-width="1.5"/><path d="M14 9v5l3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </div>
+            <div class="discover-audio-card__info">
+              <span class="discover-audio-card__type">Meditation</span>
+              <h3 class="discover-audio-card__title">Morning Calm: 5-Minute Breathing</h3>
+              <p class="discover-audio-card__trainer">Amanda Rees</p>
+              <span class="discover-audio-card__duration">5 min</span>
+            </div>
+            <button class="discover-audio-card__play" aria-label="Play Morning Calm">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M6 4L16 10L6 16V4Z" fill="currentColor"/></svg>
+            </button>
+          </div>
+          <div class="discover-audio-card">
+            <div class="discover-audio-card__icon discover-audio-card__icon--audio">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M7 11v6a7 7 0 0014 0v-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><rect x="10" y="5" width="8" height="12" rx="4" stroke="currentColor" stroke-width="1.5"/></svg>
+            </div>
+            <div class="discover-audio-card__info">
+              <span class="discover-audio-card__type">Audio Guide</span>
+              <h3 class="discover-audio-card__title">Understanding Your Balance Journey</h3>
+              <p class="discover-audio-card__trainer">Dr. Sarah Kim</p>
+              <span class="discover-audio-card__duration">8 min</span>
+            </div>
+            <button class="discover-audio-card__play" aria-label="Play Understanding Your Balance Journey">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M6 4L16 10L6 16V4Z" fill="currentColor"/></svg>
+            </button>
+          </div>
+          <div class="discover-audio-card">
+            <div class="discover-audio-card__icon discover-audio-card__icon--meditation">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="11" stroke="currentColor" stroke-width="1.5"/><path d="M14 9v5l3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </div>
+            <div class="discover-audio-card__info">
+              <span class="discover-audio-card__type">Meditation</span>
+              <h3 class="discover-audio-card__title">Evening Wind-Down: Body Scan</h3>
+              <p class="discover-audio-card__trainer">Amanda Rees</p>
+              <span class="discover-audio-card__duration">10 min</span>
+            </div>
+            <button class="discover-audio-card__play" aria-label="Play Evening Wind-Down">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M6 4L16 10L6 16V4Z" fill="currentColor"/></svg>
+            </button>
+          </div>
+          <div class="discover-audio-card">
+            <div class="discover-audio-card__icon discover-audio-card__icon--audio">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M7 11v6a7 7 0 0014 0v-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><rect x="10" y="5" width="8" height="12" rx="4" stroke="currentColor" stroke-width="1.5"/></svg>
+            </div>
+            <div class="discover-audio-card__info">
+              <span class="discover-audio-card__type">Audio Guide</span>
+              <h3 class="discover-audio-card__title">Nutrition Tips for Stronger Bones</h3>
+              <p class="discover-audio-card__trainer">Dr. Michael Torres</p>
+              <span class="discover-audio-card__duration">6 min</span>
+            </div>
+            <button class="discover-audio-card__play" aria-label="Play Nutrition Tips">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M6 4L16 10L6 16V4Z" fill="currentColor"/></svg>
+            </button>
+          </div>
+          <div class="discover-audio-card">
+            <div class="discover-audio-card__icon discover-audio-card__icon--meditation">
+              <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="11" stroke="currentColor" stroke-width="1.5"/><path d="M14 9v5l3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </div>
+            <div class="discover-audio-card__info">
+              <span class="discover-audio-card__type">Meditation</span>
+              <h3 class="discover-audio-card__title">Gratitude & Gentle Stretch</h3>
+              <p class="discover-audio-card__trainer">Chris Litten</p>
+              <span class="discover-audio-card__duration">7 min</span>
+            </div>
+            <button class="discover-audio-card__play" aria-label="Play Gratitude & Gentle Stretch">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M6 4L16 10L6 16V4Z" fill="currentColor"/></svg>
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- ======== NOTIFICATIONS VIEW ======== -->
+    <div class="view hidden" id="notificationsView">
+      <div class="notif-page">
+        <div class="notif-page__header">
+          <h1 class="notif-page__title">Notifications</h1>
+          <button class="btn btn--text notif-page__mark-all" id="notifMarkAll">Mark all as read</button>
+        </div>
+
+        <!-- Today section -->
+        <section class="notif-page__section">
+          <h2 class="notif-page__section-title">Today</h2>
+
+          <div class="notif-page__item notif-page__item--unread notif-page__item--checkin">
+            <div class="notif-page__item-icon notif-page__item-icon--checkin">
+              <svg width="20" height="20" viewBox="0 0 18 18" fill="none"><path d="M15 4.5L6.75 12.75 3 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="notif-page__item-body">
+              <p class="notif-page__item-text"><strong>Check-in due</strong></p>
+              <p class="notif-page__item-desc">Your monthly check-in is ready. It takes ~2 min and helps Amanda fine-tune your plan.</p>
+              <span class="notif-page__item-time">Just now</span>
+              <button class="btn btn--primary btn--sm notif-page__item-action notif-item__action" style="margin-top: 8px;">Start check-in</button>
+            </div>
+          </div>
+
+          <div class="notif-page__item notif-page__item--unread">
+            <div class="notif-page__item-icon notif-page__item-icon--class">
+              <svg width="20" height="20" viewBox="0 0 18 18" fill="none"><path d="M3 3.75h12v10.5H3z" stroke="currentColor" stroke-width="1.3"/><path d="M7.5 8.25L9.75 9.75 7.5 11.25z" fill="currentColor"/></svg>
+            </div>
+            <div class="notif-page__item-body">
+              <p class="notif-page__item-text"><strong>New class added</strong></p>
+              <p class="notif-page__item-desc">"12 min Gentle Morning Balance" is now available in your plan.</p>
+              <span class="notif-page__item-time">2 hours ago</span>
+            </div>
+          </div>
+
+          <div class="notif-page__item notif-page__item--unread">
+            <div class="notif-page__item-icon notif-page__item-icon--trainer">
+              <img src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=200&h=200&fit=crop&crop=face" alt="Amanda" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+            </div>
+            <div class="notif-page__item-body">
+              <p class="notif-page__item-text"><strong>Amanda sent you a message</strong></p>
+              <p class="notif-page__item-desc">"Great work this week, June! Your consistency is really paying off. Keep it up!"</p>
+              <span class="notif-page__item-time">4 hours ago</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Yesterday section -->
+        <section class="notif-page__section">
+          <h2 class="notif-page__section-title">Yesterday</h2>
+
+          <div class="notif-page__item">
+            <div class="notif-page__item-icon notif-page__item-icon--streak">
+              <span>🔥</span>
+            </div>
+            <div class="notif-page__item-body">
+              <p class="notif-page__item-text"><strong>3-week streak!</strong></p>
+              <p class="notif-page__item-desc">You've been consistent for 3 weeks. Keep it going!</p>
+              <span class="notif-page__item-time">Yesterday</span>
+            </div>
+          </div>
+
+          <div class="notif-page__item">
+            <div class="notif-page__item-icon notif-page__item-icon--progress">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 17L8 12L12 14L17 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="notif-page__item-body">
+              <p class="notif-page__item-text"><strong>Weekly summary ready</strong></p>
+              <p class="notif-page__item-desc">You completed 3 classes this week and moved 48 minutes. View your progress.</p>
+              <span class="notif-page__item-time">Yesterday at 6:00 PM</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Earlier section -->
+        <section class="notif-page__section">
+          <h2 class="notif-page__section-title">Earlier this week</h2>
+
+          <div class="notif-page__item">
+            <div class="notif-page__item-icon notif-page__item-icon--class">
+              <svg width="20" height="20" viewBox="0 0 18 18" fill="none"><path d="M3 3.75h12v10.5H3z" stroke="currentColor" stroke-width="1.3"/><path d="M7.5 8.25L9.75 9.75 7.5 11.25z" fill="currentColor"/></svg>
+            </div>
+            <div class="notif-page__item-body">
+              <p class="notif-page__item-text"><strong>Plan updated</strong></p>
+              <p class="notif-page__item-desc">Your plan was adjusted based on your check-in responses. We've made things a bit gentler this week.</p>
+              <span class="notif-page__item-time">Monday</span>
+            </div>
+          </div>
+
+          <div class="notif-page__item">
+            <div class="notif-page__item-icon notif-page__item-icon--achievement">
+              <span>🏆</span>
+            </div>
+            <div class="notif-page__item-body">
+              <p class="notif-page__item-text"><strong>Milestone reached!</strong></p>
+              <p class="notif-page__item-desc">You've completed 10 classes since joining Bold. That's real progress!</p>
+              <span class="notif-page__item-time">Sunday</span>
+            </div>
+          </div>
+
+          <div class="notif-page__item">
+            <div class="notif-page__item-icon notif-page__item-icon--care">
+              <svg width="20" height="20" viewBox="0 0 18 18" fill="none"><path d="M15.63 3.96a4.125 4.125 0 00-5.835 0L9 4.755l-.795-.795a4.126 4.126 0 00-5.835 5.835l.795.795L9 16.425l5.835-5.835.795-.795a4.125 4.125 0 000-5.835z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="notif-page__item-body">
+              <p class="notif-page__item-text"><strong>Care reminder</strong></p>
+              <p class="notif-page__item-desc">Your next appointment with Dr. Thompson is on Feb 24. Need to reschedule?</p>
+              <span class="notif-page__item-time">Last Saturday</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Empty state hint -->
+        <p class="notif-page__hint">You're all caught up! New notifications will appear here.</p>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ============================================================ -->
+  <!-- FOOTER                                                       -->
+  <!-- ============================================================ -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <img src="logo/bold-logo.svg" alt="Bold" style="height: 24px; width: auto;">
+        <p class="footer__tagline">Find better balance, build strength, and reduce pain with easy-to-follow online video exercise programs personalized for you.</p>
+        <div class="footer__badges">
+          <a href="#" class="footer__badge" aria-label="Download on App Store">
+            <svg width="120" height="36" viewBox="0 0 120 36" fill="none"><rect width="120" height="36" rx="6" fill="#000"/><text x="60" y="22" fill="white" font-family="Inter" font-size="11" text-anchor="middle">App Store</text></svg>
+          </a>
+          <a href="#" class="footer__badge" aria-label="Get it on Google Play">
+            <svg width="120" height="36" viewBox="0 0 120 36" fill="none"><rect width="120" height="36" rx="6" fill="#000"/><text x="60" y="22" fill="white" font-family="Inter" font-size="11" text-anchor="middle">Google Play</text></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer__links">
+        <div class="footer__column">
+          <h3 class="footer__heading">Company</h3>
+          <a href="#">About Bold</a>
+          <a href="#">Science</a>
+          <a href="#">Careers</a>
+          <a href="#">Trainers</a>
+          <a href="#">Resources</a>
+          <a href="#">Press</a>
+        </div>
+        <div class="footer__column">
+          <h3 class="footer__heading">For health plans</h3>
+          <a href="#">Partnerships</a>
+          <a href="#">Request demo</a>
+          <a href="#">Resources</a>
+        </div>
+        <div class="footer__column">
+          <h3 class="footer__heading">Product</h3>
+          <a href="#">Sign up</a>
+          <a href="#">How's my health?</a>
+          <a href="#">Partnerships</a>
+          <a href="#">FAQ</a>
+        </div>
+        <div class="footer__column">
+          <h3 class="footer__heading">Connect</h3>
+          <a href="#">Contact us</a>
+          <a href="#">Facebook</a>
+          <a href="#">Instagram</a>
+          <a href="#">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <div class="footer__bottom-inner">
+        <div class="footer__social">
+          <a href="#" aria-label="Instagram">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="16" height="16" rx="5" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="10" r="3.5" stroke="currentColor" stroke-width="1.5"/></svg>
+          </a>
+          <a href="#" aria-label="Facebook">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M18 10C18 5.58 14.42 2 10 2C5.58 2 2 5.58 2 10C2 14 4.87 17.37 8.68 17.88V12.2H6.74V10H8.68V8.31C8.68 6.39 9.82 5.33 11.56 5.33C12.4 5.33 13.28 5.48 13.28 5.48V7.37H12.31C11.36 7.37 11.06 7.96 11.06 8.56V10H13.19L12.84 12.2H11.06V17.88C14.87 17.37 18 14 18 10Z" stroke="currentColor" stroke-width="1.2"/></svg>
+          </a>
+          <a href="#" aria-label="LinkedIn">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="16" height="16" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M6 9V14M6 6.5V6.51M10 14V9M14 14V11C14 9.9 13.1 9 12 9C10.9 9 10 9.9 10 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </a>
+        </div>
+        <p class="footer__copy">© 2026 Age Bold Inc.</p>
+        <div class="footer__legal">
+          <a href="#">Terms</a>
+          <a href="#">Privacy</a>
+          <a href="#">Disclaimers</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+    <!-- ============================================================ -->
+  <!-- MOBILE BOTTOM NAV (sticky, visible < 1024px)                -->
+  <!-- ============================================================ -->
+  <nav class="bottom-nav" id="bottomNav" aria-label="Quick navigation">
+    <a href="#" class="bottom-nav__item bottom-nav__item--active" data-nav="today" aria-label="Today">
+      <!-- Bold logomark as Today/Home icon -->
+      <svg class="bottom-nav__icon bottom-nav__icon--logo" width="22" height="22" viewBox="0 0 43 42" fill="none">
+        <path d="M30.6023 32.6454L0.595903 41.9791C0.299764 42.0712 0 41.8471 0 41.5335V34.6844C0 34.4796 0.131864 34.2989 0.325331 34.2388L30.3317 24.9052C30.6278 24.8131 30.9276 25.0372 30.9276 25.3507V32.1999C30.9276 32.4046 30.7955 32.5853 30.6023 32.6454Z" fill="currentColor"/>
+        <path d="M36.3061 20.2035L6.29976 29.5372C6.00362 29.6293 5.70386 29.4052 5.70386 29.0916V22.2425C5.70386 22.0377 5.83572 21.857 6.02919 21.7969L36.0355 12.4633C36.3317 12.3712 36.6314 12.5953 36.6314 12.9088V19.758C36.6314 19.9627 36.4996 20.1434 36.3061 20.2035Z" fill="currentColor"/>
+        <path d="M42.0101 7.76116L12.0037 17.0948C11.7076 17.1869 11.4078 16.9628 11.4078 16.6493V9.80008C11.4078 9.59534 11.5397 9.41463 11.7332 9.35453L41.7393 0.0208756C42.0355 -0.07121 42.3352 0.152892 42.3352 0.466431V7.3156C42.3352 7.52015 42.2034 7.70106 42.0101 7.76116Z" fill="currentColor"/>
+      </svg>
+      <span class="bottom-nav__label">Today</span>
+    </a>
+    <a href="#" class="bottom-nav__item" data-nav="care" aria-label="Care">
+      <svg class="bottom-nav__icon" width="22" height="22" viewBox="0 0 18 18" fill="none"><path d="M15.63 3.96a4.125 4.125 0 00-5.835 0L9 4.755l-.795-.795a4.126 4.126 0 00-5.835 5.835l.795.795L9 16.425l5.835-5.835.795-.795a4.125 4.125 0 000-5.835z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span class="bottom-nav__label">Care</span>
+    </a>
+    <a href="#" class="bottom-nav__item" data-nav="discover" aria-label="Discover">
+      <svg class="bottom-nav__icon" width="22" height="22" viewBox="0 0 18 18" fill="none"><circle cx="8" cy="8" r="5.5" stroke="currentColor" stroke-width="1.5"/><path d="M12.5 12.5L16 16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <span class="bottom-nav__label">Discover</span>
+    </a>
+  </nav>
+
+<!-- ============================================================ -->
+  <!-- MOOD CHECK-IN OVERLAY                                        -->
+  <!-- ============================================================ -->
+  <div class="modal-overlay hidden" id="moodModal" role="dialog" aria-modal="true" aria-labelledby="moodModalTitle">
+    <div class="modal modal--compact">
+      <button class="modal__close" aria-label="Close" id="moodModalClose">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 5L15 15M15 5L5 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+      <div class="modal__section">
+        <div class="checkin-modal__header">
+          <img class="checkin-modal__photo" src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=200&h=200&fit=crop&crop=face" alt="Amanda">
+          <div>
+            <h2 class="modal__title" id="moodModalTitle">How are you feeling today?</h2>
+            <p class="modal__subtitle">This helps me adjust your plan to match how you're doing.</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal__section">
+        <div class="mood-modal__options">
+          <button class="mood-modal__btn" data-mood="great">
+            <span class="mood-modal__emoji">😄</span>
+            <span class="mood-modal__label">Great</span>
+            <span class="mood-modal__desc">Energized and ready</span>
+          </button>
+          <button class="mood-modal__btn" data-mood="good">
+            <span class="mood-modal__emoji">😊</span>
+            <span class="mood-modal__label">Good</span>
+            <span class="mood-modal__desc">Feeling steady</span>
+          </button>
+          <button class="mood-modal__btn" data-mood="okay">
+            <span class="mood-modal__emoji">😐</span>
+            <span class="mood-modal__label">Okay</span>
+            <span class="mood-modal__desc">Not bad, not great</span>
+          </button>
+          <button class="mood-modal__btn" data-mood="tired">
+            <span class="mood-modal__emoji">😴</span>
+            <span class="mood-modal__label">Tired</span>
+            <span class="mood-modal__desc">Low energy today</span>
+          </button>
+          <button class="mood-modal__btn" data-mood="sore">
+            <span class="mood-modal__emoji">🤕</span>
+            <span class="mood-modal__label">Sore</span>
+            <span class="mood-modal__desc">Some aches or pain</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- CHECK-IN MODAL                                               -->
+  <!-- ============================================================ -->
+  <div class="modal-overlay hidden" id="checkinModal" role="dialog" aria-modal="true" aria-labelledby="checkinModalTitle">
+    <div class="modal">
+      <button class="modal__close" aria-label="Close" id="checkinModalClose">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 5L15 15M15 5L5 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+
+      <div class="modal__section">
+        <div class="checkin-modal__header">
+          <img class="checkin-modal__photo" src="https://images.unsplash.com/photo-1607746882042-944635dfe10e?w=200&h=200&fit=crop&crop=face" alt="Amanda">
+          <div>
+            <h2 class="modal__title" id="checkinModalTitle">Quick check-in with Amanda</h2>
+            <p class="modal__subtitle">This takes about 2 minutes and helps personalize your plan.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal__divider"></div>
+
+      <div class="modal__section">
+        <div class="inline-checkin__question">
+          <h4 class="inline-checkin__q-label">How's your balance been feeling lately?</h4>
+          <div class="inline-checkin__options">
+            <button class="inline-checkin__option">😟 Less steady</button>
+            <button class="inline-checkin__option">😐 About the same</button>
+            <button class="inline-checkin__option">😊 More steady</button>
+            <button class="inline-checkin__option">😄 Much better!</button>
+          </div>
+        </div>
+
+        <div class="inline-checkin__question">
+          <h4 class="inline-checkin__q-label">How comfortable are you with your current class difficulty?</h4>
+          <div class="inline-checkin__options">
+            <button class="inline-checkin__option">Too easy</button>
+            <button class="inline-checkin__option">Just right</button>
+            <button class="inline-checkin__option">A bit challenging</button>
+            <button class="inline-checkin__option">Too hard</button>
+          </div>
+        </div>
+
+        <div class="inline-checkin__question">
+          <h4 class="inline-checkin__q-label">Any new aches, pains, or concerns?</h4>
+          <textarea class="inline-checkin__textarea" rows="2" placeholder="Optional — share anything you'd like us to know"></textarea>
+        </div>
+      </div>
+
+      <div class="modal__actions">
+        <button class="btn btn--primary btn--full" id="checkinSubmitBtn">Submit check-in</button>
+        <button class="btn btn--text" id="checkinSkipBtn">I'll do it later</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- ADJUST CLASS MODAL — Micro check-in + educational moment     -->
+  <!-- ============================================================ -->
+  <div class="modal-overlay hidden" id="switchClassModal" role="dialog" aria-modal="true" aria-labelledby="switchModalTitle">
+    <div class="modal">
+      <button class="modal__close" aria-label="Close" id="switchModalClose">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 5L15 15M15 5L5 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+
+      <!-- Why we chose this class — Educational moment -->
+      <div class="modal__section modal__section--edu">
+        <div class="modal__edu-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M12 16v-4M12 8h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </div>
+        <div class="modal__edu-content">
+          <h3 class="modal__edu-title">Why we chose this class for you</h3>
+          <p class="modal__edu-body">
+            This class focuses on <strong>standing balance exercises</strong> — building on the seated balance work you did earlier this week.
+            Progression like this helps your body adapt gradually, which research shows is the safest way to improve balance and reduce fall risk.
+          </p>
+        </div>
+      </div>
+
+      <div class="modal__divider"></div>
+
+      <!-- Micro check-in — Why are you switching? -->
+      <div class="modal__section">
+        <h2 class="modal__title" id="switchModalTitle">Are you adjusting because…</h2>
+        <p class="modal__subtitle">This helps us personalize your plan even better.</p>
+
+        <div class="modal__options" id="switchReasons">
+          <button class="modal__option" data-reason="sore">
+            <span class="modal__option-icon">🤕</span>
+            <span class="modal__option-text">I'm feeling sore</span>
+          </button>
+          <button class="modal__option" data-reason="challenge">
+            <span class="modal__option-icon">💪</span>
+            <span class="modal__option-text">I want more challenge</span>
+          </button>
+          <button class="modal__option" data-reason="low-energy">
+            <span class="modal__option-icon">😴</span>
+            <span class="modal__option-text">I'm low energy</span>
+          </button>
+          <button class="modal__option" data-reason="variety">
+            <span class="modal__option-icon">🔄</span>
+            <span class="modal__option-text">Just want variety</span>
+          </button>
+        </div>
+
+        <!-- Adaptive response — shown after selection -->
+        <div class="modal__response hidden" id="switchResponse">
+          <div class="modal__response-icon">✨</div>
+          <p class="modal__response-text" id="switchResponseText"></p>
+        </div>
+      </div>
+
+      <div class="modal__actions">
+        <button class="btn btn--primary btn--full" id="switchConfirmBtn" disabled>Show me another class</button>
+        <button class="btn btn--text" id="switchKeepBtn">Keep current class</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bold — Product Vision & Strategy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --purple-900: #140D26;
+      --purple-700: #2D1766;
+      --purple-600: #3B1F8C;
+      --purple-500: #5200D4;
+      --purple-400: #7B3FE4;
+      --purple-300: #A67DF0;
+      --purple-200: #D1BFFA;
+      --purple-100: #EDE5FC;
+      --purple-50:  #F7F3FE;
+      --grey-900: #1A1A1A;
+      --grey-800: #333333;
+      --grey-700: #4A4A4A;
+      --grey-600: #595959;
+      --grey-500: #6B6B6B;
+      --grey-400: #949494;
+      --grey-300: #D4D4D4;
+      --grey-200: #E8E8E8;
+      --grey-100: #F5F5F5;
+      --grey-50:  #FAFAFA;
+      --white:    #FFFFFF;
+      --green-700: #15803D;
+      --green-600: #16A34A;
+      --green-100: #DCFCE7;
+      --green-50: #F0FDF4;
+      --blue-700: #1D4ED8;
+      --blue-600: #2563EB;
+      --blue-100: #DBEAFE;
+      --amber-700: #B45309;
+      --amber-600: #D97706;
+      --amber-100: #FEF3C7;
+      --teal-600: #0D9488;
+      --teal-100: #CCFBF1;
+      --red-600: #DC2626;
+      --red-100: #FEE2E2;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+      color: var(--grey-900);
+      line-height: 1.6;
+      background: var(--white);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .container { max-width: 960px; margin: 0 auto; padding: 0 2rem; }
+    .container--narrow { max-width: 720px; margin: 0 auto; padding: 0 2rem; }
+
+    /* ================================================================
+       HERO
+       ================================================================ */
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+      background: var(--grey-900);
+    }
+
+    .hero__bg {
+      position: absolute;
+      inset: 0;
+    }
+
+    .hero__bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 40%;
+      filter: brightness(0.45) saturate(1.1);
+    }
+
+    .hero__content {
+      position: relative;
+      z-index: 2;
+      padding: 6rem 3rem 4rem;
+      max-width: 720px;
+      color: var(--white);
+    }
+
+    .hero__logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 2rem;
+      opacity: 0.85;
+    }
+
+    .hero__eyebrow {
+      font-size: 0.8125rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--grey-300);
+      margin-bottom: 1rem;
+    }
+
+    .hero__title {
+      font-size: clamp(2.75rem, 6vw, 4rem);
+      font-weight: 700;
+      line-height: 1.08;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+
+    .hero__subtitle {
+      font-size: 1.25rem;
+      line-height: 1.65;
+      opacity: 0.85;
+      max-width: 560px;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero__meta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .hero__tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 16px;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 100px;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.9);
+      backdrop-filter: blur(4px);
+    }
+
+    .hero__gradient {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 60%;
+      background: linear-gradient(to top, rgba(26,26,26,0.95) 0%, transparent 100%);
+      z-index: 1;
+    }
+
+    /* ================================================================
+       STICKY NAV
+       ================================================================ */
+    .toc {
+      background: var(--white);
+      border-bottom: 1px solid var(--grey-200);
+      padding: 1.25rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .toc__inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      display: flex;
+      gap: 0.25rem;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .toc__inner::-webkit-scrollbar { display: none; }
+
+    .toc a {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--grey-600);
+      text-decoration: none;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+
+    .toc a:hover {
+      background: var(--teal-100);
+      color: var(--teal-600);
+    }
+
+    /* ================================================================
+       SECTIONS
+       ================================================================ */
+    .section {
+      padding: 5rem 0;
+    }
+
+    .section--alt {
+      background: var(--grey-50);
+    }
+
+    .section--dark {
+      background: var(--grey-900);
+      color: var(--white);
+    }
+
+    .section--dark-gradient {
+      background: linear-gradient(160deg, var(--grey-900), #2A2A2A 50%, #333333);
+      color: var(--white);
+    }
+
+    .section__eyebrow {
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--teal-600);
+      margin-bottom: 0.75rem;
+    }
+
+    .section--dark .section__eyebrow,
+    .section--dark-gradient .section__eyebrow {
+      color: var(--teal-100);
+    }
+
+    .section__title {
+      font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.01em;
+    }
+
+    .section__lead {
+      font-size: 1.125rem;
+      color: var(--grey-600);
+      line-height: 1.7;
+      margin-bottom: 2.5rem;
+      max-width: 640px;
+    }
+
+    .section--dark .section__lead,
+    .section--dark-gradient .section__lead {
+      color: rgba(255,255,255,0.7);
+    }
+
+    /* ================================================================
+       PHOTO BREAKS
+       ================================================================ */
+    .photo-break {
+      width: 100%;
+      height: 400px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .photo-break img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .photo-break--short { height: 280px; }
+
+    .photo-break__caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 3rem 3rem 1.5rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.65), transparent);
+      color: var(--white);
+    }
+
+    .photo-break__caption p {
+      font-size: 1.125rem;
+      font-weight: 500;
+      font-style: italic;
+      max-width: 540px;
+      line-height: 1.6;
+    }
+
+    /* ================================================================
+       VISION STATEMENT — Big impact block
+       ================================================================ */
+    .vision-statement {
+      max-width: 640px;
+      margin-bottom: 3rem;
+    }
+
+    .vision-statement__text {
+      font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+      font-weight: 500;
+      line-height: 1.6;
+      color: var(--grey-700);
+      border-left: 4px solid var(--teal-600);
+      padding-left: 2rem;
+    }
+
+    .vision-statement__text strong {
+      color: var(--grey-900);
+      font-weight: 700;
+    }
+
+    /* ================================================================
+       TONE COMPARISON — Not / Yes
+       ================================================================ */
+    .tone-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 1.5rem;
+    }
+
+    .tone-column h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tone-item {
+      padding: 1rem 1.25rem;
+      border-radius: 12px;
+      margin-bottom: 0.75rem;
+      font-size: 0.9375rem;
+      line-height: 1.55;
+    }
+
+    .tone-item--not {
+      background: var(--grey-100);
+      border: 1px solid var(--grey-200);
+      color: var(--grey-500);
+      text-decoration: line-through;
+      text-decoration-color: var(--grey-400);
+    }
+
+    .tone-item--yes {
+      background: var(--green-50);
+      border: 1px solid #86EFAC;
+      color: var(--green-700);
+      font-weight: 500;
+    }
+
+    /* ================================================================
+       WHY BOLD — Feature cards
+       ================================================================ */
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    .why-card {
+      padding: 2rem;
+      border-radius: 16px;
+      background: var(--white);
+      border: 1px solid var(--grey-200);
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+    }
+
+    .why-card:hover {
+      box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+      transform: translateY(-2px);
+    }
+
+    .why-card__icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      background: var(--grey-100);
+    }
+
+    .why-card h3 {
+      font-size: 1.0625rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .why-card p {
+      font-size: 0.9375rem;
+      color: var(--grey-600);
+      line-height: 1.6;
+    }
+
+    /* ================================================================
+       PROBLEM — Split layout
+       ================================================================ */
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .problem-card {
+      padding: 2.5rem;
+      border-radius: 20px;
+    }
+
+    .problem-card--user {
+      background: var(--amber-100);
+      border: 1px solid #FCD34D;
+    }
+
+    .problem-card--business {
+      background: var(--blue-100);
+      border: 1px solid #93C5FD;
+    }
+
+    .problem-card__label {
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .problem-card--user .problem-card__label { color: var(--amber-700); }
+    .problem-card--business .problem-card__label { color: var(--blue-700); }
+
+    .problem-card h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--grey-900);
+    }
+
+    .problem-card ul {
+      list-style: none;
+    }
+
+    .problem-card li {
+      font-size: 0.9375rem;
+      color: var(--grey-700);
+      line-height: 1.6;
+      padding: 6px 0 6px 1.5rem;
+      position: relative;
+    }
+
+    .problem-card--user li::before {
+      content: '?';
+      position: absolute;
+      left: 0;
+      font-weight: 700;
+      color: var(--amber-600);
+    }
+
+    .problem-card--business li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--blue-600);
+    }
+
+    /* ================================================================
+       POSITIONING — Comparison table
+       ================================================================ */
+    .compare-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.12);
+      margin-bottom: 2rem;
+    }
+
+    .compare-table th,
+    .compare-table td {
+      padding: 1rem 1.5rem;
+      text-align: left;
+      font-size: 0.9375rem;
+      line-height: 1.5;
+      vertical-align: top;
+    }
+
+    .compare-table thead th {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--grey-300);
+      background: rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .compare-table tbody td {
+      color: rgba(255,255,255,0.8);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .compare-table tbody tr:last-child td { border-bottom: none; }
+
+    .compare-table .col-others {
+      opacity: 0.5;
+    }
+
+    .compare-table .col-bold {
+      color: var(--white);
+      font-weight: 500;
+    }
+
+    .values-grid {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .value-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 100px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.85);
+    }
+
+    .value-chip__icon {
+      font-size: 1rem;
+    }
+
+    /* ================================================================
+       SYSTEM MODEL
+       ================================================================ */
+    .system-flow {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      gap: 0;
+      align-items: stretch;
+      margin-top: 1.5rem;
+    }
+
+    .system-column {
+      border-radius: 16px;
+      padding: 2rem 1.5rem;
+    }
+
+    .system-column--inputs {
+      background: var(--blue-100);
+      border: 1px solid #93C5FD;
+    }
+
+    .system-column--engine {
+      background: var(--grey-100);
+      border: 2px solid var(--grey-300);
+    }
+
+    .system-column--outputs {
+      background: var(--green-100);
+      border: 1px solid #86EFAC;
+    }
+
+    .system-column__title {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .system-column--inputs .system-column__title { color: var(--blue-700); }
+    .system-column--engine .system-column__title { color: var(--grey-700); }
+    .system-column--outputs .system-column__title { color: var(--green-700); }
+
+    .system-column__items {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .system-column__item {
+      padding: 6px 12px;
+      background: rgba(255,255,255,0.7);
+      border-radius: 8px;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--grey-700);
+    }
+
+    .system-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 0.5rem;
+      font-size: 1.25rem;
+      color: var(--grey-400);
+    }
+
+    /* ================================================================
+       DAY IN LIFE — Timeline
+       ================================================================ */
+    .timeline {
+      margin-top: 1.5rem;
+    }
+
+    .timeline__item {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 1.5rem;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--grey-100);
+      align-items: start;
+    }
+
+    .timeline__item:last-child { border-bottom: none; }
+
+    .timeline__time {
+      font-size: 0.8125rem;
+      font-weight: 700;
+      color: var(--teal-600);
+      padding-top: 4px;
+    }
+
+    .timeline__time small {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--grey-400);
+      margin-top: 2px;
+    }
+
+    .timeline__content {
+      background: var(--white);
+      border: 1px solid var(--grey-200);
+      border-radius: 16px;
+      padding: 1.5rem;
+    }
+
+    .timeline__content p {
+      font-size: 0.9375rem;
+      color: var(--grey-700);
+      line-height: 1.65;
+    }
+
+    .timeline__content .system-says {
+      display: block;
+      background: var(--teal-100);
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      margin-top: 0.75rem;
+      font-size: 0.875rem;
+      color: var(--grey-800);
+      font-style: italic;
+      line-height: 1.5;
+      border-left: 3px solid var(--teal-600);
+    }
+
+    /* ================================================================
+       RESEARCH — Cards
+       ================================================================ */
+    .research-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .research-card {
+      padding: 2rem;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .research-card__icon {
+      font-size: 1.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .research-card h3 {
+      font-size: 1.0625rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--white);
+    }
+
+    .research-card ul {
+      list-style: none;
+    }
+
+    .research-card li {
+      font-size: 0.9375rem;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.6;
+      padding: 4px 0 4px 1.25rem;
+      position: relative;
+    }
+
+    .research-card li::before {
+      content: '·';
+      position: absolute;
+      left: 0;
+      font-weight: 700;
+      color: var(--teal-100);
+      font-size: 1.25rem;
+      line-height: 1.3;
+    }
+
+    /* ================================================================
+       IA — Surface cards
+       ================================================================ */
+    .surface-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+    }
+
+    .surface {
+      background: var(--white);
+      border: 1px solid var(--grey-200);
+      border-radius: 16px;
+      padding: 1.75rem 1.25rem;
+      text-align: center;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .surface:hover {
+      border-color: var(--teal-600);
+      box-shadow: 0 4px 16px rgba(13,148,136,0.08);
+    }
+
+    .surface__icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+      font-size: 1.5rem;
+    }
+
+    .surface__icon--today { background: var(--teal-100); }
+    .surface__icon--discover { background: var(--blue-100); }
+    .surface__icon--care { background: var(--green-100); }
+    .surface__icon--profile { background: var(--amber-100); }
+
+    .surface h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.25rem; }
+    .surface p { font-size: 0.875rem; color: var(--grey-500); line-height: 1.5; }
+
+    /* IA feature blocks */
+    .ia-features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .ia-feature {
+      padding: 2rem;
+      border-radius: 16px;
+      background: var(--white);
+      border: 1px solid var(--grey-200);
+    }
+
+    .ia-feature__icon {
+      font-size: 1.5rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .ia-feature h3 {
+      font-size: 1.0625rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+
+    .ia-feature ul {
+      list-style: none;
+    }
+
+    .ia-feature li {
+      font-size: 0.9375rem;
+      color: var(--grey-600);
+      line-height: 1.6;
+      padding: 3px 0 3px 1.25rem;
+      position: relative;
+    }
+
+    .ia-feature li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--grey-300);
+    }
+
+    /* ================================================================
+       INSIGHT BLOCK
+       ================================================================ */
+    .insight {
+      background: var(--grey-50);
+      border-left: 4px solid var(--teal-600);
+      padding: 1.5rem 2rem;
+      border-radius: 0 12px 12px 0;
+      margin: 2rem 0;
+    }
+
+    .insight p {
+      font-size: 1rem;
+      color: var(--grey-700);
+      line-height: 1.65;
+    }
+
+    .insight strong { color: var(--grey-900); }
+
+    /* ================================================================
+       CLOSING CALLOUT
+       ================================================================ */
+    .callout {
+      position: relative;
+      min-height: 420px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .callout__bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--grey-900) 0%, #2A2A2A 50%, #333333 100%);
+    }
+
+    .callout__content {
+      position: relative;
+      z-index: 2;
+      color: var(--white);
+      padding: 3rem;
+      max-width: 620px;
+    }
+
+    .callout__content h2 {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      line-height: 1.3;
+    }
+
+    .callout__content p {
+      font-size: 1.125rem;
+      opacity: 0.85;
+      line-height: 1.65;
+      margin-bottom: 1.5rem;
+    }
+
+    .callout__cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 28px;
+      background: var(--white);
+      color: var(--grey-900);
+      font-size: 0.9375rem;
+      font-weight: 600;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+
+    .callout__cta:hover {
+      background: var(--teal-100);
+      color: var(--teal-600);
+      transform: translateY(-1px);
+    }
+
+    /* ================================================================
+       FOOTER
+       ================================================================ */
+    .vision-footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      color: var(--grey-400);
+      font-size: 0.8125rem;
+      background: var(--grey-900);
+    }
+
+    .vision-footer a {
+      color: var(--teal-600);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .vision-footer a:hover { color: var(--white); }
+
+    /* ================================================================
+       RESPONSIVE
+       ================================================================ */
+    @media (max-width: 800px) {
+      .why-grid { grid-template-columns: 1fr; }
+      .problem-grid { grid-template-columns: 1fr; }
+      .tone-grid { grid-template-columns: 1fr; }
+      .surface-grid { grid-template-columns: repeat(2, 1fr); }
+      .system-flow { grid-template-columns: 1fr; gap: 0.5rem; }
+      .system-arrow { transform: rotate(90deg); padding: 0.25rem 0; }
+      .research-grid { grid-template-columns: 1fr; }
+      .ia-features { grid-template-columns: 1fr; }
+      .timeline__item { grid-template-columns: 1fr; gap: 0.5rem; }
+      .hero__content { padding: 4rem 2rem 3rem; }
+      .photo-break { height: 240px; }
+    }
+
+    @media (max-width: 480px) {
+      .surface-grid { grid-template-columns: 1fr; }
+    }
+
+    @media print {
+      .toc { position: static; }
+      .hero { min-height: auto; page-break-after: always; }
+      .section { page-break-inside: avoid; }
+    }
+
+    html { scroll-behavior: smooth; }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================ -->
+  <!-- HERO                                                         -->
+  <!-- ============================================================ -->
+  <header class="hero">
+    <div class="hero__bg"><img src="images/hero.jpg" alt="Active older adults exercising together — confident, supported, connected" loading="eager"></div>
+    <div class="hero__gradient"></div>
+    <div class="hero__content">
+      <div class="hero__logo">
+        <img src="logo/bold-logo-white.svg" alt="Bold" style="height: 32px; width: auto;">
+      </div>
+      <p class="hero__eyebrow">Product Vision & Strategy</p>
+      <h1 class="hero__title">From Program-Based<br>to Adaptive Daily Guidance</h1>
+      <p class="hero__subtitle">
+        Age Bold removes uncertainty from daily health decisions for adults 65+.
+      </p>
+      <div class="hero__meta">
+        <span class="hero__tag">Product Vision</span>
+        <span class="hero__tag">February 2026</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================================ -->
+  <!-- NAV                                                          -->
+  <!-- ============================================================ -->
+  <nav class="toc">
+    <div class="toc__inner">
+      <a href="#why">Why Bold</a>
+      <a href="#vision">Vision</a>
+      <a href="#problem">Problem</a>
+      <a href="#positioning">Positioning</a>
+      <a href="#system">System Model</a>
+      <a href="#day-in-life">A Day in Life</a>
+      <a href="#research">Research</a>
+      <a href="#ia">Architecture</a>
+    </div>
+  </nav>
+
+  <!-- ============================================================ -->
+  <!-- 1. WHY BOLD EXISTS                                           -->
+  <!-- ============================================================ -->
+  <section class="section" id="why">
+    <div class="container">
+      <div class="section__eyebrow">01 — Why Bold Exists</div>
+      <h2 class="section__title">Building confidence in daily health</h2>
+      <p class="section__lead">Bold helps older adults build confidence in their health — translating long-term goals into daily actions.</p>
+
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-card__icon">💪</div>
+          <h3>Confidence, not intensity</h3>
+          <p>Translates long-term health goals into clear, manageable daily actions that build real confidence.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-card__icon">🧘</div>
+          <h3>Beyond movement</h3>
+          <p>Supports movement, stress management, nutrition, and sleep — the full picture of healthy aging.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-card__icon">🧭</div>
+          <h3>Reduces uncertainty</h3>
+          <p>Removes the guesswork from daily care decisions. No more wondering "am I doing enough?"</p>
+        </div>
+        <div class="why-card">
+          <div class="why-card__icon">🤝</div>
+          <h3>Expert-backed guidance</h3>
+          <p>Turns evidence-based care — movement, stress management, nutrition, and provider guidance — into clear next steps.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHOTO BREAK -->
+  <div class="photo-break">
+    <img src="https://images.pexels.com/photos/7551667/pexels-photo-7551667.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Older adults doing gentle exercises together, smiling and engaged" loading="lazy">
+    <div class="photo-break__caption">
+      <p>"When people feel supported — not judged, not pushed too hard — they show up. And showing up is what changes everything."</p>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- 2. PRODUCT VISION                                            -->
+  <!-- ============================================================ -->
+  <section class="section" id="vision">
+    <div class="container">
+      <div class="section__eyebrow">02 — Product Vision</div>
+      <h2 class="section__title">Clear next steps, not anxiety</h2>
+
+      <div class="vision-statement">
+        <p class="vision-statement__text">
+          Age Bold removes uncertainty from daily health decisions for adults 65+. We turn <strong>evidence-based care</strong> — movement, stress management, nutrition, and provider guidance — into <strong>clear next steps</strong> that build confidence, not anxiety.
+        </p>
+      </div>
+
+      <div class="tone-grid">
+        <div class="tone-column">
+          <h3>🚫 Not this</h3>
+          <div class="tone-item tone-item--not">"Track your progress!"</div>
+          <div class="tone-item tone-item--not">"Complete this program!"</div>
+          <div class="tone-item tone-item--not">"Beat your streak!"</div>
+        </div>
+        <div class="tone-column">
+          <h3>✅ This instead</h3>
+          <div class="tone-item tone-item--yes">"Here's what to do today."</div>
+          <div class="tone-item tone-item--yes">"This is right for you because…"</div>
+          <div class="tone-item tone-item--yes">"You're on track."</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 3. THE PROBLEM WE SOLVE                                      -->
+  <!-- ============================================================ -->
+  <section class="section section--alt" id="problem">
+    <div class="container">
+      <div class="section__eyebrow">03 — The Problem We Solve</div>
+      <h2 class="section__title">Uncertainty blocks action</h2>
+      <p class="section__lead">Two connected problems — one for users, one for the business — that a unified adaptive system can solve.</p>
+
+      <div class="problem-grid">
+        <div class="problem-card problem-card--user">
+          <div class="problem-card__label">User Problem</div>
+          <h3>Uncertainty blocks action</h3>
+          <ul>
+            <li>"Is this exercise safe for me?"</li>
+            <li>"Am I doing enough?"</li>
+            <li>"Should I change something?"</li>
+            <li>"Is this pain normal?"</li>
+            <li>"What did my doctor mean?"</li>
+          </ul>
+        </div>
+        <div class="problem-card problem-card--business">
+          <div class="problem-card__label">Business Problem</div>
+          <h3>Fragmentation limits growth</h3>
+          <ul>
+            <li>Two separate products (Fitness + Care) create friction, confusion, and support burden</li>
+            <li>Static program model doesn't adapt to daily reality (pain flares, fatigue, stress)</li>
+            <li>Need clear clinical measurement framework for Medicare ACCESS (MSK) reimbursement</li>
+            <li>Current design creates evaluation anxiety rather than reducing uncertainty</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 4. STRATEGIC POSITIONING                                     -->
+  <!-- ============================================================ -->
+  <section class="section section--dark-gradient" id="positioning">
+    <div class="container">
+      <div class="section__eyebrow">04 — Strategic Positioning</div>
+      <h2 class="section__title">We compete on confidence, not intensity</h2>
+      <p class="section__lead">We reduce interpretive burden, not gamify completion. Guidance that adapts — not programs that judge.</p>
+
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th style="width:33%;">Others</th>
+            <th style="width:33%;">Bold — Guidance that adapts</th>
+            <th style="width:34%;">Why it matters</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="col-others">Fixed sequences</td>
+            <td class="col-bold">One clear action daily</td>
+            <td>Reduces decision fatigue</td>
+          </tr>
+          <tr>
+            <td class="col-others">Progress bars</td>
+            <td class="col-bold">Reassurance-first</td>
+            <td>Builds confidence, not anxiety</td>
+          </tr>
+          <tr>
+            <td class="col-others">Week-based advancement</td>
+            <td class="col-bold">Adjusts to reality</td>
+            <td>Adapts to pain, fatigue, mood</td>
+          </tr>
+          <tr>
+            <td class="col-others">Gamified streaks</td>
+            <td class="col-bold">Confidence-building</td>
+            <td>Celebrates showing up</td>
+          </tr>
+          <tr>
+            <td class="col-others">Evaluation-driven</td>
+            <td class="col-bold">Uncertainty removal</td>
+            <td>Clarity over competition</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 style="font-size: 1.125rem; font-weight: 700; margin-bottom: 1rem; color: rgba(255,255,255,0.85);">What 65+ adults value</h3>
+      <div class="values-grid">
+        <span class="value-chip"><span class="value-chip__icon">🛡️</span> Safety over challenge</span>
+        <span class="value-chip"><span class="value-chip__icon">✨</span> Clarity over choice</span>
+        <span class="value-chip"><span class="value-chip__icon">🔄</span> Repetition over escalation</span>
+        <span class="value-chip"><span class="value-chip__icon">🤝</span> Support over competition</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHOTO BREAK -->
+  <div class="photo-break photo-break--short">
+    <img src="https://images.pexels.com/photos/7551619/pexels-photo-7551619.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Senior woman relaxing after a gentle exercise session" loading="lazy">
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- 5. SYSTEM MODEL                                              -->
+  <!-- ============================================================ -->
+  <section class="section" id="system">
+    <div class="container">
+      <div class="section__eyebrow">05 — System Model</div>
+      <h2 class="section__title">The product as a system</h2>
+      <p class="section__lead">Input sources feed an adaptive engine that surfaces simple, personalized actions.</p>
+
+      <div class="system-flow">
+        <!-- Inputs -->
+        <div class="system-column system-column--inputs">
+          <div class="system-column__title">📥 Inputs</div>
+          <div class="system-column__items">
+            <span class="system-column__item">Onboarding goals</span>
+            <span class="system-column__item">MSK baseline</span>
+            <span class="system-column__item">Check-in responses</span>
+            <span class="system-column__item">Engagement history</span>
+            <span class="system-column__item">Provider notes</span>
+            <span class="system-column__item">Pain / stress signals</span>
+            <span class="system-column__item">Preferences</span>
+            <span class="system-column__item">Skip patterns</span>
+          </div>
+        </div>
+
+        <!-- Arrow -->
+        <div class="system-arrow">→</div>
+
+        <!-- Engine -->
+        <div class="system-column system-column--engine">
+          <div class="system-column__title">⚙️ Engine</div>
+          <div class="system-column__items">
+            <span class="system-column__item">Goal alignment</span>
+            <span class="system-column__item">Safety constraints</span>
+            <span class="system-column__item">Adaptive rules</span>
+            <span class="system-column__item">Check-in triggers</span>
+            <span class="system-column__item">Measurement logic</span>
+            <span class="system-column__item">ACCESS compliance</span>
+            <span class="system-column__item">ML personalization</span>
+          </div>
+        </div>
+
+        <!-- Arrow -->
+        <div class="system-arrow">→</div>
+
+        <!-- Outputs -->
+        <div class="system-column system-column--outputs">
+          <div class="system-column__title">🖥 Outputs</div>
+          <div class="system-column__items">
+            <span class="system-column__item">Today's Plan (one clear action)</span>
+            <span class="system-column__item">Check-ins (structured moments)</span>
+            <span class="system-column__item">Progress signals (narrative, not %)</span>
+            <span class="system-column__item">Discover</span>
+            <span class="system-column__item">Provider dashboard</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="insight" style="margin-top: 2rem;">
+        <p><strong>Key principle:</strong> Bold isn't a library of classes — it's a connected system that learns from each member and adapts over time. Every signal becomes an input. Every output reduces uncertainty.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 6. A DAY IN LIFE                                             -->
+  <!-- ============================================================ -->
+  <section class="section section--alt" id="day-in-life">
+    <div class="container">
+      <div class="section__eyebrow">06 — A Day in Life</div>
+      <h2 class="section__title">June, 68</h2>
+      <p class="section__lead">How Today's Plan removes uncertainty and builds confidence — moment by moment.</p>
+
+      <div class="timeline">
+        <div class="timeline__item">
+          <div class="timeline__time">
+            7:30 AM
+            <small>Opens Bold</small>
+          </div>
+          <div class="timeline__content">
+            <p>Today's Plan shows one clear action: <strong>"15-min Balance & Stability"</strong></p>
+            <span class="system-says">"We're building on your hip flexibility from last week. This helps with the stairs you mentioned."</span>
+          </div>
+        </div>
+
+        <div class="timeline__item">
+          <div class="timeline__time">
+            7:35 AM
+            <small>Micro check-in</small>
+          </div>
+          <div class="timeline__content">
+            <p>Before starting: <strong>"How are you feeling today?"</strong></p>
+            <p style="margin-top: 0.5rem;">June selects "Feeling sore." The system adjusts instantly.</p>
+            <span class="system-says">"Let's try 12-min Gentle Seated Strength instead — easier on your joints today."</span>
+          </div>
+        </div>
+
+        <div class="timeline__item">
+          <div class="timeline__time">
+            7:50 AM
+            <small>Completes class</small>
+          </div>
+          <div class="timeline__content">
+            <p>Reassurance appears — no streak counter, no % complete. Just clarity.</p>
+            <span class="system-says">"Great work. You're staying consistent — 4 days this week."</span>
+          </div>
+        </div>
+
+        <div class="timeline__item">
+          <div class="timeline__time">
+            Next Week
+            <small>Progress narrative</small>
+          </div>
+          <div class="timeline__content">
+            <p>June's Profile shows a <strong>narrative summary</strong> — not charts or scores:</p>
+            <span class="system-says">"Pain level: 7 → 4 over 8 weeks. You've tried 3 types of balance work. Currently focusing on fall prevention." Doctor-friendly summary ready.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 7. RESEARCH-BACKED DESIGN                                    -->
+  <!-- ============================================================ -->
+  <section class="section section--dark" id="research">
+    <div class="container">
+      <div class="section__eyebrow">07 — Research-Backed Design</div>
+      <h2 class="section__title">Grounded in behavioral science</h2>
+      <p class="section__lead">Our design principles are informed by evidence on exercise adherence and behavior change in older adults.</p>
+
+      <div class="research-grid">
+        <div class="research-card">
+          <div class="research-card__icon">📊</div>
+          <h3>Adherence Factors</h3>
+          <ul>
+            <li>Supervised programs show higher adherence (65–86%) vs unsupervised (58–77%)</li>
+            <li>Person-level factors: better health, fewer medications</li>
+            <li>Physical factors: better functional ability</li>
+            <li>Psychological: better cognitive ability, fewer depressive symptoms</li>
+          </ul>
+        </div>
+        <div class="research-card">
+          <div class="research-card__icon">🔬</div>
+          <h3>Behavior Change Techniques</h3>
+          <ul>
+            <li>Goal-setting &amp; self-monitoring most effective</li>
+            <li>Feedback &amp; social support enhance adherence</li>
+            <li>Problem-solving reduces barriers</li>
+            <li>Personalized feedback > generic messaging</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="insight" style="margin-top: 2.5rem; background: rgba(255,255,255,0.08); border-left-color: var(--teal-600);">
+        <p style="color: rgba(255,255,255,0.85);"><strong style="color: var(--teal-100);">Design implication:</strong> Bold acts as a "supervised" companion — offering the structure, feedback, and reassurance that drive adherence, while adapting to each person's daily reality.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHOTO BREAK -->
+  <div class="photo-break photo-break--short">
+    <img src="https://images.pexels.com/photos/7551668/pexels-photo-7551668.jpeg?auto=compress&cs=tinysrgb&w=1600" alt="Older couple enjoying a walk outdoors" loading="lazy">
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- 8. INFORMATION ARCHITECTURE                                  -->
+  <!-- ============================================================ -->
+  <section class="section" id="ia">
+    <div class="container">
+      <div class="section__eyebrow">08 — Information Architecture</div>
+      <h2 class="section__title">Structuring Bold's experience</h2>
+      <p class="section__lead">Five primary surfaces. Simple, predictable navigation. Progress signals woven throughout.</p>
+
+      <div class="surface-grid">
+        <div class="surface">
+          <div class="surface__icon surface__icon--today">📋</div>
+          <h3>Today</h3>
+          <p>One clear action. Completion clarity. Lightweight reassurance.</p>
+        </div>
+        <div class="surface">
+          <div class="surface__icon surface__icon--discover">🔍</div>
+          <h3>Discover</h3>
+          <p>On-demand, live, articles, audio, meditation — matched to your program.</p>
+        </div>
+        <div class="surface">
+          <div class="surface__icon surface__icon--care">❤️</div>
+          <h3>Care</h3>
+          <p>Telehealth. Nutrition, exercise, sleep, stress, and provider support.</p>
+        </div>
+        <div class="surface">
+          <div class="surface__icon surface__icon--profile">👤</div>
+          <h3>Profile</h3>
+          <p>Progress narrative, check-in history, program settings.</p>
+        </div>
+      </div>
+
+      <div class="ia-features">
+        <div class="ia-feature">
+          <div class="ia-feature__icon">📋</div>
+          <h3>Today's Plan</h3>
+          <ul>
+            <li>Answers "What do I do right now?"</li>
+            <li>One clear action at a time</li>
+            <li>Provides completion clarity</li>
+            <li>Lightweight reassurance and adjustment visibility</li>
+          </ul>
+        </div>
+        <div class="ia-feature">
+          <div class="ia-feature__icon">📝</div>
+          <h3>Check-ins & Progress</h3>
+          <ul>
+            <li>Baseline, periodic, and triggered check-ins</li>
+            <li>Embedded signals in Today and Profile summaries</li>
+            <li>Hybrid model balances clarity and lightness</li>
+            <li>Progress shown as narrative, not percentages</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="insight" style="margin-top: 2rem;">
+        <p><strong>Architecture principles:</strong> Simplify navigation. Align with care expansion. Support flexible future adjustments. Progress signals live in Today, Check-ins, and Profile — never behind extra taps.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- CLOSING                                                      -->
+  <!-- ============================================================ -->
+  <div class="callout">
+    <div class="callout__bg"></div>
+    <div class="callout__content">
+      <h2>From program-based to adaptive daily guidance.</h2>
+      <p>Bold removes uncertainty from daily health decisions — turning evidence-based care into clear next steps that build confidence, not anxiety.</p>
+      <a href="prototype.html" class="callout__cta">View interactive prototype →</a>
+    </div>
+  </div>
+
+  <footer class="vision-footer">
+    <p style="color: var(--grey-500);">Bold · Product Vision & Strategy · February 2026 · Confidential</p>
+    <p style="margin-top: 0.75rem;"><a href="prototype.html">View interactive prototype →</a></p>
+  </footer>
+
+</body>
+</html>
