@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Plan – Bold</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      background: #fafafa;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ---- Nav ---- */
+    .results-nav {
+      background: #fff;
+      box-shadow: 0 1px 3px rgba(16,24,40,.10), 0 1px 2px rgba(16,24,40,.06);
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      flex-shrink: 0;
+    }
+    .results-logo {
+      height: 22px; width: 75px;
+      position: relative; flex-shrink: 0; display: block; overflow: hidden;
+    }
+    .results-logo .logo-lines {
+      position: absolute; top: 0; left: 0; right: 70%; bottom: 0;
+    }
+    .results-logo .logo-text {
+      position: absolute; top: 20%; left: 36%; right: 0; bottom: 20%;
+    }
+    .results-logo .logo-lines img,
+    .results-logo .logo-text img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; max-width: none; object-fit: contain;
+    }
+    .results-nav-label {
+      font-size: 16px;
+      font-weight: 600;
+      color: #115e59;
+      letter-spacing: -0.16px;
+    }
+
+    /* ---- Main content ---- */
+    .results-body {
+      flex: 1;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 40px 24px 60px;
+    }
+    .results-card {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      width: 100%;
+      max-width: 519px;
+    }
+
+    /* ---- Photo grid ---- */
+    .results-photo-wrap {
+      position: relative;
+      width: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .results-photo-wrap img.grid {
+      width: 100%;
+      display: block;
+      border-radius: 12px;
+    }
+    /* Fade overlay at top of photo grid */
+    .results-photo-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(250,250,250,0) 60%, rgba(250,250,250,.8) 100%);
+      pointer-events: none;
+    }
+
+    /* ---- Plan text ---- */
+    .results-title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .results-title {
+      font-size: 32px;
+      font-weight: 600;
+      color: #171717;
+      letter-spacing: -1px;
+      line-height: 1.25;
+    }
+    .results-subtitle {
+      font-size: 16px;
+      font-weight: 400;
+      color: #171717;
+      line-height: 1.5;
+    }
+
+    /* ---- Bullet list ---- */
+    .results-bullets {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .results-bullet {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+    .results-bullet .icon {
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+      margin-top: -2px;
+    }
+    .results-bullet p {
+      font-size: 16px;
+      line-height: 1.5;
+      color: #000;
+    }
+    .results-bullet strong { font-weight: 700; }
+
+    /* ---- CTA button ---- */
+    .results-cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #5200d4;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      height: 52px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: var(--font);
+      text-decoration: none;
+      width: 100%;
+      transition: background .15s;
+    }
+    .results-cta:hover { background: #3f00a8; }
+
+    /* ---- Sticky CTA (mobile) ---- */
+    .results-sticky {
+      display: none;
+    }
+    @media (max-width: 767px) {
+      .results-cta { display: none; }
+      .results-sticky {
+        display: flex;
+        position: fixed;
+        bottom: 0; left: 0; right: 0;
+        padding: 12px 20px 28px;
+        background: linear-gradient(to top, #fafafa 70%, rgba(250,250,250,0));
+        z-index: 50;
+      }
+      .results-sticky a {
+        display: flex; align-items: center; justify-content: center;
+        background: #5200d4; color: #fff;
+        border-radius: 12px; height: 52px;
+        font-size: 16px; font-weight: 600;
+        text-decoration: none; width: 100%;
+        transition: background .15s;
+      }
+      .results-sticky a:hover { background: #3f00a8; }
+      .results-body { padding-bottom: 100px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="results-nav">
+  <a href="index.html" class="results-logo">
+    <div class="logo-lines"><img src="results-logo-lines.svg" alt="" /></div>
+    <div class="logo-text"><img src="results-logo-text.svg" alt="BOLD" /></div>
+  </a>
+  <span class="results-nav-label">Your results</span>
+</nav>
+
+<!-- Content -->
+<div class="results-body">
+  <div class="results-card">
+    <!-- 3×2 instructor photo grid -->
+    <div class="results-photo-wrap">
+      <img class="grid" src="results-grid.jpg" alt="Bold instructors" />
+    </div>
+
+    <!-- Title -->
+    <div class="results-title-block">
+      <h1 class="results-title">Your plan is ready, <span id="user-name">there</span></h1>
+      <p class="results-subtitle">Simple clear daily actions that adapt to your feedback.</p>
+    </div>
+
+    <!-- Bullets -->
+    <div class="results-bullets">
+      <div class="results-bullet">
+        <img class="icon" src="checkmark.svg" alt="✓" />
+        <p><strong>Goal:</strong> <span id="plan-goal">Improve balance and reduce risk of falls</span></p>
+      </div>
+      <div class="results-bullet">
+        <img class="icon" src="checkmark.svg" alt="✓" />
+        <p><strong>Duration:</strong> <span id="plan-duration">20-minute sessions, building gradually over time</span></p>
+      </div>
+      <div class="results-bullet">
+        <img class="icon" src="checkmark.svg" alt="✓" />
+        <p><strong>Focus:</strong> <span id="plan-focus">Gentle balance and stability training through standing exercises</span></p>
+      </div>
+      <div class="results-bullet">
+        <img class="icon" src="checkmark.svg" alt="✓" />
+        <p><strong>Accommodations:</strong> <span id="plan-movements">No equipment needed. All exercises include seated modifications.</span></p>
+      </div>
+    </div>
+
+    <!-- CTA (desktop inline) -->
+    <a href="today-plan.html" class="results-cta">See today's plan</a>
+  </div>
+</div>
+
+<!-- Sticky CTA (mobile only) -->
+<div class="results-sticky">
+  <a href="today-plan.html">See today's plan</a>
+</div>
+
+<script>
+  // ── Read onboarding answers ───────────────────────────
+  const name           = localStorage.getItem('boldUserName') || '';
+  const focus          = JSON.parse(localStorage.getItem('boldFocus') || '[]');
+  const duration       = localStorage.getItem('boldDuration') || '20 minutes';
+  const intensity      = localStorage.getItem('boldIntensity') || 'moderate';
+  const positions      = JSON.parse(localStorage.getItem('boldPosition') || '[]');
+  const accommodation  = localStorage.getItem('boldAccommodations') || '';
+  const prim           = focus[0] || 'balance';
+
+  function cap(str, n) { return str.length > n ? str.slice(0, n - 1).trimEnd() + '…' : str; }
+
+  function rewriteAccommodation(text, focus) {
+    const t = text.toLowerCase();
+
+    // Joint-specific injuries / surgeries
+    if (/knee/.test(t) && /(surgery|replacement|pain|injury|bad)/.test(t))
+      return 'Knee sensitivity noted — no deep bends, squats, or high-impact moves';
+    if (/hip/.test(t) && /(replacement|surgery|pain|injury)/.test(t))
+      return 'Hip replacement noted — no deep hip flexion or leg crossing';
+    if (/shoulder/.test(t) && /(pain|injury|surgery|bad|replacement)/.test(t))
+      return 'Shoulder sensitivity noted — no overhead or heavy pressing movements';
+    if (/back|spine|lumbar|disc/.test(t))
+      return 'Back sensitivity noted — core work is gentle, supported, and low-load';
+    if (/neck|cervical/.test(t))
+      return 'Neck sensitivity noted — no forward flexion or rotational strain';
+    if (/ankle|foot|feet/.test(t))
+      return 'Ankle sensitivity noted — standing work uses a chair for full support';
+    if (/wrist|hand|grip|finger/.test(t))
+      return 'Hand sensitivity noted — no grip-heavy or weight-bearing arm exercises';
+
+    // Mobility aids
+    if (/walker|rollator/.test(t))
+      return 'Walker use noted — all standing exercises designed for supported balance';
+    if (/cane/.test(t))
+      return 'Cane use noted — one-hand support available for all standing moves';
+    if (/wheelchair/.test(t))
+      return 'Wheelchair noted — plan built entirely from a seated position';
+
+    // Conditions
+    if (/osteoporosis|bone density/.test(t))
+      return 'Osteoporosis noted — no spinal flexion or high-impact movements included';
+    if (/arthritis/.test(t))
+      return 'Arthritis noted — low-load movements that reduce joint inflammation';
+    if (/parkinson/.test(t))
+      return 'Parkinson\'s noted — rhythm and coordination exercises prioritized safely';
+    if (/diabetes/.test(t))
+      return 'Diabetes noted — steady moderate effort, no intense blood-sugar spikes';
+    if (/heart|cardiac|pacemaker/.test(t))
+      return 'Cardiac condition noted — intensity stays within safe heart rate zones';
+    if (/vertigo|dizziness|balance/.test(t))
+      return 'Dizziness noted — seated start, slow position changes throughout';
+    if (/fall|fell/.test(t))
+      return 'Fall history noted — all balance work is done near a wall or chair';
+    if (/stroke/.test(t))
+      return 'Stroke history noted — unilateral work and gentle coordination focus';
+    if (/breath|lung|copd|asthma/.test(t))
+      return 'Breathing condition noted — pace stays conversational throughout';
+    if (/incontinence|bladder|leakage/.test(t))
+      return 'Bladder sensitivity noted — pelvic floor exercises integrated from day one';
+
+    // Surgery / recovery (generic)
+    if (/surgery|operation|procedure|recovery|recovering/.test(t))
+      return 'Recent surgery noted — exercises stay well within safe recovery range';
+
+    // Pain without specific joint
+    if (/pain|ache|sore|tender/.test(t))
+      return 'Pain areas noted — exercises avoid aggravating load on affected regions';
+
+    // Avoid / can't do something
+    if (/avoid|can'?t|cannot|no /.test(t))
+      return 'Movement limits noted — exercise selection excludes those patterns entirely';
+
+    // Generic fallback — still better than echoing their text
+    return 'Your noted needs shape exercise selection and intensity from day one';
+  }
+
+  // Name
+  if (name) document.getElementById('user-name').textContent = name;
+
+  // ── Bullet 1: Goal (≤80 chars) ────────────────────────
+  const goals = {
+    balance:       'Reduce fall risk and improve confidence on your feet',
+    pain:          'Reduce pain and move more freely in daily life',
+    routine_new:   'Add structured movement that fits your current lifestyle',
+    routine_start: 'Build a consistent routine you can stick with long-term',
+    pelvic:        'Strengthen pelvic floor function and core stability',
+    brain:         'Support brain health and cognitive sharpness through movement',
+  };
+  document.getElementById('plan-goal').textContent =
+    cap(goals[prim] || goals.balance, 80);
+
+  // ── Bullet 2: Duration + position (≤85 chars) ─────────
+  // Position lives HERE only — never repeated in bullet 3.
+  const seatOnly   = positions.includes('seated') && !positions.includes('standing') && !positions.includes('floor') && !positions.includes('any');
+  const standOnly  = positions.includes('standing') && !positions.includes('seated') && !positions.includes('floor') && !positions.includes('any');
+  const hasFloor   = positions.includes('floor') || positions.includes('any');
+
+  let posAdj = '';
+  if (seatOnly)       posAdj = 'chair-based ';
+  else if (standOnly) posAdj = 'standing ';
+  else if (hasFloor)  posAdj = 'standing and floor ';
+  // mixed seated+standing: no qualifier needed — default assumed
+
+  document.getElementById('plan-duration').textContent =
+    cap(duration + ' ' + posAdj + 'sessions, building gradually over time', 85);
+
+  // ── Bullet 3: Focus — approach + intensity + modality (≤95 chars) ──
+  // No position here — already covered in bullet 2.
+  const intensityAdj = { gentle: 'gentle', moderate: 'moderate-intensity', challenging: 'higher-intensity' };
+  const iLabel = intensityAdj[intensity] || 'moderate-intensity';
+
+  const approaches = {
+    balance:       ['Balance and stability training', 'lower-body strength and coordination work'],
+    pain:          ['Pain management', 'joint-supportive low-impact strength exercises'],
+    routine_new:   ['Functional fitness', 'full-body strength and mobility exercises'],
+    routine_start: ['Foundational fitness', 'beginner-friendly strength and flexibility work'],
+    pelvic:        ['Pelvic floor rehabilitation', 'core, breathing, and pelvic floor exercises'],
+    brain:         ['Neuromotor training', 'coordination, rhythm, and balance exercises'],
+  };
+  const [approach, modality] = approaches[prim] || approaches.balance;
+
+  document.getElementById('plan-focus').textContent =
+    cap(approach + ' via ' + iLabel + ' ' + modality, 95);
+
+  // ── Bullet 4: Accommodations — only real constraints (≤95 chars) ──
+  // Rule: must add something new. Only show position note if chair-only (safety).
+  // Never restate what bullet 2 or 3 already covered.
+  let accom = '';
+
+  if (accommodation) {
+    accom = rewriteAccommodation(accommodation, prim);
+  } else if (seatOnly) {
+    // Safety nuance: no standing required
+    accom = 'No standing or floor work — all exercises done seated';
+  } else if (prim === 'pain') {
+    accom = 'Exercises stop before strain; you control pace and range';
+  } else if (prim === 'pelvic') {
+    accom = 'Exercises are subtle and safe to do privately anywhere';
+  } else if (prim === 'brain') {
+    accom = 'Cognitive load increases gradually — no overwhelm at the start';
+  } else if (intensity === 'challenging') {
+    accom = 'Progressive overload built in — expect to feel it by week two';
+  } else if (intensity === 'gentle') {
+    accom = 'Intensity ramps slowly — your comfort always leads the way';
+  } else {
+    accom = 'Plan adapts weekly based on how your body responds';
+  }
+
+  document.getElementById('plan-movements').textContent = cap(accom, 95);
+</script>
+</body>
+</html>

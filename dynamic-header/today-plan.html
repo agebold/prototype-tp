@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Today's Plan – Bold</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font); background: #fafafa; min-height: 100vh; display: flex; flex-direction: column; color: #140d26; -webkit-font-smoothing: antialiased; }
+
+    /* ═══════════════════════════════════════
+       NAV
+    ═══════════════════════════════════════ */
+    .tp-nav {
+      background: #fff;
+      border-bottom: 1px solid #e5e5e5;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      position: sticky; top: 0; z-index: 20;
+      box-shadow: 0 1px 2px rgba(16,24,40,.05);
+    }
+    .tp-nav-logo { position: relative; width: 100px; height: 30px; flex-shrink: 0; display: block; overflow: hidden; }
+    .tp-nav-logo .logo-lines { position: absolute; top: 0; left: 0; right: 69.76%; bottom: 0; }
+    .tp-nav-logo .logo-text  { position: absolute; top: 20.94%; left: 36.57%; right: 0; bottom: 20.53%; }
+    .tp-nav-logo .logo-lines img, .tp-nav-logo .logo-text img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: contain; }
+    .tp-nav-right { display: flex; align-items: center; gap: 8px; }
+    .tp-btn-app {
+      background: #ffcc1a; color: #000; border: none; border-radius: 9999px;
+      height: 40px; padding: 0 16px; font-size: 16px; font-weight: 600; cursor: pointer;
+      font-family: var(--font); white-space: nowrap;
+    }
+    .tp-streak {
+      display: flex; align-items: center; gap: 4px;
+      background: linear-gradient(135deg, #e5ca56, #c99434);
+      border: 2px solid #d5c874; border-radius: 9999px;
+      height: 40px; padding: 0 14px; color: #fff; font-size: 16px; font-weight: 600;
+    }
+    .tp-streak-fire { font-size: 18px; }
+    .tp-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: #5200d4; display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700; color: #fff; flex-shrink: 0;
+    }
+
+    /* ═══════════════════════════════════════
+       HERO — trainer + blob animation
+    ═══════════════════════════════════════ */
+    .tp-hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px 16px 24px;
+      text-align: center;
+      position: relative;
+    }
+
+    /* Animated blob container behind trainer photo */
+    .tp-blob-wrap {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 8px;
+      overflow: visible;
+    }
+    /* The animated blob */
+    .tp-blob {
+      position: absolute;
+      pointer-events: none;
+      inset: -120px;
+      background: conic-gradient(
+        from 0deg,
+        #80e8ff 0%,
+        #3366ff 25%,
+        #5200d4 50%,
+        #80e8ff 75%,
+        #3366ff 100%
+      );
+      border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+      animation: blob-morph 7s ease-in-out infinite, blob-spin 12s linear infinite;
+      filter: blur(22px);
+      opacity: 0.12;
+    }
+    /* Second blob offset for depth */
+    .tp-blob-2 {
+      position: absolute;
+      pointer-events: none;
+      inset: -80px;
+      background: radial-gradient(ellipse at 30% 30%, #80e8ff 0%, #3366ff 40%, #5200d4 100%);
+      border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+      animation: blob-morph 9s ease-in-out infinite reverse, blob-spin 16s linear infinite reverse;
+      filter: blur(18px);
+      opacity: 0.08;
+    }
+    @keyframes blob-morph {
+      0%, 100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+      20%       { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+      40%       { border-radius: 50% 40% 60% 30% / 30% 70% 40% 60%; }
+      60%       { border-radius: 40% 70% 30% 60% / 70% 30% 60% 40%; }
+      80%       { border-radius: 70% 30% 50% 50% / 40% 60% 50% 60%; }
+    }
+    @keyframes blob-spin {
+      from { transform: rotate(0deg) scale(1.15); }
+      to   { transform: rotate(360deg) scale(1.15); }
+    }
+    /* Blob mover wrapper — cursor-follow applied here */
+    .tp-blob-mover {
+      position: absolute;
+      inset: 0;
+      will-change: transform;
+    }
+
+    /* Trainer circle photo on top */
+    .tp-trainer-img {
+      position: relative;
+      z-index: 2;
+      width: 96px; height: 96px;
+      border-radius: 50%;
+      object-fit: cover;
+      display: block;
+      border: 3px solid #fff;
+      box-shadow: 0 4px 16px rgba(0,0,0,.12);
+    }
+
+    .tp-date   { font-size: 14px; font-weight: 600; color: #8a8693; margin-bottom: 4px; }
+    .tp-greeting { font-size: 28px; font-weight: 600; letter-spacing: -0.8px; line-height: 1.2; color: #140d26; margin-bottom: 8px; }
+    .tp-intro  { font-size: 18px; font-weight: 400; color: #171717; line-height: 1.5; max-width: 340px; }
+
+    /* ═══════════════════════════════════════
+       STEPS TRACKER
+    ═══════════════════════════════════════ */
+    .tp-steps {
+      padding: 0 16px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .tp-step-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 4px 0;
+      position: relative;
+    }
+    /* Vertical connector line between steps */
+    .tp-step-row:not(:last-child)::after {
+      content: '';
+      position: absolute;
+      left: 19px;
+      top: 44px;
+      bottom: -4px;
+      width: 2px;
+      background: #e5e5e5;
+    }
+    /* Completed stepper dot */
+    .tp-step-dot {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+    .tp-step-dot.done {
+      background: #16a34a;
+      color: #fff;
+    }
+    .tp-step-dot.next {
+      background: #fff;
+      border: 2px solid #5200d4;
+      box-shadow: 0 0 0 4px rgba(82,0,212,.12), 0 0 6px 0 #7c3aed;
+    }
+    .tp-step-dot.next::after {
+      content: '';
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: #5200d4;
+    }
+    .tp-step-label { font-size: 14px; font-weight: 400; color: #171717; line-height: 1.57; }
+    .tp-step-title { font-size: 16px; font-weight: 600; color: #171717; line-height: 1.5; }
+    .tp-step-sub   { font-size: 16px; font-weight: 600; color: #171717; line-height: 1.5; display: flex; align-items: center; gap: 4px; }
+
+    /* ═══════════════════════════════════════
+       CLASS CARD
+    ═══════════════════════════════════════ */
+    .tp-card-wrap {
+      padding: 16px 16px 32px;
+    }
+    .tp-class-card {
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 2px rgba(16,24,40,.05);
+    }
+
+    /* Thumbnail */
+    .tp-thumb {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/9;
+      overflow: hidden;
+      background: #1a1a2e;
+    }
+    .tp-thumb img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block; max-width: none;
+    }
+    .tp-save-btn {
+      position: absolute; top: 12px; right: 12px;
+      display: flex; align-items: center; gap: 4px;
+      background: rgba(255,255,255,.85); border: 1px solid #e5e5e5;
+      border-radius: 12px; padding: 8px 12px 8px 8px;
+      font-size: 14px; font-weight: 600; color: #140d26;
+      cursor: pointer; font-family: var(--font);
+      backdrop-filter: blur(4px);
+    }
+
+    /* Meta */
+    .tp-meta { padding: 12px 12px 16px; display: flex; flex-direction: column; gap: 16px; }
+    .tp-tag {
+      display: inline-flex; align-items: center; gap: 4px;
+      background: #ebf0ff; color: #2563eb;
+      font-size: 12px; font-weight: 600; line-height: 1.33;
+      padding: 4px 8px; border-radius: 4px;
+    }
+    .tp-class-title { font-size: 18px; font-weight: 600; color: #140d26; line-height: 1.4; }
+    .tp-class-trainer { font-size: 16px; font-weight: 400; color: #140d26; }
+
+    /* "Why this class" box */
+    .tp-why {
+      background: #eaf0ff;
+      border-radius: 25px;
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .tp-why-header {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 14px; font-weight: 600; color: #171717;
+    }
+    .tp-why-avatar {
+      width: 24px; height: 24px; border-radius: 50%;
+      object-fit: cover; display: block; flex-shrink: 0;
+    }
+    .tp-why-text { font-size: 18px; font-weight: 400; color: #171717; line-height: 1.5; }
+
+    /* Actions */
+    .tp-actions { display: flex; flex-direction: column; gap: 12px; }
+    .tp-start {
+      width: 100%; height: 48px;
+      background: #5200d4; color: #fff; border: none; border-radius: 12px;
+      font-size: 16px; font-weight: 600; cursor: pointer; font-family: var(--font);
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      transition: background .15s;
+    }
+    .tp-start:hover { background: #3f00a8; }
+    .tp-change {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      height: 40px;
+      font-size: 14px; font-weight: 600; color: #404040; cursor: pointer; background: none; border: none;
+      font-family: var(--font); padding: 0;
+    }
+    .tp-change span { color: #5200d4; }
+
+    /* Plan summary — small button in hero */
+    .tp-summary-hero {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: #fff; border: 1px solid #d4d4d4; border-radius: 8px;
+      padding: 5px 10px; font-size: 14px; font-weight: 600; color: #171717;
+      cursor: pointer; font-family: var(--font);
+      margin-top: 12px;
+      box-shadow: 0 1px 2px rgba(16,24,40,.06);
+      text-decoration: none;
+    }
+    .tp-summary-hero:hover { background: #f5f5f5; }
+
+    /* Plan summary — full-width button at bottom of card (mobile) */
+    .tp-summary-card {
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      background: #fff; border: 1px solid #d4d4d4; border-radius: 8px;
+      padding: 7px 16px; font-size: 14px; font-weight: 600; color: #171717;
+      cursor: pointer; font-family: var(--font);
+      width: 100%; margin-top: 12px;
+      box-shadow: 0 1px 2px rgba(16,24,40,.06);
+    }
+    .tp-summary-card:hover { background: #f5f5f5; }
+
+    /* ═══════════════════════════════════════
+       DESKTOP (≥768px)
+    ═══════════════════════════════════════ */
+    @media (min-width: 768px) {
+      .tp-hero { padding: 48px 24px 24px; }
+      .tp-blob-wrap { width: 108px; height: 108px; margin-bottom: 16px; }
+      .tp-trainer-img { width: 88px; height: 88px; }
+      .tp-greeting { font-size: 32px; }
+      .tp-intro { font-size: 18px; max-width: 520px; }
+
+      /* Single-column centered layout — NOT a 2-col sidebar grid */
+      .tp-main-layout {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 40px 80px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .tp-steps { padding: 0; }
+      .tp-card-wrap { padding: 0; }
+
+      /* Desktop class card: text LEFT, thumbnail RIGHT */
+      .tp-class-card {
+        display: grid;
+        grid-template-columns: 1fr 440px;
+        grid-template-rows: auto;
+      }
+      /* Meta (text) goes to left column */
+      .tp-meta {
+        grid-column: 1;
+        grid-row: 1;
+        padding: 28px;
+        gap: 20px;
+        justify-content: space-between;
+      }
+      /* Thumbnail goes to right column */
+      .tp-thumb {
+        grid-column: 2;
+        grid-row: 1;
+        aspect-ratio: unset;
+        height: 100%;
+        min-height: 320px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="tp-nav">
+  <a href="index.html" class="tp-nav-logo">
+    <div class="logo-lines"><img src="nav-logo-lines.svg" alt="" /></div>
+    <div class="logo-text"><img src="nav-logo-text.svg" alt="BOLD" /></div>
+  </a>
+  <div class="tp-nav-right">
+    <button class="tp-btn-app">Use app</button>
+    <div class="tp-streak"><span class="tp-streak-fire">🔥</span>1</div>
+    <div class="tp-avatar" id="nav-initials">?</div>
+  </div>
+</nav>
+
+<!-- Hero -->
+<div class="tp-hero">
+  <div class="tp-blob-wrap">
+    <div class="tp-blob-mover" id="blob-mover">
+      <div class="tp-blob"></div>
+      <div class="tp-blob-2"></div>
+    </div>
+    <img class="tp-trainer-img" src="trainer-photo.jpg" alt="Your Bold coach" />
+  </div>
+  <p class="tp-date" id="today-date">Today</p>
+  <h1 class="tp-greeting">Good <span id="time-of-day">morning</span>, <span id="user-name">there</span></h1>
+  <p class="tp-intro" id="coach-intro">I'm Amanda, your Bold coach. Your first class is just 9 minutes. Finish feeling good — not wiped out!</p>
+  <a href="plan-summary.html" class="tp-summary-hero">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><rect x="2" y="7" width="2.5" height="5" rx="0.5" fill="#525252"/><rect x="5.75" y="4" width="2.5" height="8" rx="0.5" fill="#525252"/><rect x="9.5" y="2" width="2.5" height="10" rx="0.5" fill="#525252"/></svg>
+    Plan summary
+  </a>
+</div>
+
+<!-- Main layout wrapper (splits into 2-col on desktop) -->
+<div class="tp-main-layout">
+
+  <!-- Steps -->
+  <div class="tp-steps">
+    <div class="tp-step-row">
+      <div class="tp-step-dot done">✓</div>
+      <div>
+        <p class="tp-step-label">Completed</p>
+        <p class="tp-step-title">Free access confirmed</p>
+        <p class="tp-step-sub">Personalized plan created <span style="font-size:18px;opacity:.5;cursor:pointer" title="Your plan was built based on your goals and preferences">ⓘ</span></p>
+      </div>
+    </div>
+    <div class="tp-step-row">
+      <div class="tp-step-dot next"></div>
+      <div>
+        <p class="tp-step-label">Up Next</p>
+        <p class="tp-step-title">Finish your first class</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Class card + bottom summary -->
+  <div class="tp-card-wrap">
+    <div class="tp-class-card">
+      <!-- Thumbnail -->
+      <div class="tp-thumb">
+        <img src="class-thumbnail.jpg" alt="Class thumbnail" />
+        <button class="tp-save-btn">
+          <svg width="16" height="18" viewBox="0 0 16 18" fill="none"><path d="M14 17L8 13L2 17V3C2 2.44772 2.44772 2 3 2H13C13.5523 2 14 2.44772 14 3V17Z" stroke="#140d26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Save
+        </button>
+      </div>
+
+      <!-- Meta info -->
+      <div class="tp-meta">
+        <div>
+          <span class="tp-tag">Move class ⓘ</span>
+          <p class="tp-class-title" id="class-title" style="margin-top:8px">9 min Strength: Full Body Toning</p>
+          <p class="tp-class-trainer">Amanda</p>
+        </div>
+
+        <!-- Why this class -->
+        <div class="tp-why">
+          <div class="tp-why-header">
+            <img class="tp-why-avatar" src="coach-avatar.jpg" alt="Coach" />
+            Why this class
+          </div>
+          <p class="tp-why-text" id="why-text">Your first class is short and gentle — designed to build your confidence and leave you feeling great.</p>
+        </div>
+
+        <!-- Actions -->
+        <div class="tp-actions">
+          <button class="tp-start" onclick="alert('Starting class!')">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M5 3.5L16 10L5 16.5V3.5Z" fill="white"/></svg>
+            Start class
+          </button>
+          <button class="tp-change">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M17.5 10A7.5 7.5 0 1 1 10 2.5c2.42 0 4.58 1.14 6 2.93" stroke="#525252" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 1.5v4h-4" stroke="#525252" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Not feeling this today? <span>Change class</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div><!-- end tp-main-layout -->
+
+<script>
+  const name          = localStorage.getItem('boldUserName') || '';
+  const focus         = JSON.parse(localStorage.getItem('boldFocus') || '[]');
+  const intensity     = localStorage.getItem('boldIntensity') || 'moderate';
+  const duration      = localStorage.getItem('boldDuration') || '20 minutes';
+  const accommodation = localStorage.getItem('boldAccommodations') || '';
+  const prim          = focus[0] || 'balance';
+
+  // Name + initials
+  if (name) {
+    document.getElementById('user-name').textContent = name;
+    document.getElementById('nav-initials').textContent = name.slice(0, 2).toUpperCase();
+  }
+
+  // Time of day
+  const h = new Date().getHours();
+  document.getElementById('time-of-day').textContent = h < 12 ? 'morning' : h < 17 ? 'afternoon' : 'evening';
+
+  // Date
+  const d = new Date();
+  document.getElementById('today-date').textContent = d.toLocaleDateString('en-US', { weekday:'short', month:'long', day:'numeric' });
+
+  // Class title — match to focus + duration
+  const durMin = parseInt(duration) || 20;
+  const titles = {
+    balance:       `${durMin} min Balance & Stability Flow`,
+    pain:          `${durMin} min Gentle Joint Relief`,
+    routine_new:   `${durMin} min Strength: Full Body Toning`,
+    routine_start: `${durMin} min Beginner Full Body Strength`,
+    pelvic:        `${durMin} min Core & Pelvic Floor Essentials`,
+    brain:         `${durMin} min Mind-Body Coordination`,
+  };
+  document.getElementById('class-title').textContent = titles[prim] || titles.balance;
+
+  // Coach intro
+  const intros = {
+    balance:       `I'm Amanda, your Bold coach. This ${durMin}-minute class works on balance from the ground up.`,
+    pain:          `I'm Amanda, your Bold coach. This ${durMin}-minute class is gentle on your joints and leaves you feeling better, not worse.`,
+    routine_new:   `I'm Amanda, your Bold coach. This ${durMin}-minute class is a great addition to your current routine.`,
+    routine_start: `I'm Amanda, your Bold coach. Your first class is just ${durMin} minutes — finish feeling good, not wiped out!`,
+    pelvic:        `I'm Amanda, your Bold coach. This ${durMin}-minute class is discreet and effective — you can do it anywhere.`,
+    brain:         `I'm Amanda, your Bold coach. This ${durMin}-minute class mixes movement and focus to keep your brain sharp.`,
+  };
+  document.getElementById('coach-intro').textContent = intros[prim] || intros.routine_start;
+
+  // "Why this class" — use accommodation if present
+  function whyText(accommodation, prim, intensity) {
+    const t = accommodation.toLowerCase();
+    if (accommodation) {
+      if (/knee/.test(t))     return 'Knee comfort noted — this seated class avoids any deep bending or high-impact moves.';
+      if (/back|spine/.test(t)) return 'Back sensitivity noted — this class keeps your spine supported throughout.';
+      if (/hip/.test(t))      return 'Hip sensitivity noted — no deep hip flexion, all movements stay in a safe range.';
+      if (/balance|fall/.test(t)) return 'Balance concerns noted — every standing move uses a chair for full support.';
+      if (/walker|cane/.test(t))  return 'Mobility aid noted — this class is fully adaptable for supported standing.';
+      if (/pain/.test(t))     return 'Pain areas noted — this class is low-load and stops well before any strain.';
+      return 'Your preferences shaped this class — it works around your needs, not against them.';
+    }
+    // No accommodation — use focus + intensity
+    const map = {
+      balance:       'Balance is built gradually — this class focuses on the lower body movements that matter most.',
+      pain:          'Low impact, high payoff — gentle movements that support your joints without aggravating them.',
+      routine_new:   'A strong complement to what you already do — fresh movements, same commitment.',
+      routine_start: 'Short and structured — the perfect first step to a routine you can actually stick to.',
+      pelvic:        'Subtle and effective — pelvic floor work you can do anywhere, at any time.',
+      brain:         'Movement + focus in one — coordination exercises that challenge your brain and your body.',
+    };
+    return map[prim] || map.routine_start;
+  }
+  document.getElementById('why-text').textContent = whyText(accommodation, prim, intensity);
+
+  // ── Blob directional stretch toward cursor ──────────
+  const blobMover = document.getElementById('blob-mover');
+  const blobWrap  = blobMover.closest('.tp-blob-wrap');
+  let tDx = 0, tDy = 0, cDx = 0, cDy = 0;
+
+  document.addEventListener('mousemove', e => {
+    const rect = blobWrap.getBoundingClientRect();
+    const ox = rect.left + rect.width  / 2;
+    const oy = rect.top  + rect.height / 2;
+    const dx = e.clientX - ox;
+    const dy = e.clientY - oy;
+    const dist = Math.hypot(dx, dy);
+    // Max 80px reach in cursor direction
+    const reach = Math.min(dist / 400, 1) * 80;
+    tDx = dist > 0 ? (dx / dist) * reach : 0;
+    tDy = dist > 0 ? (dy / dist) * reach : 0;
+  });
+
+  (function tick() {
+    cDx += (tDx - cDx) * 0.05;
+    cDy += (tDy - cDy) * 0.05;
+    const angle   = Math.atan2(cDy, cDx) * 180 / Math.PI;
+    const stretch = 1 + Math.hypot(cDx, cDy) / 120; // stretch factor along cursor axis
+    // Rotate to cursor direction, stretch along that axis only, rotate back
+    blobMover.style.transform =
+      `rotate(${angle}deg) scale(${stretch.toFixed(3)}, 1) rotate(${-angle}deg)`;
+    requestAnimationFrame(tick);
+  })();
+</script>
+
+</body>
+</html>

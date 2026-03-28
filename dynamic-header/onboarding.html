@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Get Started – Bold</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: #fafafa;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Nav ──────────────────────────────────────────── */
+    .ob-nav {
+      background: #fff;
+      border-bottom: 1px solid #e5e5e5;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .ob-logo {
+      position: relative; width: 114px; height: 34px;
+      flex-shrink: 0; display: block; overflow: hidden;
+    }
+    .ob-logo .logo-lines {
+      position: absolute; top: 0; left: 0; right: 69.76%; bottom: 0;
+    }
+    .ob-logo .logo-text {
+      position: absolute; top: 20.94%; left: 36.57%; right: 0; bottom: 20.53%;
+    }
+    .ob-logo .logo-lines img,
+    .ob-logo .logo-text img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; max-width: none; object-fit: contain;
+    }
+    .ob-nav-right {
+      display: flex; align-items: center; gap: 16px;
+      font-size: 14px; font-weight: 600;
+    }
+    .ob-nav-section { color: #140d26; }
+    .ob-nav-pct { color: #00887a; }
+
+    /* ── Page layout ──────────────────────────────────── */
+    .ob-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px 60px;
+      position: relative;
+    }
+
+    /* Back button */
+    .ob-back {
+      position: absolute;
+      top: 24px;
+      left: 33px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      box-shadow: 0 1px 2px rgba(16,24,40,0.05);
+      font-size: 16px;
+      font-weight: 600;
+      color: #140d26;
+      cursor: pointer;
+      font-family: var(--font);
+      text-decoration: none;
+      visibility: hidden;
+    }
+    .ob-back:hover { background: #f5f5f5; }
+
+    /* ── Question card ────────────────────────────────── */
+    .ob-card {
+      width: 100%;
+      max-width: 492px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding-top: 24px;
+    }
+
+    .ob-step { display: none; }
+    .ob-step.active { display: flex; flex-direction: column; gap: 16px; }
+
+    /* Question header */
+    .ob-q-header { display: flex; flex-direction: column; gap: 4px; }
+    .ob-q-num {
+      font-size: 14px;
+      font-weight: 600;
+      color: #9ca3af;
+      line-height: 1.57;
+    }
+    .ob-q-title {
+      font-size: 24px;
+      font-weight: 600;
+      color: #140d26;
+      line-height: 1.33;
+    }
+    .ob-q-sub {
+      font-size: 16px;
+      font-weight: 400;
+      color: #525252;
+      line-height: 1.5;
+      margin-top: 4px;
+    }
+
+    /* ── Option tiles ─────────────────────────────────── */
+    .ob-options { display: flex; flex-direction: column; gap: 8px; }
+
+    .ob-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 16px;
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 8px;
+      box-shadow: 0 1px 2px rgba(16,24,40,0.05);
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 400;
+      color: #140d26;
+      line-height: 1.25;
+      text-align: left;
+      width: 100%;
+      font-family: var(--font);
+      transition: border-color .15s, background .15s;
+    }
+    .ob-option:hover { border-color: #5200d4; background: #f5f0ff; }
+    .ob-option.selected { border-color: #5200d4; background: #f5f0ff; }
+
+    /* Checkbox indicator */
+    .ob-check {
+      width: 16px; height: 16px;
+      border: 1.5px solid #acacac;
+      border-radius: 4px;
+      flex-shrink: 0;
+      background: #fff;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color .15s, background .15s;
+      position: relative;
+    }
+    .ob-option.selected .ob-check {
+      background: #5200d4; border-color: #5200d4;
+    }
+    .ob-check::after {
+      content: '';
+      display: none;
+      width: 9px; height: 6px;
+      border-left: 2px solid #fff;
+      border-bottom: 2px solid #fff;
+      transform: rotate(-45deg) translate(1px, -1px);
+    }
+    .ob-option.selected .ob-check::after { display: block; }
+
+    /* Radio variant */
+    .ob-option.radio .ob-check {
+      border-radius: 50%;
+      width: 18px; height: 18px;
+    }
+    .ob-option.radio .ob-check::after {
+      width: 8px; height: 8px;
+      border: none;
+      background: #fff;
+      border-radius: 50%;
+      transform: none;
+    }
+
+    /* Textarea */
+    .ob-textarea {
+      width: 100%;
+      min-height: 130px;
+      border: 1px solid #e5e5e5;
+      border-radius: 8px;
+      box-shadow: 0 1px 2px rgba(16,24,40,0.05);
+      padding: 14px 16px;
+      font-size: 16px;
+      font-family: var(--font);
+      color: #140d26;
+      background: #fff;
+      resize: vertical;
+      outline: none;
+      line-height: 1.5;
+      transition: border-color .15s;
+    }
+    .ob-textarea::placeholder { color: #9ca3af; }
+    .ob-textarea:focus {
+      border-color: #5200d4;
+      box-shadow: 0 0 0 3px rgba(82,0,212,0.10);
+    }
+
+    /* Continue button */
+    .ob-continue {
+      width: 100%;
+      height: 44px;
+      background: #5200d4;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      font-family: var(--font);
+      cursor: pointer;
+      transition: background .15s;
+      margin-top: 8px;
+    }
+    .ob-continue:hover { background: #3f00a8; }
+
+    /* ── Mobile ───────────────────────────────────────── */
+    @media (max-width: 767px) {
+      .ob-back {
+        position: static;
+        align-self: flex-start;
+        visibility: visible !important;
+        margin-bottom: 4px;
+      }
+      .ob-back.hidden-mobile { display: none; }
+      .ob-body { padding: 16px 16px 60px; align-items: stretch; }
+      .ob-card { padding-top: 0; max-width: 100%; }
+      .ob-q-title { font-size: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="ob-nav">
+  <a href="index.html" class="ob-logo">
+    <div class="logo-lines"><img src="nav-logo-lines.svg" alt="" /></div>
+    <div class="logo-text"><img src="nav-logo-text.svg" alt="BOLD" /></div>
+  </a>
+  <div class="ob-nav-right">
+    <span class="ob-nav-section">Background</span>
+    <span class="ob-nav-pct" id="pct-label">0% Completed</span>
+  </div>
+</nav>
+
+<!-- Body -->
+<div class="ob-body">
+
+  <button class="ob-back" id="back-btn" onclick="goBack()">
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <path d="M12.5 15l-5-5 5-5" stroke="#140d26" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    Back
+  </button>
+
+  <div class="ob-card">
+
+    <!-- Step 1: Focus -->
+    <div class="ob-step active" id="step-1">
+      <div class="ob-q-header">
+        <p class="ob-q-num">Question 1</p>
+        <h2 class="ob-q-title">What are you looking for from your Bold Program</h2>
+        <p class="ob-q-sub">Choose all that apply</p>
+      </div>
+      <div class="ob-options">
+        <button class="ob-option" data-value="balance" onclick="toggleCheck(this,'q1')">
+          <span class="ob-check"></span>Strengthen my balance &amp; stability
+        </button>
+        <button class="ob-option" data-value="pain" onclick="toggleCheck(this,'q1')">
+          <span class="ob-check"></span>Manage my pain
+        </button>
+        <button class="ob-option" data-value="routine_new" onclick="toggleCheck(this,'q1')">
+          <span class="ob-check"></span>Add something new to my exercise routine
+        </button>
+        <button class="ob-option" data-value="routine_start" onclick="toggleCheck(this,'q1')">
+          <span class="ob-check"></span>Start an exercise routine I can stick to
+        </button>
+        <button class="ob-option" data-value="pelvic" onclick="toggleCheck(this,'q1')">
+          <span class="ob-check"></span>Improve my pelvic health
+        </button>
+        <button class="ob-option" data-value="brain" onclick="toggleCheck(this,'q1')">
+          <span class="ob-check"></span>Enhance my brain health and memory
+        </button>
+      </div>
+      <button class="ob-continue" onclick="nextStep()">Continue</button>
+    </div>
+
+    <!-- Step 2: Activity level -->
+    <div class="ob-step" id="step-2">
+      <div class="ob-q-header">
+        <p class="ob-q-num">Question 2</p>
+        <h2 class="ob-q-title">How active are you currently?</h2>
+        <p class="ob-q-sub">Choose one</p>
+      </div>
+      <div class="ob-options">
+        <button class="ob-option radio" data-value="not_active" onclick="selectOne(this,'q2')">
+          <span class="ob-check"></span>Not very active – I mostly sit or rest
+        </button>
+        <button class="ob-option radio" data-value="light" onclick="selectOne(this,'q2')">
+          <span class="ob-check"></span>Lightly active – occasional walks or light movement
+        </button>
+        <button class="ob-option radio" data-value="moderate" onclick="selectOne(this,'q2')">
+          <span class="ob-check"></span>Moderately active – exercise a few times a week
+        </button>
+        <button class="ob-option radio" data-value="very_active" onclick="selectOne(this,'q2')">
+          <span class="ob-check"></span>Very active – I exercise most days
+        </button>
+      </div>
+      <button class="ob-continue" onclick="nextStep()">Continue</button>
+    </div>
+
+    <!-- Step 3: Session duration -->
+    <div class="ob-step" id="step-3">
+      <div class="ob-q-header">
+        <p class="ob-q-num">Question 3</p>
+        <h2 class="ob-q-title">How long do you prefer each workout session?</h2>
+        <p class="ob-q-sub">Choose one</p>
+      </div>
+      <div class="ob-options">
+        <button class="ob-option radio" data-value="10 minutes" onclick="selectOne(this,'q3')">
+          <span class="ob-check"></span>10 minutes – short and sweet
+        </button>
+        <button class="ob-option radio" data-value="20 minutes" onclick="selectOne(this,'q3')">
+          <span class="ob-check"></span>20 minutes – a good quick workout
+        </button>
+        <button class="ob-option radio" data-value="30 minutes" onclick="selectOne(this,'q3')">
+          <span class="ob-check"></span>30 minutes – solid session
+        </button>
+        <button class="ob-option radio" data-value="45+ minutes" onclick="selectOne(this,'q3')">
+          <span class="ob-check"></span>45+ minutes – I have time and want more
+        </button>
+      </div>
+      <button class="ob-continue" onclick="nextStep()">Continue</button>
+    </div>
+
+    <!-- Step 4: Intensity -->
+    <div class="ob-step" id="step-4">
+      <div class="ob-q-header">
+        <p class="ob-q-num">Question 4</p>
+        <h2 class="ob-q-title">How would you describe your preferred workout intensity?</h2>
+        <p class="ob-q-sub">Choose one</p>
+      </div>
+      <div class="ob-options">
+        <button class="ob-option radio" data-value="gentle" onclick="selectOne(this,'q4')">
+          <span class="ob-check"></span>Gentle – easy on the body, low impact
+        </button>
+        <button class="ob-option radio" data-value="moderate" onclick="selectOne(this,'q4')">
+          <span class="ob-check"></span>Moderate – some effort but comfortable
+        </button>
+        <button class="ob-option radio" data-value="challenging" onclick="selectOne(this,'q4')">
+          <span class="ob-check"></span>Challenging – I want to push myself
+        </button>
+      </div>
+      <button class="ob-continue" onclick="nextStep()">Continue</button>
+    </div>
+
+    <!-- Step 5: Position preference -->
+    <div class="ob-step" id="step-5">
+      <div class="ob-q-header">
+        <p class="ob-q-num">Question 5</p>
+        <h2 class="ob-q-title">Which exercise positions work best for you?</h2>
+        <p class="ob-q-sub">Choose all that apply</p>
+      </div>
+      <div class="ob-options">
+        <button class="ob-option" data-value="seated" onclick="toggleCheck(this,'q5')">
+          <span class="ob-check"></span>Seated – I prefer exercises in a chair
+        </button>
+        <button class="ob-option" data-value="standing" onclick="toggleCheck(this,'q5')">
+          <span class="ob-check"></span>Standing – I'm comfortable on my feet
+        </button>
+        <button class="ob-option" data-value="floor" onclick="toggleCheck(this,'q5')">
+          <span class="ob-check"></span>Floor – I can get up and down safely
+        </button>
+        <button class="ob-option" data-value="any" onclick="toggleCheck(this,'q5')">
+          <span class="ob-check"></span>Any – I'm comfortable with all positions
+        </button>
+      </div>
+      <button class="ob-continue" onclick="nextStep()">Continue</button>
+    </div>
+
+    <!-- Step 6: Accommodations -->
+    <div class="ob-step" id="step-6">
+      <div class="ob-q-header">
+        <p class="ob-q-num">Question 6</p>
+        <h2 class="ob-q-title">Anything we should know before building your plan?</h2>
+        <p class="ob-q-sub">Optional – share any injuries, conditions, or limitations</p>
+      </div>
+      <textarea
+        class="ob-textarea"
+        id="q6-text"
+        placeholder="e.g. recent knee surgery, avoid jumping, use a walker..."
+        rows="5"
+      ></textarea>
+      <button class="ob-continue" onclick="finish()">See my plan</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const TOTAL = 6;
+  let step = 1;
+  const answers = { q1:[], q2:null, q3:null, q4:null, q5:[], q6:'' };
+
+  function updateNav() {
+    const pct = Math.round((step - 1) / TOTAL * 100);
+    document.getElementById('pct-label').textContent = pct + '% Completed';
+    const back = document.getElementById('back-btn');
+    back.style.visibility = step === 1 ? 'hidden' : 'visible';
+    back.classList.toggle('hidden-mobile', step === 1);
+  }
+
+  function showStep(n) {
+    document.querySelectorAll('.ob-step').forEach(s => s.classList.remove('active'));
+    document.getElementById('step-' + n).classList.add('active');
+    step = n;
+    updateNav();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function nextStep() {
+    if (step < TOTAL) showStep(step + 1);
+  }
+
+  function goBack() {
+    if (step > 1) showStep(step - 1);
+    else history.back();
+  }
+
+  function toggleCheck(btn, key) {
+    btn.classList.toggle('selected');
+    const val = btn.dataset.value;
+    const arr = answers[key];
+    const i = arr.indexOf(val);
+    if (i === -1) arr.push(val); else arr.splice(i, 1);
+  }
+
+  function selectOne(btn, key) {
+    btn.closest('.ob-options').querySelectorAll('.ob-option').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    answers[key] = btn.dataset.value;
+  }
+
+  function finish() {
+    answers.q6 = document.getElementById('q6-text').value.trim();
+
+    localStorage.setItem('boldFocus',          JSON.stringify(answers.q1));
+    localStorage.setItem('boldActivity',       answers.q2 || '');
+    localStorage.setItem('boldDuration',       answers.q3 || '');
+    localStorage.setItem('boldIntensity',      answers.q4 || '');
+    localStorage.setItem('boldPosition',       JSON.stringify(answers.q5));
+    localStorage.setItem('boldAccommodations', answers.q6);
+
+    // Legacy key used by program-results.html
+    if (answers.q1.includes('pain'))    localStorage.setItem('boldGoal', 'pain');
+    else if (answers.q1.includes('balance')) localStorage.setItem('boldGoal', 'balance');
+    else                                     localStorage.setItem('boldGoal', 'strength');
+
+    window.location.href = 'program-results.html';
+  }
+
+  updateNav();
+</script>
+
+</body>
+</html>

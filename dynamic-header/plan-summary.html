@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Plan Summary – Bold</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font); background: #fafafa; min-height: 100vh; display: flex; flex-direction: column; color: #171717; -webkit-font-smoothing: antialiased; }
+
+    /* ── Nav ── */
+    .ps-nav {
+      background: #fff; border-bottom: 1px solid #e5e5e5;
+      height: 64px; display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px; position: sticky; top: 0; z-index: 20;
+      box-shadow: 0 1px 2px rgba(16,24,40,.05);
+    }
+    .ps-nav-logo { position: relative; width: 100px; height: 30px; flex-shrink: 0; display: block; overflow: hidden; }
+    .ps-nav-logo .logo-lines { position: absolute; top: 0; left: 0; right: 69.76%; bottom: 0; }
+    .ps-nav-logo .logo-text  { position: absolute; top: 20.94%; left: 36.57%; right: 0; bottom: 20.53%; }
+    .ps-nav-logo .logo-lines img, .ps-nav-logo .logo-text img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: contain; }
+    .ps-nav-right { display: flex; align-items: center; gap: 8px; }
+    .ps-btn-app { background: #ffcc1a; color: #000; border: none; border-radius: 9999px; height: 40px; padding: 0 16px; font-size: 16px; font-weight: 600; cursor: pointer; font-family: var(--font); white-space: nowrap; }
+    .ps-streak { display: flex; align-items: center; gap: 4px; background: linear-gradient(135deg, #e5ca56, #c99434); border: 2px solid #d5c874; border-radius: 9999px; height: 40px; padding: 0 14px; color: #fff; font-size: 16px; font-weight: 600; }
+    .ps-avatar { width: 40px; height: 40px; border-radius: 50%; background: #5200d4; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: #fff; flex-shrink: 0; }
+
+    /* ── Breadcrumb ── */
+    .ps-breadcrumb {
+      background: #fff; border-bottom: 1px solid #e5e5e5;
+      padding: 10px 16px; font-size: 16px;
+      box-shadow: 0 2px 4px rgba(16,24,40,.06);
+    }
+    .ps-breadcrumb a { color: #5200d4; font-weight: 600; text-decoration: none; }
+    .ps-breadcrumb a:hover { text-decoration: underline; }
+    .ps-breadcrumb span { color: #171717; }
+
+    /* ── Page content ── */
+    .ps-page { flex: 1; padding: 24px 16px 48px; display: flex; flex-direction: column; gap: 24px; }
+
+    /* ── Card ── */
+    .ps-card { background: #fff; border: 1px solid #e5e5e5; border-radius: 12px; }
+    .ps-card-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 24px; border-bottom: 1px solid #e5e5e5; }
+    .ps-card-title { font-size: 20px; font-weight: 600; color: #171717; line-height: 1.25; }
+    .ps-edit-btn { font-size: 16px; font-weight: 600; color: #4d4d4d; background: none; border: none; cursor: pointer; font-family: var(--font); }
+    .ps-card-body { padding: 24px; }
+
+    /* ── Goal row ── */
+    .ps-goal-row {
+      display: flex; align-items: center; gap: 8px;
+      background: #fafafa; border-radius: 8px; padding: 8px; min-height: 56px;
+    }
+    .ps-goal-icon { width: 24px; height: 22px; flex-shrink: 0; }
+    .ps-goal-text { font-size: 16px; font-weight: 600; color: #404040; }
+
+    /* ── Journey timeline ── */
+    .ps-journey-body { padding: 24px 16px; display: flex; flex-direction: column; gap: 0; }
+    .ps-timeline { display: flex; flex-direction: column; gap: 0; position: relative; }
+
+    .ps-step { display: flex; gap: 22px; align-items: flex-start; position: relative; padding-bottom: 16px; }
+    /* Dashed connector between steps */
+    .ps-step:not(:last-of-type)::before {
+      content: '';
+      position: absolute;
+      left: 11px;
+      top: 28px;
+      bottom: -4px;
+      width: 2px;
+      border-left: 2px dashed #d4d4d4;
+    }
+    .ps-step-dot {
+      width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center; margin-top: 2px;
+    }
+    .ps-step-dot.done { background: #16a34a; }
+    .ps-step-dot.done svg { display: block; }
+    .ps-step-dot.now {
+      border: 2px solid #5200d4;
+      box-shadow: 0 0 0 3px rgba(124,58,237,.18), 0 0 5px 0 #7c3aed;
+      background: #fff;
+    }
+    .ps-step-dot.now::after { content: ''; width: 8px; height: 8px; border-radius: 50%; background: #5200d4; }
+    .ps-step-dot.future { border: 2px solid #d4d4d4; background: #fff; }
+
+    .ps-step-info { flex: 1; min-width: 0; }
+    .ps-step-label { font-size: 14px; font-weight: 400; color: #171717; line-height: 1.57; }
+    .ps-step-title { font-size: 16px; font-weight: 600; color: #171717; line-height: 1.5; }
+    .ps-step-title.now { color: #5200d4; }
+    .ps-step-desc { font-size: 18px; font-weight: 400; color: rgba(0,0,0,.8); line-height: 1.4; margin-top: 2px; }
+    .ps-desc-text {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .ps-desc-text.expanded {
+      display: block;
+      overflow: visible;
+    }
+    .ps-read-more { color: #5200d4; font-weight: 600; font-size: 15px; background: none; border: none; cursor: pointer; font-family: var(--font); padding: 0; margin-top: 4px; display: block; }
+
+    /* ── Carousel ── */
+    .ps-carousel-wrap {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      padding: 8px 0 20px;
+    }
+    .ps-carousel-wrap::-webkit-scrollbar { display: none; }
+    .ps-carousel-item {
+      flex-shrink: 0;
+      width: 200px;
+      scroll-snap-align: start;
+    }
+    .ps-thumb {
+      width: 200px;
+      height: 150px;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #1a1a2e;
+      margin-bottom: 10px;
+    }
+    .ps-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; max-width: none; }
+    .ps-class-title { font-size: 15px; font-weight: 600; color: #171717; line-height: 1.3; }
+    .ps-class-trainer { font-size: 13px; font-weight: 400; color: #737373; margin-top: 3px; }
+
+    /* ── Desktop ── */
+    @media (min-width: 768px) {
+      .ps-breadcrumb { padding: 8px 144px; }
+      .ps-page { max-width: 1100px; margin: 0 auto; padding: 24px 40px 80px; width: 100%; }
+      .ps-card-title { font-size: 22px; }
+
+      /* Journey body wider padding */
+      .ps-journey-body { padding: 24px; }
+
+      /* 3-col fixed on desktop, no scroll */
+      .ps-carousel-wrap { overflow-x: visible; flex-wrap: nowrap; }
+      .ps-carousel-item { flex: 1; width: auto; min-width: 180px; }
+      .ps-thumb { width: 100%; height: 160px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="ps-nav">
+  <a href="today-plan.html" class="ps-nav-logo">
+    <div class="logo-lines"><img src="nav-logo-lines.svg" alt="" /></div>
+    <div class="logo-text"><img src="nav-logo-text.svg" alt="BOLD" /></div>
+  </a>
+  <div class="ps-nav-right">
+    <button class="ps-btn-app">Use app</button>
+    <div class="ps-streak"><span>🔥</span>1</div>
+    <div class="ps-avatar" id="nav-initials">?</div>
+  </div>
+</nav>
+
+<!-- Breadcrumb -->
+<div class="ps-breadcrumb">
+  <a href="today-plan.html">Today</a> <span>&gt; Plan summary</span>
+</div>
+
+<!-- Page -->
+<div class="ps-page">
+
+  <!-- Your goal -->
+  <div class="ps-card">
+    <div class="ps-card-header">
+      <h2 class="ps-card-title">Your goal</h2>
+      <button class="ps-edit-btn">Edit</button>
+    </div>
+    <div class="ps-card-body">
+      <div class="ps-goal-row">
+        <svg class="ps-goal-icon" viewBox="0 0 24 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 2h13l-3 5 3 5H3V2Z" stroke="#5200d4" stroke-width="1.5" stroke-linejoin="round"/>
+          <line x1="3" y1="2" x2="3" y2="20" stroke="#5200d4" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <span class="ps-goal-text" id="goal-text">Balance and fall prevention</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Your journey -->
+  <div class="ps-card">
+    <div class="ps-card-header">
+      <h2 class="ps-card-title">Your journey</h2>
+    </div>
+    <div class="ps-journey-body">
+      <div class="ps-timeline">
+
+        <!-- Step 1: The decision -->
+        <div class="ps-step">
+          <div class="ps-step-dot done">
+            <svg width="12" height="10" viewBox="0 0 12 10" fill="none"><path d="M1 5l3.5 3.5L11 1" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="ps-step-info">
+            <p class="ps-step-label">Where it starts</p>
+            <p class="ps-step-title" id="past-title">You made the decision</p>
+            <p class="ps-step-desc"><span id="past-desc" class="ps-desc-text">Most people think about getting started for months. You did it. That decision — right now, today — is the hardest part, and you've already cleared it.</span></p>
+            <button class="ps-read-more" id="past-rm" hidden>Read more</button>
+          </div>
+        </div>
+
+        <!-- Step 2: Now -->
+        <div class="ps-step">
+          <div class="ps-step-dot now"></div>
+          <div class="ps-step-info">
+            <p class="ps-step-label">Now</p>
+            <p class="ps-step-title now" id="now-title">Building your foundation</p>
+            <p class="ps-step-desc"><span id="now-desc" class="ps-desc-text">This is where earlier work starts to pay off — your body is adapting and getting stronger each session.</span></p>
+            <button class="ps-read-more" id="now-rm" hidden>Read more</button>
+          </div>
+        </div>
+
+        <!-- Step 3: What's Ahead -->
+        <div class="ps-step">
+          <div class="ps-step-dot future"></div>
+          <div class="ps-step-info">
+            <p class="ps-step-label">What's Ahead</p>
+            <p class="ps-step-title" id="next-title">Full integration & confidence</p>
+            <p class="ps-step-desc"><span id="next-desc" class="ps-desc-text">The final phase brings everything together into fluid, confident movement you'll carry for life.</span></p>
+            <button class="ps-read-more" id="next-rm" hidden>Read more</button>
+          </div>
+        </div>
+
+        <!-- Upcoming class carousel -->
+        <div class="ps-carousel-wrap" id="next-carousel"></div>
+
+      </div>
+    </div>
+  </div>
+
+</div><!-- end ps-page -->
+
+<script>
+  const name         = localStorage.getItem('boldUserName') || '';
+  const focus        = JSON.parse(localStorage.getItem('boldFocus') || '[]');
+  const duration     = localStorage.getItem('boldDuration') || '20 minutes';
+  const prim         = focus[0] || 'balance';
+  const durMin       = parseInt(duration) || 20;
+
+  // Nav initials
+  if (name) document.getElementById('nav-initials').textContent = name.slice(0, 2).toUpperCase();
+
+  // ── Goal label ────────────────────────────────────
+  const goalLabels = {
+    balance:       'Balance and fall prevention',
+    pain:          'Pain reduction and daily mobility',
+    routine_new:   'Adding consistent movement',
+    routine_start: 'Building a lasting fitness routine',
+    pelvic:        'Pelvic floor and core strength',
+    brain:         'Brain health through movement',
+  };
+  document.getElementById('goal-text').textContent = goalLabels[prim] || goalLabels.balance;
+
+  // ── Journey phases ────────────────────────────────
+  const phases = {
+    balance: {
+      past:  { title: "Foundation work still intact",     desc: "Hip stability, core activation, and balance groundwork you've built are serving as the base for everything ahead." },
+      now:   { title: "Balance in motion",                desc: "This is where earlier work starts to pay off — dynamic balance and real-world movement patterns begin here." },
+      next:  { title: "Full-body integration",            desc: "Strength, coordination, and balance confidence come together into fluid, functional movement." },
+    },
+    pain: {
+      past:  { title: "Joint care & mobility restored",   desc: "Low-impact work has built tissue resilience and reduced flare-up frequency across your affected areas." },
+      now:   { title: "Functional strength phase",        desc: "Pain-free ranges are expanding — now we build load tolerance and ease of movement in daily tasks." },
+      next:  { title: "Active maintenance",               desc: "The final phase locks in habits that keep pain away long-term through consistent, smart movement." },
+    },
+    routine_new: {
+      past:  { title: "Movement habits established",      desc: "You've added regular exercise to your week — consistency is the foundation of everything ahead." },
+      now:   { title: "Building on your base",            desc: "With habits in place, we layer in variety and challenge to keep your body adapting." },
+      next:  { title: "Long-term progression",            desc: "The goal becomes sustaining and growing — a routine you'll carry for years, not just weeks." },
+    },
+    routine_start: {
+      past:  { title: "First steps completed",            desc: "Foundational classes are done — form, breathing, and body awareness are all taking shape." },
+      now:   { title: "Building your foundation",         desc: "Beginner work is paying off — we now increase volume and introduce new movement patterns." },
+      next:  { title: "Consistency & growth",             desc: "A sustainable routine comes together — structured, progressive, and designed to last." },
+    },
+    pelvic: {
+      past:  { title: "Pelvic floor awareness built",     desc: "Foundational breathing, bracing, and relaxation patterns have been established and practiced." },
+      now:   { title: "Strength & coordination",          desc: "Pelvic floor strength is increasing — coordination between breath, core, and floor is coming together." },
+      next:  { title: "Functional integration",           desc: "Pelvic floor work integrates with full-body movement — strength that works in real life." },
+    },
+    brain: {
+      past:  { title: "Neuromotor base established",      desc: "Coordination, rhythm, and dual-task movement patterns have been introduced and practiced consistently." },
+      now:   { title: "Cognitive-movement challenge",     desc: "More complex patterns are layered in — reaction time, sequencing, and coordination under load improve." },
+      next:  { title: "Advanced integration",             desc: "High-level coordination and brain-body connection exercises complete your neuromotor training." },
+    },
+  };
+  // Day-one motivating copy for step 1 (keyed by focus area)
+  const dayOneDesc = {
+    balance:       "Most people think about getting started for months. You did it. That decision — right now, today — is the hardest part, and it's already behind you.",
+    pain:          "Choosing to move instead of staying still takes real courage when you're in pain. You made that call. Your body will thank you for it.",
+    routine_new:   "Adding movement to a full life isn't easy — but you showed up. That choice separates the people who mean to start from the ones who actually do.",
+    routine_start: "Getting started is always the hardest step. You've already done it. Everything from here builds on the commitment you made today.",
+    pelvic:        "It takes guts to prioritize something this personal. You're already ahead of most people just by deciding to address it. That matters.",
+    brain:         "Investing in your brain health is one of the smartest things you can do. You're here, you're doing it — that decision will compound for years.",
+  };
+
+  const p = phases[prim] || phases.balance;
+  // Step 1 is day-one onboarding — override with motivating copy
+  document.getElementById('past-desc').textContent  = dayOneDesc[prim] || dayOneDesc.balance;
+  document.getElementById('now-title').textContent  = p.now.title;
+  document.getElementById('now-desc').textContent   = p.now.desc;
+  document.getElementById('next-title').textContent = p.next.title;
+  document.getElementById('next-desc').textContent  = p.next.desc;
+
+  // ── Class carousels ───────────────────────────────
+  // img[0] = today's class, img[1] and img[2] = upcoming classes
+  const thumbs = ['class-thumbnail.jpg', 'DSCF3699.jpg', 'DSCF3776.jpg'];
+
+  const classSets = {
+    balance: {
+      next: [
+        { title: `${durMin} min Strength: Full Body Toning`, trainer: 'Amanda',        img: thumbs[0] },
+        { title: `${durMin} min Standing Balance Flow`,       trainer: 'Alysha Findley',img: thumbs[1] },
+        { title: `${durMin} min Fall Prevention Circuit`,     trainer: 'Amanda',        img: thumbs[2] },
+      ],
+    },
+    pain: {
+      next: [
+        { title: `${durMin} min Strength: Full Body Toning`, trainer: 'Amanda',        img: thumbs[0] },
+        { title: `${durMin} min Joint Support Flow`,          trainer: 'Alysha Findley',img: thumbs[1] },
+        { title: `${durMin} min Active Recovery`,             trainer: 'Amanda',        img: thumbs[2] },
+      ],
+    },
+    routine_new: {
+      next: [
+        { title: `${durMin} min Strength: Full Body Toning`, trainer: 'Amanda',        img: thumbs[0] },
+        { title: `${durMin} min Cardio Foundations`,          trainer: 'Alysha Findley',img: thumbs[1] },
+        { title: `${durMin} min Strength & Mobility`,         trainer: 'Amanda',        img: thumbs[2] },
+      ],
+    },
+    routine_start: {
+      next: [
+        { title: `${durMin} min Strength: Full Body Toning`, trainer: 'Amanda',        img: thumbs[0] },
+        { title: `${durMin} min Progression Flow`,            trainer: 'Alysha Findley',img: thumbs[1] },
+        { title: `${durMin} min Building Strength`,           trainer: 'Amanda',        img: thumbs[2] },
+      ],
+    },
+    pelvic: {
+      next: [
+        { title: `${durMin} min Strength: Full Body Toning`, trainer: 'Amanda',        img: thumbs[0] },
+        { title: `${durMin} min Core Coordination`,           trainer: 'Alysha Findley',img: thumbs[1] },
+        { title: `${durMin} min Full Integration`,            trainer: 'Amanda',        img: thumbs[2] },
+      ],
+    },
+    brain: {
+      next: [
+        { title: `${durMin} min Strength: Full Body Toning`, trainer: 'Amanda',        img: thumbs[0] },
+        { title: `${durMin} min Reaction Speed Flow`,         trainer: 'Alysha Findley',img: thumbs[1] },
+        { title: `${durMin} min Mind-Body Integration`,       trainer: 'Amanda',        img: thumbs[2] },
+      ],
+    },
+  };
+
+  function renderCarousel(id, classes) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.innerHTML = classes.map(c => `<div class="ps-carousel-item">
+      <div class="ps-thumb"><img src="${c.img}" alt="" /></div>
+      <p class="ps-class-title">${c.title}</p>
+      <p class="ps-class-trainer">${c.trainer}</p>
+    </div>`).join('');
+  }
+
+  const cs = classSets[prim] || classSets.balance;
+  renderCarousel('next-carousel', cs.next);
+
+  // ── Read more / Read less ─────────────────────────
+  function initReadMore(descId, btnId) {
+    const desc = document.getElementById(descId);
+    const btn  = document.getElementById(btnId);
+
+    // Measure full (unclamped) height by cloning without the clamp style
+    const clone = desc.cloneNode(true);
+    clone.style.cssText = 'position:absolute;visibility:hidden;overflow:visible;display:block;-webkit-line-clamp:unset;width:' + desc.offsetWidth + 'px';
+    desc.parentNode.appendChild(clone);
+    const fullHeight    = clone.scrollHeight;
+    const clampedHeight = desc.clientHeight;
+    clone.remove();
+
+    if (fullHeight > clampedHeight + 2) {
+      btn.hidden = false;
+      btn.addEventListener('click', () => {
+        const expanded = desc.classList.toggle('expanded');
+        btn.textContent = expanded ? 'Read less' : 'Read more';
+      });
+    }
+  }
+
+  initReadMore('past-desc', 'past-rm');
+  initReadMore('now-desc',  'now-rm');
+  initReadMore('next-desc', 'next-rm');
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bold – Ten minutes today. A healthier tomorrow.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    /* ── RESET ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: #f0f3fd;
+      color: #171717;
+      -webkit-font-smoothing: antialiased;
+      min-width: 1280px;
+    }
+    img { display: block; }
+    a { text-decoration: none; color: inherit; }
+    button { cursor: pointer; font-family: inherit; border: none; background: none; }
+
+    /* ── SHARED BUTTONS ─────────────────────────────────── */
+    .btn-blue {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: #3366ff; color: #fff;
+      font-size: 20px; font-weight: 500; font-family: 'Inter', sans-serif;
+      border-radius: 10px; height: 65px; padding: 0 28px;
+      border: none; cursor: pointer; transition: background .15s;
+      white-space: nowrap;
+    }
+    .btn-blue:hover { background: #2255ee; }
+    .btn-yellow {
+      display: inline-flex; align-items: center; justify-content: center;
+      background: #ffcc1b; color: #171717;
+      font-size: 20px; font-weight: 500; font-family: 'Inter', sans-serif;
+      border-radius: 10px; height: 65px; padding: 0 28px;
+      border: none; cursor: pointer; white-space: nowrap;
+    }
+
+    /* ── FLOATING NAV ──────────────────────────────────── */
+    .nav-wrap {
+      position: fixed; top: 21px; left: 50%;
+      transform: translateX(-50%);
+      width: 1360px; z-index: 100;
+    }
+    .nav-bar {
+      background: #f0f3fd;
+      border-radius: 10px;
+      box-shadow: 0 4px 50px rgba(0, 0, 0, 0.25);
+      height: 80px;
+      display: flex; align-items: center;
+      padding: 0 40px;
+    }
+    /* Logo: exact Figma structure — wrapper divs + image fills */
+    .nav-logo {
+      position: relative; width: 133px; height: 40px;
+      flex-shrink: 0; display: block; overflow: hidden;
+    }
+    .nav-logo-lines {
+      position: absolute; top: 0; right: 69.76%; bottom: 0; left: 0;
+    }
+    .nav-logo-lines img,
+    .nav-logo-text img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; max-width: none; object-fit: contain;
+    }
+    .nav-logo-text {
+      position: absolute; top: 20.94%; right: 0; bottom: 20.53%; left: 36.57%;
+    }
+    .nav-links {
+      display: flex; align-items: center; gap: 4px;
+      margin: 0 auto;
+    }
+    .nav-links a {
+      padding: 12px 16px;
+      font-size: 16px; font-weight: 500; color: #171717;
+      border-radius: 12px; transition: background .15s;
+    }
+    .nav-links a:hover { background: rgba(0, 0, 0, 0.06); }
+    .nav-actions { display: flex; gap: 12px; align-items: center; flex-shrink: 0; }
+    .nav-login {
+      border: 1px solid #d4d4d4; border-radius: 8px;
+      font-size: 16px; font-weight: 500; color: #171717;
+      padding: 0 24px; height: 48px; background: transparent;
+      display: inline-flex; align-items: center;
+    }
+    .nav-signup {
+      background: #3366ff; border-radius: 8px;
+      font-size: 16px; font-weight: 500; color: #fff;
+      padding: 0 24px; height: 48px;
+      display: inline-flex; align-items: center;
+      transition: background .15s;
+    }
+    .nav-signup:hover { background: #2255ee; }
+    .nav-enroll { display: none; }
+    .nav-hamburger { display: none; }
+
+    /* ── HERO ───────────────────────────────────────────── */
+    .hero {
+      position: relative; width: 100%; height: 924px; overflow: hidden;
+      background: #2a2118; /* dark warm fallback while photo loads */
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; object-fit: cover; object-position: center;
+      max-width: none;
+    }
+    .hero-gradient {
+      position: absolute; bottom: 0; left: 0; right: 0; height: 300px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.9) 100%);
+      pointer-events: none;
+    }
+    .hero-content {
+      position: absolute; left: 112px; top: 205px; width: 568px;
+    }
+    .hero-title {
+      font-size: 55px; font-weight: 700; color: #fafafa;
+      line-height: 1.2; letter-spacing: -1px;
+      margin-bottom: 24px;
+    }
+    .hero-sub {
+      font-size: 20px; font-weight: 400; color: #fafafa;
+      line-height: 30px; letter-spacing: -0.2px;
+      max-width: 503px; margin-bottom: 48px;
+    }
+    .hero-bottom {
+      position: absolute; left: 112px; bottom: 60px;
+    }
+    .hero-available {
+      font-size: 20px; font-weight: 700; color: #fafafa;
+      letter-spacing: -0.2px; line-height: 30px; margin-bottom: 24px;
+    }
+    .hero-partners {
+      display: flex; align-items: center; gap: 48px;
+    }
+    .hero-partners img { height: 35px; width: auto; max-width: 200px; }
+    .hero-more {
+      font-size: 20px; font-weight: 500; color: #fafafa; letter-spacing: -0.2px;
+    }
+    .hero-bg-mobile { display: none; }
+    .hero-partners-strip { display: none; }
+    .res-card-content { display: none; }
+    .res-carousel-nav { display: none; }
+    .mobile-menu { display: none; }
+
+    /* ── MODULE 2 – HEALTHY AGING ───────────────────────── */
+    .mod-healthy {
+      background: #f0f3fd;
+      padding: 80px 0;
+    }
+    .mod-healthy-inner {
+      max-width: 1440px; margin: 0 auto; padding: 0 112px;
+      display: flex; align-items: center; gap: 127px;
+    }
+    .mod-photo-frame {
+      width: 596px; height: 770px;
+      border-radius: 30px; overflow: hidden;
+      flex-shrink: 0; position: relative;
+    }
+    .mod-photo-frame img {
+      position: absolute;
+      width: 100%; height: 100%; object-fit: cover;
+      max-width: none;
+    }
+    .mod-text { flex: 1; }
+    .section-title {
+      font-size: 45px; font-weight: 700; color: #171717;
+      line-height: 1.2; letter-spacing: -1px; margin-bottom: 24px;
+    }
+    .section-body {
+      font-size: 20px; font-weight: 400; color: #171717;
+      line-height: 30px; letter-spacing: -0.2px; margin-bottom: 48px;
+    }
+
+    /* ── RESOURCES ─────────────────────────────────────── */
+    .resources {
+      background: #f0f3fd;
+      padding: 0 0 80px;
+    }
+    .resources-inner {
+      max-width: 1440px; margin: 0 auto; padding: 0 112px;
+    }
+    .resources-header {
+      max-width: 802px; margin: 0 auto 48px; text-align: center;
+      padding-top: 80px;
+    }
+    .resources-eyebrow {
+      font-size: 20px; font-weight: 400; color: #171717;
+      letter-spacing: -0.2px; line-height: 30px; margin-bottom: 24px;
+    }
+    .resources-title {
+      font-size: 45px; font-weight: 700; color: #171717;
+      line-height: 1.2; letter-spacing: -1px; margin-bottom: 24px;
+    }
+    .resources-body {
+      font-size: 20px; font-weight: 400; color: #171717;
+      line-height: 30px; letter-spacing: -0.2px;
+    }
+    .resource-cards { }
+    .resource-cards-inner {
+      display: flex; gap: 24px;
+    }
+    .res-card {
+      flex: 1; height: 551px; border-radius: 30px; overflow: hidden;
+      position: relative; display: flex; align-items: flex-end; padding: 30px 30px 40px;
+    }
+    .res-card-bg {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; object-fit: cover; max-width: none;
+    }
+    .res-card-grad {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0) 50%, rgba(0,0,0,0.9) 100%);
+    }
+    .res-card-label {
+      position: relative; z-index: 1;
+      font-size: 40px; font-weight: 700; color: #fafafa;
+      letter-spacing: -1px; line-height: 1.2;
+    }
+
+    /* ── TESTIMONIALS ──────────────────────────────────── */
+    .testimonials {
+      background: #f0f3fd;
+      padding: 80px 0 60px;
+    }
+    .testi-header {
+      max-width: 1440px; margin: 0 auto; padding: 0 112px 48px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .testi-heading {
+      font-size: 45px; font-weight: 700; color: #171717;
+      letter-spacing: -1px; line-height: 1.2;
+    }
+    .testi-nav-btns { display: flex; gap: 12px; }
+    .testi-nav-btn {
+      width: 60px; height: 60px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      transition: background .15s; flex-shrink: 0;
+    }
+    .testi-nav-btn:hover { background: rgba(0,0,0,0.08); }
+    .testi-track-wrap {
+      overflow: hidden; padding: 0 112px;
+    }
+    .testi-track {
+      display: flex; gap: 24px;
+      transition: transform 0.4s cubic-bezier(.4,0,.2,1);
+    }
+    .testi-card {
+      flex-shrink: 0; width: 493px; height: 658px;
+      background: #001d56; border-radius: 30px;
+      padding: 48px; display: flex; flex-direction: column; gap: 48px;
+    }
+    .testi-person {
+      display: flex; align-items: center; gap: 48px;
+    }
+    .testi-avatar {
+      width: 158px; height: 158px; border-radius: 50%;
+      overflow: hidden; flex-shrink: 0;
+    }
+    .testi-avatar img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    .testi-name {
+      font-size: 25px; font-weight: 700; color: #99b3fe; line-height: 35px;
+    }
+    .testi-quote {
+      font-size: 30px; font-weight: 700; color: #fafafa;
+      line-height: 45px; letter-spacing: -1px;
+    }
+    .testi-quote .hl { color: #d5aeff; }
+
+    /* ── EVIDENCE ──────────────────────────────────────── */
+    .evidence {
+      background: #001d56;
+      padding: 80px 0;
+    }
+    .evidence-inner {
+      max-width: 1440px; margin: 0 auto; padding: 0 112px;
+    }
+    .evidence-header {
+      max-width: 802px; margin: 0 auto 48px; text-align: center;
+    }
+    .evidence-title {
+      font-size: 45px; font-weight: 700; color: #fafafa;
+      line-height: 1.2; letter-spacing: -1px; margin-bottom: 24px;
+    }
+    .evidence-body {
+      font-size: 20px; font-weight: 400; color: #fafafa;
+      line-height: 30px; letter-spacing: -0.2px; margin-bottom: 48px;
+    }
+    .evidence-cards {
+      display: flex; gap: 24px; min-height: 511px;
+    }
+    .ev-card {
+      flex: 1; border-radius: 30px; overflow: hidden;
+      position: relative; min-height: 511px;
+    }
+    .ev-card-periwinkle {
+      background: #99b3fe;
+      display: flex; flex-direction: column; padding: 48px 36px;
+    }
+    .ev-card-lavender {
+      background: #d5aeff;
+      display: flex; flex-direction: column; padding: 48px 36px;
+    }
+    .ev-bar-chart {
+      display: flex; align-items: flex-end; gap: 12px;
+      height: 214px; margin-bottom: 12px;
+    }
+    .ev-bar {
+      width: 105px;
+      border-radius: 15px 15px 0 0;
+    }
+    .ev-stat-title {
+      font-size: 26px; font-weight: 700; color: #171717;
+      letter-spacing: -0.26px; line-height: 1.2;
+      text-align: center; margin-top: auto; margin-bottom: 12px;
+    }
+    .ev-stat-body {
+      font-size: 20px; font-weight: 400; color: #171717;
+      line-height: 30px; letter-spacing: -0.2px; text-align: center;
+    }
+    .ev-card-photo img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; object-fit: cover; max-width: none;
+    }
+    .ev-pie { width: 200px; height: 200px; margin-bottom: 12px; }
+
+    /* ── BRING BOLD ────────────────────────────────────── */
+    .bring {
+      background: #f0f3fd;
+      padding: 80px 0;
+    }
+    .bring-inner {
+      max-width: 1440px; margin: 0 auto; padding: 0 112px;
+      display: flex; align-items: center; gap: 127px;
+    }
+    .bring-photo {
+      width: 596px; height: 770px;
+      border-radius: 30px; overflow: hidden;
+      flex-shrink: 0; position: relative;
+    }
+    .bring-photo img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; object-fit: cover; max-width: none;
+    }
+    .bring-text { flex: 1; }
+
+    /* ── GET STARTED CTA ───────────────────────────────── */
+    .cta {
+      position: relative; height: 574px; overflow: hidden;
+    }
+    .cta-bg {
+      position: absolute; inset: 0; background: #99b3fe;
+    }
+    .cta-bg img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; object-fit: cover; max-width: none;
+    }
+    .cta-overlay {
+      position: absolute; inset: 0;
+      background: rgba(0, 0, 0, 0.3);
+    }
+    .cta-content {
+      position: relative; z-index: 1; height: 100%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 48px;
+    }
+    .cta-title {
+      font-size: 45px; font-weight: 700; color: #fafafa;
+      letter-spacing: -1px; text-align: center;
+    }
+    .cta-btns { display: flex; gap: 24px; }
+
+    /* ── FOOTER ────────────────────────────────────────── */
+    .footer {
+      background: #001d56;
+      padding: 80px 0 60px;
+    }
+    .footer-inner {
+      max-width: 1440px; margin: 0 auto; padding: 0 112px;
+    }
+    .footer-top {
+      display: flex; gap: 80px; margin-bottom: 80px; align-items: flex-start;
+    }
+    .footer-brand { flex-shrink: 0; width: 387px; }
+    .footer-logo {
+      position: relative; width: 183px; height: 55px;
+      display: block; margin-bottom: 36px; overflow: hidden;
+    }
+    .footer-logo .logo-lines {
+      position: absolute; top: 0; left: 0; right: 70%; bottom: 0;
+    }
+    .footer-logo .logo-text {
+      position: absolute; top: 20%; left: 36%; right: 0; bottom: 20%;
+    }
+    .footer-logo .logo-lines img,
+    .footer-logo .logo-text img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; max-width: none; object-fit: contain;
+    }
+    .footer-tagline {
+      font-size: 30px; font-weight: 700; color: #fafafa;
+      line-height: 1.2; letter-spacing: -1px; margin-bottom: 36px;
+    }
+    .footer-badges {
+      display: flex; gap: 16px; margin-top: 36px;
+    }
+    .store-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #000; border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 7px; padding: 6px 12px 6px 10px;
+      text-decoration: none; color: #fff; height: 44px;
+      flex-shrink: 0;
+    }
+    .store-badge:hover { background: #1a1a1a; }
+    .store-badge-icon { flex-shrink: 0; display: flex; align-items: center; }
+    .store-badge-text { display: flex; flex-direction: column; }
+    .store-badge-small { font-size: 9px; font-weight: 400; color: #fff; line-height: 1.2; letter-spacing: 0.02em; }
+    .store-badge-large { font-size: 17px; font-weight: 600; color: #fff; line-height: 1.1; letter-spacing: -0.3px; }
+    .footer-cols {
+      flex: 1; display: grid;
+      grid-template-columns: repeat(4, 1fr); gap: 24px;
+    }
+    .footer-col-heading {
+      font-size: 20px; font-weight: 700; color: #fafafa;
+      letter-spacing: -0.2px; line-height: 1.35; margin-bottom: 16px;
+      background: none; border: none; padding: 0; font-family: inherit;
+      display: block; text-align: left; cursor: default;
+    }
+    .footer-caret { display: none; }
+    .footer-col-links { display: block; }
+    .footer-col a {
+      display: block; font-size: 20px; font-weight: 400; color: #fafafa;
+      letter-spacing: -0.2px; line-height: 1.35; margin-bottom: 4px;
+      transition: color .15s;
+    }
+    .footer-col a:hover { color: #99b3fe; }
+    .footer-trust {
+      flex-shrink: 0; display: flex; flex-direction: column;
+      align-items: flex-end; gap: 12px; justify-content: flex-end;
+    }
+    .footer-trust-row { display: flex; gap: 40px; }
+    .footer-trust img { width: 100px; height: 100px; object-fit: contain; }
+    .footer-divider {
+      border: none; border-top: 1px solid rgba(255,255,255,0.2);
+      margin: 0 0 32px;
+    }
+    .footer-bottom {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-copy {
+      font-size: 20px; font-weight: 400; color: #fafafa; letter-spacing: -0.2px;
+    }
+    .footer-legal { display: flex; gap: 48px; }
+    .footer-legal a {
+      font-size: 20px; font-weight: 400; color: #fafafa;
+      letter-spacing: -0.2px; transition: color .15s;
+    }
+    .footer-legal a:hover { color: #99b3fe; }
+
+/* ── MOBILE RESPONSIVE ─────────────────────────────── */
+@media (max-width: 767px) {
+  body { min-width: 0; }
+
+  /* NAV */
+  .nav-wrap {
+    position: fixed; top: 0; left: 0; right: 0; width: 100%;
+    transform: none;
+  }
+  .nav-bar {
+    border-radius: 0; height: 50px; padding: 0 20px;
+    border-bottom: 1px solid #e5e5e5; background: #fcfcfc;
+    box-shadow: none;
+    justify-content: space-between;
+  }
+  .nav-logo { width: 89px; height: 27px; }
+  .nav-links { display: none; }
+  .nav-login {
+    display: inline-flex; height: auto;
+    padding: 10px 12px; border-radius: 12px;
+    font-size: 16px; font-weight: 600; color: #140d26;
+    background: #fff; border: 1px solid #e5e5e5;
+    box-shadow: 0 1px 2px rgba(16,24,40,0.05);
+  }
+  .nav-signup { display: none; }
+  .nav-enroll {
+    display: inline-flex; align-items: center; height: auto;
+    padding: 10px 12px; border-radius: 12px;
+    font-size: 16px; font-weight: 600; color: #fff;
+    background: #3366ff; text-decoration: none;
+  }
+  .nav-hamburger {
+    display: flex; align-items: center; justify-content: center;
+    width: 30px; height: 30px; background: none; border: none;
+    padding: 0; cursor: pointer;
+  }
+  .nav-hamburger img { width: 30px; height: 30px; }
+
+  /* MOBILE MENU */
+  .mobile-menu {
+    position: fixed; top: 50px; left: 0; right: 0; bottom: 0;
+    background: #fff; z-index: 99; padding: 24px 20px;
+    display: none; flex-direction: column; gap: 0;
+    border-top: 1px solid #e5e5e5;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a:not(.btn-blue):not(.btn-ghost-mobile) {
+    font-size: 18px; font-weight: 600; color: #171717;
+    padding: 16px 0; border-bottom: 1px solid #f0f0f0;
+    display: block;
+  }
+  .mobile-menu-btns {
+    display: flex; flex-direction: column; gap: 12px;
+    margin-top: 24px;
+  }
+  .btn-ghost-mobile {
+    display: flex; align-items: center; justify-content: center;
+    height: 48px; border: 1.5px solid #d4d4d4; border-radius: 10px;
+    font-size: 16px; font-weight: 600; color: #171717;
+  }
+  .mobile-menu .btn-blue { height: 48px; font-size: 16px; width: 100%; border-radius: 10px; }
+
+  /* HERO */
+  .hero { height: 592px; margin-top: 50px; background: #2a2118; }
+  .hero-bg { display: none; }
+  .hero-bg-mobile {
+    display: block;
+    position: absolute; inset: 0;
+    width: 100%; height: 100%; object-fit: cover; object-position: 70% center; max-width: none;
+  }
+  .hero-content {
+    left: 25px; right: 25px; width: auto;
+    top: auto; bottom: 49px;
+  }
+  .hero-title { font-size: 30px; line-height: 36px; letter-spacing: -0.5px; margin-bottom: 24px; }
+  .hero-sub { font-size: 16px; line-height: 24px; letter-spacing: -0.16px; margin-bottom: 30px; max-width: none; }
+  .hero-content .btn-blue { height: 48px; font-size: 16px; width: 100%; border-radius: 10px; }
+  .hero-bottom { display: none; }
+  .hero-gradient { height: 200px; }
+
+  /* HERO PARTNER STRIP */
+  .hero-partners-strip {
+    background: #f0f3fd; padding: 30px 25px;
+    display: flex; flex-direction: column; gap: 24px; align-items: center;
+  }
+  .hero-available-strip {
+    font-size: 17px; font-weight: 700; color: #171717;
+    line-height: 24px; text-align: center;
+  }
+  .hero-partners-row {
+    display: flex; align-items: center; justify-content: center;
+    flex-wrap: wrap; gap: 17px;
+  }
+  .hero-partners-row img { height: 20px; width: auto; max-width: 120px; filter: brightness(0); }
+  .hero-more-strip { font-size: 17px; font-weight: 400; color: #171717; }
+
+  /* MODULE 2 */
+  .mod-healthy { padding: 72px 0; }
+  .mod-healthy-inner {
+    flex-direction: column; align-items: center;
+    padding: 0 25px; gap: 30px;
+  }
+  .mod-photo-frame { width: 325px; height: 325px; border-radius: 20px; flex-shrink: 0; }
+  .mod-text { text-align: center; }
+  .section-title { font-size: 30px; line-height: 36px; letter-spacing: -0.5px; margin-bottom: 24px; }
+  .section-body { font-size: 16px; line-height: 24px; letter-spacing: -0.16px; margin-bottom: 24px; }
+  .mod-text .btn-blue { height: 48px; font-size: 16px; width: 275px; border-radius: 10px; }
+
+  /* RESOURCES */
+  .resources { padding: 0 0 72px; }
+  .resources-inner { padding: 0 25px; }
+  .resources-header { max-width: none; padding-top: 72px; margin-bottom: 30px; }
+  .resources-eyebrow { font-size: 16px; line-height: 24px; letter-spacing: -0.16px; margin-bottom: 24px; }
+  .resources-title { font-size: 30px; line-height: 36px; letter-spacing: -0.5px; margin-bottom: 24px; }
+  .resources-body { font-size: 16px; line-height: 24px; letter-spacing: -0.16px; }
+  .resource-cards {
+    overflow: hidden;
+  }
+  .resource-cards-inner {
+    display: flex; gap: 0;
+    transition: transform 0.4s cubic-bezier(.4,0,.2,1);
+  }
+  .res-card {
+    flex: none; width: 325px; height: 433px; border-radius: 20px;
+    padding: 24px; justify-content: flex-end; flex-direction: column;
+    gap: 24px;
+  }
+  .res-card-label { display: none; }
+  .res-card-content { display: flex; flex-direction: column; gap: 24px; position: relative; z-index: 1; }
+  .res-card-title { font-size: 30px; font-weight: 700; color: #fafafa; line-height: 36px; }
+  .res-card-desc { font-size: 14px; font-weight: 400; color: #fafafa; line-height: 20px; }
+  .res-card-cta { height: 48px; font-size: 16px; width: 100%; border-radius: 10px; }
+  .res-carousel-nav {
+    display: flex; gap: 10px; justify-content: center; margin-top: 24px;
+  }
+  .res-nav-btn {
+    width: 32px; height: 32px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    background: none; border: none; cursor: pointer; padding: 0;
+  }
+  .res-nav-btn img { width: 32px; height: 32px; }
+
+  /* TESTIMONIALS */
+  .testimonials { padding: 72px 0 72px; }
+  .testi-header { padding: 0 25px 30px; flex-direction: column; align-items: flex-start; gap: 16px; }
+  .testi-heading { font-size: 30px; line-height: 36px; letter-spacing: -0.5px; }
+  .testi-nav-btns { margin-top: 0; }
+  .testi-nav-btn { width: 32px; height: 32px; }
+  .testi-track-wrap { padding: 0 25px; }
+  .testi-card {
+    width: 325px; height: 433px; border-radius: 20px;
+    padding: 25px; gap: 48px;
+  }
+  .testi-person { gap: 24px; }
+  .testi-avatar { width: 72px; height: 72px; }
+  .testi-name { font-size: 20px; line-height: 28px; }
+  .testi-quote { font-size: 20px; line-height: 30px; letter-spacing: -0.2px; }
+
+  /* EVIDENCE */
+  .evidence { padding: 72px 25px; }
+  .evidence-inner { padding: 0; max-width: none; }
+  .evidence-header { max-width: none; margin-bottom: 30px; }
+  .evidence-title { font-size: 30px; line-height: 36px; letter-spacing: -0.5px; margin-bottom: 24px; }
+  .evidence-body { font-size: 16px; line-height: 24px; letter-spacing: -0.16px; margin-bottom: 30px; }
+  .evidence-header .btn-yellow { height: 48px; font-size: 16px; width: 275px; border-radius: 10px; }
+  .evidence-cards { flex-direction: column; gap: 12px; min-height: 0; }
+  .ev-card { min-height: 0; border-radius: 20px; }
+  .ev-card-periwinkle, .ev-card-lavender { padding: 25px; }
+  .ev-bar-chart { display: none; }
+  .ev-card-photo { display: none; }
+  .ev-pie { display: none; }
+  .ev-stat-title { font-size: 26px; margin-top: 0; margin-bottom: 12px; text-align: left; }
+  .ev-stat-body { font-size: 16px; line-height: 24px; text-align: left; }
+
+  /* BRING BOLD */
+  .bring { padding: 72px 0; }
+  .bring-inner { flex-direction: column; align-items: center; padding: 0 25px; gap: 30px; }
+  .bring-photo { width: 325px; height: 325px; border-radius: 20px; }
+  .bring-text { text-align: center; }
+  .bring-text .btn-blue { height: 48px; font-size: 16px; width: 275px; border-radius: 10px; }
+
+  /* CTA */
+  .cta { height: 468px; }
+  .cta-content { gap: 30px; padding: 0 25px; }
+  .cta-title { font-size: 30px; line-height: 36px; letter-spacing: -0.5px; }
+  .cta-btns { flex-direction: column; gap: 12px; width: 275px; }
+  .cta-btns .btn-blue, .cta-btns .btn-yellow { height: 48px; font-size: 16px; width: 100%; border-radius: 10px; }
+
+  /* FOOTER */
+  .footer { padding: 72px 0 60px; }
+  .footer-inner { padding: 0; }
+  .footer-top { flex-direction: column; gap: 0; margin-bottom: 0; }
+  .footer-brand { width: auto; padding: 0 50px; margin-bottom: 48px; }
+  .footer-logo { width: 130px; height: 39px; margin-bottom: 30px; }
+  .footer-tagline { font-size: 30px; line-height: 36px; margin-bottom: 30px; }
+  .footer-brand .btn-yellow { width: 275px; height: 48px; font-size: 16px; border-radius: 10px; }
+  .footer-badges { margin-top: 24px; }
+  .store-badge { height: 41px; padding: 5px 10px 5px 8px; }
+  .store-badge-large { font-size: 15px; }
+  .footer-cols { grid-template-columns: 1fr; gap: 0; padding: 0; }
+  .footer-col { border-top: 1px solid rgba(255,255,255,0.15); }
+  .footer-col-heading {
+    display: flex; align-items: center; justify-content: space-between;
+    width: 100%; font-size: 16px; font-weight: 700; color: #fafafa;
+    padding: 16px 50px; background: none; border: none; cursor: pointer;
+    font-family: inherit; text-align: left;
+  }
+  .footer-caret { width: 32px; height: 32px; transition: transform .2s; }
+  .footer-col-heading.open .footer-caret { transform: rotate(180deg); }
+  .footer-col-links { display: none; padding: 0 50px 16px; }
+  .footer-col-links.open { display: block; }
+  .footer-col a {
+    font-size: 16px; line-height: 24px; padding: 4px 0; margin-bottom: 8px;
+  }
+  .footer-trust { padding: 0 50px; margin: 48px 0; align-items: flex-start; }
+  .footer-trust-row { gap: 24px; }
+  .footer-trust img { width: 72px; height: 72px; }
+  .footer-divider { margin: 0 50px 24px; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; gap: 8px; padding: 0 50px; }
+  .footer-copy { font-size: 16px; }
+  .footer-legal { gap: 27px; }
+  .footer-legal a { font-size: 16px; }
+}
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════
+     FLOATING NAV
+══════════════════════════════════════════════════════ -->
+<div class="nav-wrap">
+  <nav class="nav-bar">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-lines">
+        <img src="nav-logo-lines.svg" alt="" />
+      </div>
+      <div class="nav-logo-text">
+        <img src="nav-logo-text.svg" alt="BOLD" />
+      </div>
+    </a>
+    <div class="nav-links">
+      <a href="#">FAQ</a>
+      <a href="#">Resources</a>
+      <a href="#">Partnerships</a>
+      <a href="#">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <a href="sign-in.html" class="nav-login">Log in</a>
+      <a href="check-eligibility.html" class="nav-signup">Check eligibility</a>
+      <a href="check-eligibility.html" class="nav-enroll">Enroll</a>
+      <button class="nav-hamburger" onclick="toggleMenu()" aria-label="Menu">
+        <img src="icon-menu.svg" alt="" />
+      </button>
+    </div>
+  </nav>
+</div><!-- end nav-wrap -->
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#">FAQ</a>
+  <a href="#">Resources</a>
+  <a href="#">Partnerships</a>
+  <a href="#">Contact</a>
+  <div class="mobile-menu-btns">
+    <a href="sign-in.html" class="btn-ghost-mobile">Log in</a>
+    <a href="check-eligibility.html" class="btn-blue">Check eligibility</a>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════════════ -->
+<section class="hero">
+  <img class="hero-bg" src="hero-bg.jpg" alt="" />
+  <img class="hero-bg-mobile" src="hero-bg.jpg" alt="" />
+  <div class="hero-gradient"></div>
+
+  <div class="hero-content">
+    <h1 class="hero-title">Ten minutes today.<br>A healthier tomorrow.</h1>
+    <p class="hero-sub">Build strength, improve balance, and reduce pain with clinically-backed programs tailored to you — all at no cost for eligible members.</p>
+    <a href="check-eligibility.html" class="btn-blue">Check eligibility</a>
+  </div>
+
+  <div class="hero-bottom">
+    <p class="hero-available">Available at no cost to 12 million Medicare members nationwide</p>
+    <div class="hero-partners">
+      <img src="partner-renewactive.svg" alt="Renew Active by UnitedHealthcare" />
+      <img src="partner-onepass.svg" alt="OnePass" />
+      <img src="partner-massadvantage.png" alt="Mass Advantage" style="height:34px" />
+      <img src="partner-ucla.svg" alt="UCLA Medicare Advantage Plan" style="height:34px" />
+      <span class="hero-more">+ more</span>
+    </div>
+  </div>
+</section>
+
+<!-- Mobile partner strip (shown below hero on mobile only) -->
+<div class="hero-partners-strip">
+  <p class="hero-available-strip">Available at no cost to 12 million Medicare members nationwide</p>
+  <div class="hero-partners-row">
+    <img src="partner-renewactive.svg" alt="Renew Active" />
+    <img src="partner-onepass.svg" alt="OnePass" />
+    <img src="partner-massadvantage.png" alt="Mass Advantage" />
+    <img src="partner-ucla.svg" alt="UCLA" />
+    <span class="hero-more-strip">+ more</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     MODULE 2 – THE HEALTHY AGING COMPANION
+══════════════════════════════════════════════════════ -->
+<section class="mod-healthy">
+  <div class="mod-healthy-inner">
+    <div class="mod-photo-frame">
+      <img src="laptop.jpg" alt="Bold app on laptop" />
+    </div>
+    <div class="mod-text">
+      <h2 class="section-title">The healthy aging companion for Medicare members</h2>
+      <p class="section-body">With thousands of age-friendly exercise classes, comprehensive healthy aging education, and community resources, you'll find your place here.</p>
+      <a href="check-eligibility.html" class="btn-blue">Check eligibility</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     RESOURCES – COMPREHENSIVE RESOURCES
+══════════════════════════════════════════════════════ -->
+<section class="resources">
+  <div class="resources-inner">
+    <div class="resources-header">
+      <p class="resources-eyebrow">The Bold experience</p>
+      <h2 class="resources-title">Comprehensive resources<br>to support your health</h2>
+      <p class="resources-body">Bold offers resources for the lifestyle choices that most affect your health — including exercise, nutrition, sleep, and social connection — all in an easy-to-use online app.</p>
+    </div>
+    <div class="resource-cards">
+      <div class="resource-cards-inner" id="res-track">
+        <div class="res-card">
+          <img class="res-card-bg" src="card-move.jpg" alt="" />
+          <div class="res-card-grad"></div>
+          <span class="res-card-label">Move</span>
+          <div class="res-card-content"><p class="res-card-title">Move</p><p class="res-card-desc">Build strength, improve balance, and reduce pain with thousands of exercise classes taught by experienced trainers.</p><a href="check-eligibility.html" class="btn-blue res-card-cta">Check eligibility</a></div>
+        </div>
+        <div class="res-card">
+          <img class="res-card-bg" src="card-learn.jpg" alt="" />
+          <div class="res-card-grad"></div>
+          <span class="res-card-label">Learn</span>
+          <div class="res-card-content"><p class="res-card-title">Learn</p><p class="res-card-desc">Explore nutrition, sleep, mental wellness, and more through Bold's library of expert-led healthy aging content.</p><a href="check-eligibility.html" class="btn-blue res-card-cta">Check eligibility</a></div>
+        </div>
+        <div class="res-card">
+          <img class="res-card-bg" src="card-connect.jpg" alt="" />
+          <div class="res-card-grad"></div>
+          <span class="res-card-label">Connect</span>
+          <div class="res-card-content"><p class="res-card-title">Connect</p><p class="res-card-desc">Find community, make friends, and share your journey with millions of Bold members across the country.</p><a href="check-eligibility.html" class="btn-blue res-card-cta">Check eligibility</a></div>
+        </div>
+        <div class="res-card">
+          <img class="res-card-bg" src="card-getcare.jpg" alt="" />
+          <div class="res-card-grad"></div>
+          <span class="res-card-label">Get care</span>
+          <div class="res-card-content"><p class="res-card-title">Get care</p><p class="res-card-desc">Get connected to the care you need — from telehealth to specialists — all in one convenient place.</p><a href="check-eligibility.html" class="btn-blue res-card-cta">Check eligibility</a></div>
+        </div>
+      </div>
+      <div class="res-carousel-nav">
+        <button class="res-nav-btn" onclick="slideRes(-1)" aria-label="Previous"><img src="icon-caret-left.svg" alt="" /></button>
+        <button class="res-nav-btn" onclick="slideRes(1)" aria-label="Next"><img src="icon-caret-right.svg" alt="" /></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     TESTIMONIALS – BELOVED BY MEMBERS AND PARTNERS
+══════════════════════════════════════════════════════ -->
+<section class="testimonials">
+  <div class="testi-header">
+    <h2 class="testi-heading">Beloved by members and partners</h2>
+    <div class="testi-nav-btns">
+      <button class="testi-nav-btn" onclick="slideTesti(-1)" aria-label="Previous">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M15 19l-7-7 7-7" stroke="#171717" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <button class="testi-nav-btn" onclick="slideTesti(1)" aria-label="Next">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+          <path d="M9 5l7 7-7 7" stroke="#171717" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+  <div class="testi-track-wrap">
+    <div class="testi-track" id="testi-track">
+
+      <!-- Card 1: Gerrie -->
+      <div class="testi-card">
+        <div class="testi-person">
+          <div class="testi-avatar">
+            <img src="photo-gerrie.jpg" alt="Gerrie" />
+          </div>
+          <div class="testi-name">Gerrie<br>75 years old</div>
+        </div>
+        <p class="testi-quote">"I was delighted with the breadth of classes offered, the instruction was really good, <span class="hl">I could do it at home, and I could do it at my convenience</span>."</p>
+      </div>
+
+      <!-- Card 2: Mike Cantor MD -->
+      <div class="testi-card">
+        <div class="testi-person" style="gap:0">
+          <div class="testi-name" style="color:#99b3fe">Mike Cantor, MD<br>Chief Medical officer<br>Mass Advantage</div>
+        </div>
+        <p class="testi-quote">"Bold exemplifies [our] member-first approach by making exercise therapy more <span class="hl">accessible and approachable for members of all ability levels</span>."</p>
+      </div>
+
+      <!-- Card 3: Bennett -->
+      <div class="testi-card">
+        <div class="testi-person">
+          <div class="testi-avatar">
+            <img src="photo-bennett.jpg" alt="Bennett" />
+          </div>
+          <div class="testi-name">Bennett<br>66 years old</div>
+        </div>
+        <p class="testi-quote">"The instructors show you what to do and how to do it – because correct form means everything. <span class="hl">And they make it fun!</span> I look forward to my Bold sessions."</p>
+      </div>
+
+      <!-- Card 4: Susan -->
+      <div class="testi-card">
+        <div class="testi-person">
+          <div class="testi-avatar">
+            <img src="photo-susan.jpg" alt="Susan" />
+          </div>
+          <div class="testi-name">Susan<br>66 years old</div>
+        </div>
+        <p class="testi-quote">"I was ultimately able to do 45 minutes of moderate cardio, <span class="hl">which certainly had never before been possible</span>."</p>
+      </div>
+
+      <!-- Card 5: Kay -->
+      <div class="testi-card">
+        <div class="testi-person">
+          <div class="testi-avatar">
+            <img src="photo-kay.jpg" alt="Kay" />
+          </div>
+          <div class="testi-name">Kay<br>72 years old</div>
+        </div>
+        <p class="testi-quote">"I think having confidence in my own balance <span class="hl">helps me feel more confident in the world</span> – just going out and walking, and not worrying about falling."</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     MODULE 5 – EVIDENCE-BASED OUTCOMES
+══════════════════════════════════════════════════════ -->
+<section class="evidence">
+  <div class="evidence-inner">
+    <div class="evidence-header">
+      <h2 class="evidence-title">Evidence-based programs that drive remarkable outcomes</h2>
+      <p class="evidence-body">Our programs are based on years of research into how to engage older people in their health, promote healthy behaviors, and drive lasting impact.</p>
+      <a href="#" class="btn-yellow">Learn more</a>
+    </div>
+    <div class="evidence-cards">
+
+      <!-- Left: periwinkle + bar chart -->
+      <div class="ev-card ev-card-periwinkle">
+        <div class="ev-bar-chart">
+          <div class="ev-bar" style="height:107px;background:rgba(38,77,191,0.5);"></div>
+          <div class="ev-bar" style="height:214px;background:#264dbf;"></div>
+        </div>
+        <p class="ev-stat-title">Increased physical activity</p>
+        <p class="ev-stat-body">Bold members see a more than 2x increase in weekly physical activity levels. <em>JMIR</em></p>
+      </div>
+
+      <!-- Center: full photo -->
+      <div class="ev-card ev-card-photo">
+        <img src="evidence-center.jpg" alt="Bold member" />
+      </div>
+
+      <!-- Right: lavender + pie chart -->
+      <div class="ev-card ev-card-lavender">
+        <img src="evidence-pie.svg" alt="" class="ev-pie" />
+        <p class="ev-stat-title">Reduced fall prevalence</p>
+        <p class="ev-stat-body">Bold members see a 40% reduction in falls and related hospitalizations. <em>Health system analysis, 2024</em></p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     MODULE 6 – BRING BOLD TO YOUR MEMBERS
+══════════════════════════════════════════════════════ -->
+<section class="bring">
+  <div class="bring-inner">
+    <div class="bring-photo">
+      <img src="bring-bold.jpg" alt="Bring Bold to your members" />
+    </div>
+    <div class="bring-text">
+      <h2 class="section-title">Bring Bold to<br>your members</h2>
+      <p class="section-body">Bold works with leading Medicare Advantage plans, providers, and other Medicare organizations to improve quality and Star Ratings, achieve stronger HOS performance, and reduce total cost of care.</p>
+      <a href="#" class="btn-blue">Explore partnerships</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     GET STARTED CTA
+══════════════════════════════════════════════════════ -->
+<section class="cta">
+  <div class="cta-bg">
+    <img src="cta-bg.jpg" alt="" />
+  </div>
+  <div class="cta-overlay"></div>
+  <div class="cta-content">
+    <h2 class="cta-title">Get started with Bold</h2>
+    <div class="cta-btns">
+      <a href="check-eligibility.html" class="btn-blue">Check eligibility</a>
+      <a href="#" class="btn-yellow">Book a business demo</a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+
+      <!-- Brand column -->
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo">
+          <div class="logo-lines"><img src="footer-logo-lines.svg" alt="" /></div>
+          <div class="logo-text"><img src="footer-logo-text.svg" alt="BOLD" /></div>
+        </a>
+        <p class="footer-tagline">Do something<br>Bold every day.</p>
+        <a href="check-eligibility.html" class="btn-yellow" style="width:208px">Check eligibility</a>
+        <div class="footer-badges">
+          <!-- Google Play badge -->
+          <a href="#" class="store-badge" aria-label="Get it on Google Play">
+            <span class="store-badge-icon">
+              <svg width="20" height="22" viewBox="0 0 20 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0.5 1.19c0-.63.71-1 1.22-.62l17 9.81a.7.7 0 0 1 0 1.22l-17 9.81c-.51.37-1.22-.01-1.22-.62V1.19z" fill="url(#gp-a)"/>
+                <path d="M0.5 1.19L11.2 11 0.5 20.81V1.19z" fill="url(#gp-b)"/>
+                <path d="M11.2 11L17.72 7.35 0.5 1.19 11.2 11z" fill="url(#gp-c)"/>
+                <path d="M11.2 11L0.5 20.81l17.22-6.16L11.2 11z" fill="url(#gp-d)"/>
+                <defs>
+                  <linearGradient id="gp-a" x1="0.5" y1="11" x2="18.72" y2="11" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#00A0FF"/>
+                    <stop offset="0.01" stop-color="#00A1FF"/>
+                    <stop offset="0.26" stop-color="#00BEFF"/>
+                    <stop offset="0.51" stop-color="#00D2FF"/>
+                    <stop offset="0.76" stop-color="#00DFFF"/>
+                    <stop offset="1" stop-color="#00E3FF"/>
+                  </linearGradient>
+                  <linearGradient id="gp-b" x1="0.5" y1="11" x2="11.2" y2="11" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#FFE000"/>
+                    <stop offset="0.41" stop-color="#FFBD00"/>
+                    <stop offset="0.78" stop-color="#FFA500"/>
+                    <stop offset="1" stop-color="#FF9C00"/>
+                  </linearGradient>
+                  <linearGradient id="gp-c" x1="0.5" y1="5.82" x2="18.72" y2="5.82" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#FF3A44"/>
+                    <stop offset="1" stop-color="#C31162"/>
+                  </linearGradient>
+                  <linearGradient id="gp-d" x1="0.5" y1="16.18" x2="18.72" y2="16.18" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#32A071"/>
+                    <stop offset="0.07" stop-color="#2DA771"/>
+                    <stop offset="0.48" stop-color="#15CF74"/>
+                    <stop offset="0.8" stop-color="#06E775"/>
+                    <stop offset="1" stop-color="#00F076"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+            </span>
+            <span class="store-badge-text">
+              <span class="store-badge-small">GET IT ON</span>
+              <span class="store-badge-large">Google Play</span>
+            </span>
+          </a>
+          <!-- App Store badge -->
+          <a href="#" class="store-badge" aria-label="Download on the App Store">
+            <span class="store-badge-icon">
+              <svg width="18" height="22" viewBox="0 0 18 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M14.98 11.66c-.02-2.28 1.87-3.38 1.96-3.44-1.07-1.56-2.73-1.77-3.32-1.79-1.4-.14-2.75.83-3.46.83-.72 0-1.82-.81-3-.79-1.53.02-2.95.89-3.74 2.25-1.6 2.77-.41 6.87 1.15 9.12.77 1.1 1.68 2.34 2.87 2.3 1.16-.05 1.59-.74 2.99-.74 1.39 0 1.79.74 3 .72 1.24-.02 2.03-1.12 2.79-2.23.88-1.28 1.24-2.52 1.26-2.58-.03-.01-2.47-.95-2.5-3.65z" fill="#fff"/>
+                <path d="M12.74 4.4c.64-.78 1.07-1.85.95-2.93-.92.04-2.03.61-2.69 1.38-.59.68-1.11 1.77-.97 2.81 1.02.08 2.07-.52 2.71-1.26z" fill="#fff"/>
+              </svg>
+            </span>
+            <span class="store-badge-text">
+              <span class="store-badge-small">Download on the</span>
+              <span class="store-badge-large">App Store</span>
+            </span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Link columns -->
+      <div class="footer-cols">
+        <div class="footer-col">
+          <button class="footer-col-heading" onclick="toggleFooterCol(this)">Company <img src="icon-caret-down.svg" class="footer-caret" /></button>
+          <div class="footer-col-links">
+            <a href="#">About Bold</a>
+            <a href="#">Science</a>
+            <a href="#">Resources</a>
+            <a href="#">Partnerships</a>
+            <a href="#">Press</a>
+            <a href="#">Careers</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <button class="footer-col-heading" onclick="toggleFooterCol(this)">For Health Plans <img src="icon-caret-down.svg" class="footer-caret" /></button>
+          <div class="footer-col-links">
+            <a href="#">Partnerships</a>
+            <a href="#">Request demo</a>
+            <a href="#">Resources</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <button class="footer-col-heading" onclick="toggleFooterCol(this)">Product <img src="icon-caret-down.svg" class="footer-caret" /></button>
+          <div class="footer-col-links">
+            <a href="#">Sign up</a>
+            <a href="#">Partnerships</a>
+            <a href="#">FAQ</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <button class="footer-col-heading" onclick="toggleFooterCol(this)">Connect <img src="icon-caret-down.svg" class="footer-caret" /></button>
+          <div class="footer-col-links">
+            <a href="#">Contact us</a>
+            <a href="#">Instagram</a>
+            <a href="#">Facebook</a>
+            <a href="#">LinkedIn</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Trust badges -->
+      <div class="footer-trust">
+        <div class="footer-trust-row">
+          <img src="badge-aicpa.svg" alt="AICPA SOC" />
+          <img src="badge-hipaa.svg" alt="HIPAA Compliant" />
+        </div>
+      </div>
+
+    </div>
+
+    <hr class="footer-divider" />
+
+    <div class="footer-bottom">
+      <p class="footer-copy">© 2025 Age Bold Inc.</p>
+      <div class="footer-legal">
+        <a href="#">Terms</a>
+        <a href="#">Privacy</a>
+        <a href="#">Disclaimers</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile nav menu
+  function toggleMenu() {
+    document.getElementById('mobile-menu').classList.toggle('open');
+  }
+
+  // Testimonials carousel — card width depends on screen size
+  let testiIdx = 0;
+  const TESTI_TOTAL = 5;
+  function slideTesti(dir) {
+    const isMobile = window.innerWidth <= 767;
+    const cardW = isMobile ? (325 + 24) : (493 + 24);
+    const max = TESTI_TOTAL - 1;
+    testiIdx = Math.max(0, Math.min(max, testiIdx + dir));
+    document.getElementById('testi-track').style.transform =
+      'translateX(-' + (testiIdx * cardW) + 'px)';
+  }
+  // Reset carousel on resize
+  window.addEventListener('resize', () => { testiIdx = 0; slideTesti(0); });
+
+  // Resources carousel (mobile only)
+  let resIdx = 0;
+  const RES_TOTAL = 4;
+  function slideRes(dir) {
+    resIdx = Math.max(0, Math.min(RES_TOTAL - 1, resIdx + dir));
+    const inner = document.querySelector('.resource-cards-inner');
+    if (inner) inner.style.transform = 'translateX(-' + (resIdx * 325) + 'px)';
+  }
+
+  // Footer accordion
+  function toggleFooterCol(btn) {
+    btn.classList.toggle('open');
+    const links = btn.nextElementSibling;
+    if (links) links.classList.toggle('open');
+  }
+</script>
+
+</body>
+</html>

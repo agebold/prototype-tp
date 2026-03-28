@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Check Eligibility – Bold</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font);
+      background: #f5f5f5;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ── Outer wrapper ───────────────────────────────── */
+    .ce-wrap {
+      display: flex;
+      width: 1052px;
+      min-height: 719px;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.18);
+      margin: 40px 0;
+    }
+
+    /* ── Left: hero image panel ───────────────────────── */
+    .ce-hero {
+      position: relative;
+      width: 502px;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+    .ce-hero img.ce-hero-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      max-width: none;
+      display: block;
+    }
+    /* dark gradient over bottom of image for logo legibility */
+    .ce-hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 45%);
+      pointer-events: none;
+    }
+    .ce-hero-branding {
+      position: absolute;
+      bottom: 30px;
+      left: 30px;
+      right: 30px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      z-index: 2;
+    }
+    /* Logo */
+    .ce-logo {
+      position: relative;
+      width: 140px;
+      height: 42px;
+      flex-shrink: 0;
+      display: block;
+      overflow: hidden;
+    }
+    .ce-logo .logo-lines {
+      position: absolute; top: 0; left: 0; right: 69.76%; bottom: 0;
+    }
+    .ce-logo .logo-text {
+      position: absolute; top: 20.94%; left: 36.57%; right: 0; bottom: 20.53%;
+    }
+    .ce-logo .logo-lines img,
+    .ce-logo .logo-text img {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%; max-width: none; object-fit: contain;
+    }
+    .ce-hero-tagline {
+      font-size: 16px;
+      font-weight: 600;
+      color: #fff;
+      text-align: right;
+      line-height: 1.4;
+      max-width: 200px;
+    }
+
+    /* ── Right: form panel ───────────────────────────── */
+    .ce-form-panel {
+      flex: 1;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* close button row */
+    .ce-nav {
+      display: flex;
+      justify-content: flex-end;
+      padding: 12px;
+      flex-shrink: 0;
+    }
+    .ce-close {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      box-shadow: 0 1px 2px rgba(16,24,40,0.05);
+      cursor: pointer;
+      text-decoration: none;
+      color: #171717;
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 1;
+    }
+    .ce-close:hover { background: #f5f5f5; }
+
+    /* content area */
+    .ce-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    /* header */
+    .ce-header {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 0 32px 16px;
+    }
+    .ce-title {
+      font-size: 32px;
+      font-weight: 600;
+      color: #171717;
+      line-height: 1.25;
+      text-align: center;
+      letter-spacing: -0.5px;
+    }
+    .ce-desc {
+      font-size: 16px;
+      font-weight: 400;
+      color: #171717;
+      line-height: 1.5;
+    }
+
+    /* fields */
+    .ce-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 0 32px 16px;
+    }
+    .ce-field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .ce-label {
+      font-size: 16px;
+      font-weight: 600;
+      color: #140d26;
+      line-height: 1.5;
+    }
+    .ce-input {
+      width: 100%;
+      height: 44px;
+      border: 1px solid #e5e5e5;
+      border-radius: 12px;
+      box-shadow: 0 1px 2px rgba(16,24,40,0.05);
+      padding: 0 16px;
+      font-size: 16px;
+      font-family: var(--font);
+      color: #171717;
+      background: #fff;
+      outline: none;
+      transition: border-color .15s, box-shadow .15s;
+      -webkit-appearance: none;
+    }
+    .ce-input::placeholder { color: #8a8693; }
+    .ce-input:focus {
+      border-color: #5200d4;
+      box-shadow: 0 0 0 3px rgba(82,0,212,0.12);
+    }
+
+    /* action */
+    .ce-action {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 0 32px;
+    }
+    .ce-submit {
+      width: 100%;
+      height: 48px;
+      background: #5200d4;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      font-family: var(--font);
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .ce-submit:hover { background: #3f00a8; }
+    .ce-terms {
+      font-size: 12px;
+      font-weight: 400;
+      color: #525252;
+      line-height: 1.6;
+    }
+    .ce-terms a { color: #525252; text-decoration: underline; }
+
+    /* footer */
+    .ce-footer {
+      border-top: 1px solid #e5e5e5;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 32px;
+      font-size: 14px;
+      color: #000;
+      flex-shrink: 0;
+    }
+    .ce-footer a { color: #5200d4; font-weight: 500; }
+
+    /* ── Responsive ───────────────────────────────────── */
+    @media (max-width: 767px) {
+      body { background: #fff; align-items: flex-start; }
+
+      .ce-wrap {
+        width: 100%;
+        min-height: 100vh;
+        border-radius: 0;
+        box-shadow: none;
+        flex-direction: column;
+        margin: 0;
+      }
+
+      /* Hide the hero image on mobile */
+      .ce-hero { display: none; }
+
+      .ce-form-panel { min-height: 100vh; }
+
+      .ce-title { font-size: 26px; }
+      .ce-header { padding: 0 20px 16px; }
+      .ce-fields { padding: 0 20px 16px; }
+      .ce-action { padding: 0 20px; }
+      .ce-footer { padding: 16px 20px; flex-direction: column; gap: 8px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="ce-wrap">
+
+  <!-- ── Left: Hero image ── -->
+  <div class="ce-hero">
+    <img class="ce-hero-photo" src="eligibility-hero.jpg" alt="" />
+    <div class="ce-hero-branding">
+      <a href="index.html" class="ce-logo">
+        <div class="logo-lines"><img src="nav-logo-lines.svg" alt="" /></div>
+        <div class="logo-text"><img src="footer-logo-text.svg" alt="BOLD" /></div>
+      </a>
+      <p class="ce-hero-tagline">Do something Bold everyday.</p>
+    </div>
+  </div>
+
+  <!-- ── Right: Form ── -->
+  <div class="ce-form-panel">
+
+    <!-- Close -->
+    <div class="ce-nav">
+      <a href="index.html" class="ce-close" aria-label="Close">&#x2715;</a>
+    </div>
+
+    <div class="ce-content">
+      <!-- Header -->
+      <div class="ce-header">
+        <h1 class="ce-title">Check eligibility</h1>
+        <p class="ce-desc">Check if your health plan includes Bold at no cost. Enter your information to confirm.</p>
+      </div>
+
+      <!-- Form fields -->
+      <form class="ce-fields" onsubmit="handleSubmit(event)">
+        <div class="ce-field">
+          <label class="ce-label" for="ce-email">Email</label>
+          <input class="ce-input" id="ce-email" type="email" placeholder="you@example.com" autocomplete="email" required />
+        </div>
+        <div class="ce-field">
+          <label class="ce-label" for="ce-first">First name</label>
+          <input class="ce-input" id="ce-first" type="text" placeholder="First name" autocomplete="given-name" required />
+        </div>
+        <div class="ce-field">
+          <label class="ce-label" for="ce-last">Last name</label>
+          <input class="ce-input" id="ce-last" type="text" placeholder="Last name" autocomplete="family-name" required />
+        </div>
+        <div class="ce-field">
+          <label class="ce-label" for="ce-dob">Date of birth</label>
+          <input class="ce-input" id="ce-dob" type="text" placeholder="MM/DD/YYYY" inputmode="numeric" />
+        </div>
+
+        <!-- Action -->
+        <div class="ce-action">
+          <button type="submit" class="ce-submit">Sign up</button>
+          <p class="ce-terms">
+            By signing up, you agree to Bold's
+            <a href="https://agebold.com/terms-of-service/" target="_blank">Terms of use</a>
+            and
+            <a href="https://agebold.com/privacy-policy/" target="_blank">Privacy policy</a>.
+          </p>
+        </div>
+      </form>
+    </div>
+
+    <!-- Footer -->
+    <div class="ce-footer">
+      <span>Need help? <a href="tel:8337011545">Call us (833) 701-1545</a></span>
+      <span>Already on Bold? <a href="sign-in.html">Sign in</a></span>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // Auto-format date of birth as MM/DD/YYYY
+  document.getElementById('ce-dob').addEventListener('input', function(e) {
+    let v = e.target.value.replace(/\D/g, '').slice(0, 8);
+    if (v.length >= 5) v = v.slice(0,2) + '/' + v.slice(2,4) + '/' + v.slice(4);
+    else if (v.length >= 3) v = v.slice(0,2) + '/' + v.slice(2);
+    e.target.value = v;
+  });
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const name = document.getElementById('ce-first').value.trim();
+    if (name) localStorage.setItem('boldUserName', name);
+    window.location.href = 'onboarding.html';
+  }
+</script>
+
+</body>
+</html>
