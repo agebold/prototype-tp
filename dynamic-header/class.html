@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Class – Bold</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font); background: #fcfcfc; min-height: 100vh; display: flex; flex-direction: column; color: #171717; -webkit-font-smoothing: antialiased; }
+
+    /* ── Nav ── */
+    .cl-nav {
+      background: #fff; border-bottom: 1px solid #e5e5e5;
+      height: 64px; display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px; position: sticky; top: 0; z-index: 20;
+      box-shadow: 0 1px 2px rgba(16,24,40,.05);
+    }
+    .cl-nav-logo { position: relative; width: 100px; height: 30px; flex-shrink: 0; display: block; overflow: hidden; }
+    .cl-nav-logo .logo-lines { position: absolute; top: 0; left: 0; right: 69.76%; bottom: 0; }
+    .cl-nav-logo .logo-text  { position: absolute; top: 20.94%; left: 36.57%; right: 0; bottom: 20.53%; }
+    .cl-nav-logo .logo-lines img, .cl-nav-logo .logo-text img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: contain; }
+    .cl-nav-right { display: flex; align-items: center; gap: 8px; }
+    .cl-btn-app { background: #ffcc1a; color: #000; border: none; border-radius: 9999px; height: 40px; padding: 0 16px; font-size: 16px; font-weight: 600; cursor: pointer; font-family: var(--font); white-space: nowrap; }
+    .cl-streak { display: flex; align-items: center; gap: 4px; background: linear-gradient(135deg, #e5ca56, #c99434); border: 2px solid #d5c874; border-radius: 9999px; height: 40px; padding: 0 14px; color: #fff; font-size: 16px; font-weight: 600; }
+    .cl-avatar { width: 40px; height: 40px; border-radius: 50%; background: #5200d4; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: #fff; flex-shrink: 0; }
+
+    /* ── Breadcrumb ── */
+    .cl-breadcrumb {
+      background: #fff; border-bottom: 1px solid #e5e5e5;
+      padding: 10px 20px; font-size: 16px;
+      box-shadow: 0 2px 4px rgba(16,24,40,.06);
+    }
+    .cl-breadcrumb a { color: #5200d4; font-weight: 600; text-decoration: none; }
+    .cl-breadcrumb a:hover { text-decoration: underline; }
+    .cl-breadcrumb span { color: #171717; }
+
+    /* ── Mobile layout (default) ── */
+    .cl-page { flex: 1; display: flex; flex-direction: column; }
+
+    /* Video thumbnail — full width on mobile */
+    .cl-video-wrap {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: #1a1a2e;
+      overflow: hidden;
+    }
+    .cl-video-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block; max-width: none;
+    }
+    .cl-video-overlay {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.35);
+    }
+    .cl-start-btn {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex; align-items: center; gap: 8px;
+      background: #fff; border: 1px solid #e5e5e5;
+      border-radius: 12px; padding: 12px 16px;
+      font-size: 16px; font-weight: 600; color: #140d26;
+      cursor: pointer; font-family: var(--font);
+      box-shadow: 0 1px 2px rgba(16,24,40,.05);
+      white-space: nowrap;
+    }
+    .cl-start-btn:hover { background: #f5f5f5; }
+    .cl-start-btn svg { flex-shrink: 0; }
+
+    /* Content below video on mobile */
+    .cl-content {
+      padding: 24px 16px 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* Title + trainer row */
+    .cl-title { font-size: 24px; font-weight: 600; color: #000; line-height: 1.33; letter-spacing: -0.3px; }
+    .cl-trainer-row { display: flex; align-items: center; gap: 16px; }
+    .cl-trainer-info { display: flex; align-items: center; gap: 8px; }
+    .cl-trainer-avatar { width: 24px; height: 24px; border-radius: 50%; object-fit: cover; display: block; flex-shrink: 0; }
+    .cl-trainer-name { font-size: 16px; font-weight: 400; color: #140d26; }
+    .cl-save-btn {
+      display: flex; align-items: center; gap: 4px;
+      background: #fff; border: 1px solid #e5e5e5; border-radius: 10px;
+      padding: 6px 10px; font-size: 14px; font-weight: 600; color: #140d26;
+      cursor: pointer; font-family: var(--font);
+      box-shadow: 0 1px 2px rgba(16,24,40,.05);
+    }
+    .cl-save-btn:hover { background: #f5f5f5; }
+
+    /* About class */
+    .cl-about-title { font-size: 16px; font-weight: 600; color: #140d26; margin-bottom: 4px; }
+    .cl-about-text  { font-size: 16px; font-weight: 400; color: #140d26; line-height: 1.5; }
+
+    /* Why this class box */
+    .cl-why-box {
+      background: #ebf0ff;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .cl-why-header {
+      background: #264dbf;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .cl-why-avatar-wrap { position: relative; flex-shrink: 0; }
+    .cl-why-avatar {
+      width: 52px; height: 52px; border-radius: 50%;
+      object-fit: cover; display: block;
+    }
+    .cl-why-badge {
+      position: absolute; bottom: -2px; right: -2px;
+      width: 20px; height: 20px;
+      background: #16a34a; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      border: 2px solid #264dbf;
+    }
+    .cl-why-header-text { display: flex; flex-direction: column; }
+    .cl-why-from { font-size: 14px; font-weight: 400; color: #e5e5e5; line-height: 1.57; }
+    .cl-why-title { font-size: 16px; font-weight: 600; color: #fff; line-height: 1.5; }
+    .cl-why-divider { height: 1px; background: #99b3ff; margin: 0; }
+    .cl-why-bullets {
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .cl-why-bullets ul { padding-left: 20px; display: flex; flex-direction: column; gap: 8px; }
+    .cl-why-bullets li { font-size: 16px; font-weight: 400; color: #4d4d4d; line-height: 1.4; }
+    .cl-why-footer {
+      background: #ebf0ff;
+      border-top: 1px dashed #99b3ff;
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      height: 56px;
+    }
+    .cl-change-btn {
+      background: none; border: none; cursor: pointer; font-family: var(--font);
+      font-size: 16px; font-weight: 600; color: #404040;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .cl-change-btn span { color: #5200d4; }
+
+    /* ── Desktop (≥768px) ── */
+    @media (min-width: 768px) {
+      .cl-breadcrumb { padding: 10px 36px; }
+
+      .cl-page {
+        flex-direction: row;
+        align-items: flex-start;
+        max-width: 1440px;
+        margin: 0 auto;
+        width: 100%;
+        padding: 24px 32px 80px;
+        gap: 32px;
+      }
+
+      /* Left: video */
+      .cl-video-col {
+        flex: 1;
+        min-width: 0;
+      }
+      .cl-video-wrap {
+        border-radius: 12px;
+        aspect-ratio: 16/9;
+        box-shadow: 0 4px 8px -2px rgba(16,24,40,.1), 0 2px 4px -2px rgba(16,24,40,.06);
+      }
+
+      /* Right: details */
+      .cl-content {
+        width: 436px;
+        flex-shrink: 0;
+        padding: 0;
+        gap: 24px;
+      }
+
+      .cl-title { font-size: 30px; letter-spacing: -0.63px; line-height: 1.2; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="cl-nav">
+  <a href="today-plan.html" class="cl-nav-logo">
+    <div class="logo-lines"><img src="assets/logos/nav-logo-lines.svg" alt="" /></div>
+    <div class="logo-text"><img src="assets/logos/nav-logo-text.svg" alt="BOLD" /></div>
+  </a>
+  <div class="cl-nav-right">
+    <button class="cl-btn-app">Use app</button>
+    <div class="cl-streak"><span>🔥</span>1</div>
+    <div class="cl-avatar" id="nav-initials">?</div>
+  </div>
+</nav>
+
+<!-- Breadcrumb -->
+<div class="cl-breadcrumb">
+  <a href="today-plan.html">Today</a>
+  <span> &gt; <span id="breadcrumb-title">Class</span></span>
+</div>
+
+<!-- Page -->
+<div class="cl-page">
+
+  <!-- Video column -->
+  <div class="cl-video-col">
+    <div class="cl-video-wrap">
+      <img src="assets/images/class-thumbnail.jpg" alt="Class video" />
+      <div class="cl-video-overlay"></div>
+      <button class="cl-start-btn" onclick="alert('Starting class!')">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3.5 2L13.5 8L3.5 14V2Z" fill="#140d26"/></svg>
+        Start class
+      </button>
+    </div>
+  </div>
+
+  <!-- Details column -->
+  <div class="cl-content">
+
+    <!-- Title + trainer -->
+    <div>
+      <h1 class="cl-title" id="class-title">Class</h1>
+      <div class="cl-trainer-row" style="margin-top:12px">
+        <div class="cl-trainer-info">
+          <img class="cl-trainer-avatar" src="assets/images/coach-avatar.jpg" alt="Trainer" />
+          <span class="cl-trainer-name">Amanda</span>
+        </div>
+        <button class="cl-save-btn">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M12 14.5L8 11.5L4 14.5V3C4 2.72 4.22 2.5 4.5 2.5H11.5C11.78 2.5 12 2.72 12 3V14.5Z" stroke="#140d26" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Save class
+        </button>
+      </div>
+    </div>
+
+    <!-- About class -->
+    <div>
+      <p class="cl-about-title">About class</p>
+      <p class="cl-about-text" id="about-text">A beginner-friendly class designed to build your confidence and leave you feeling great.</p>
+    </div>
+
+    <!-- Why this class -->
+    <div class="cl-why-box">
+      <div class="cl-why-header">
+        <div class="cl-why-avatar-wrap">
+          <img class="cl-why-avatar" src="assets/images/coach-avatar.jpg" alt="Amanda" />
+          <div class="cl-why-badge">
+            <svg width="10" height="8" viewBox="0 0 10 8" fill="none"><path d="M1 4l2.5 2.5L9 1" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+        <div class="cl-why-header-text">
+          <span class="cl-why-from">From trainer Amanda</span>
+          <span class="cl-why-title">Why this class</span>
+        </div>
+      </div>
+      <div class="cl-why-divider"></div>
+      <div class="cl-why-bullets">
+        <ul id="why-bullets">
+          <li>This class is chosen based on your goals and preferences.</li>
+        </ul>
+      </div>
+      <div class="cl-why-footer">
+        <button class="cl-change-btn" onclick="history.back()">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M17.5 10A7.5 7.5 0 1 1 10 2.5c2.42 0 4.58 1.14 6 2.93" stroke="#525252" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 1.5v4h-4" stroke="#525252" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Not feeling this today? <span>Change class</span>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const name         = localStorage.getItem('boldUserName') || '';
+  const focus        = JSON.parse(localStorage.getItem('boldFocus') || '[]');
+  const duration     = localStorage.getItem('boldDuration') || '20 minutes';
+  const intensity    = localStorage.getItem('boldIntensity') || 'moderate';
+  const positions    = JSON.parse(localStorage.getItem('boldPosition') || '[]');
+  const accommodation = localStorage.getItem('boldAccommodations') || '';
+  const prim         = focus[0] || 'balance';
+  const durMin       = parseInt(duration) || 20;
+
+  // Nav initials
+  if (name) document.getElementById('nav-initials').textContent = name.slice(0, 2).toUpperCase();
+
+  // Class title
+  const titles = {
+    balance:       `${durMin} min Balance & Stability Flow`,
+    pain:          `${durMin} min Gentle Joint Relief`,
+    routine_new:   `${durMin} min Strength: Full Body Toning`,
+    routine_start: `${durMin} min Beginner Full Body Strength`,
+    pelvic:        `${durMin} min Core & Pelvic Floor Essentials`,
+    brain:         `${durMin} min Mind-Body Coordination`,
+  };
+  const classTitle = titles[prim] || titles.balance;
+  document.getElementById('class-title').textContent = classTitle;
+  document.getElementById('breadcrumb-title').textContent = classTitle;
+  document.title = classTitle + ' – Bold';
+
+  // About class
+  const abouts = {
+    balance:       'A balance-focused class using standing and seated exercises to build stability, strengthen your lower body, and reduce fall risk.',
+    pain:          'A low-impact class designed to reduce joint discomfort through gentle movement, improving your range of motion without aggravating pain.',
+    routine_new:   'A full-body class that complements your existing routine with structured movement to build on what you already do.',
+    routine_start: 'A beginner-friendly class to build a consistent routine — short, structured, and designed to leave you feeling accomplished.',
+    pelvic:        'A focused class combining core, breathing, and pelvic floor exercises — subtle, effective, and safe to do anywhere.',
+    brain:         'A coordination class that challenges both your body and mind through rhythm, reaction, and sequencing exercises.',
+  };
+  document.getElementById('about-text').textContent = abouts[prim] || abouts.balance;
+
+  // Why this class — personalized bullet points
+  const seatOnly  = positions.includes('seated') && !positions.includes('standing') && !positions.includes('floor') && !positions.includes('any');
+  const standOnly = positions.includes('standing') && !positions.includes('seated') && !positions.includes('floor') && !positions.includes('any');
+  const hasFloor  = positions.includes('floor') || positions.includes('any');
+  const intensityAdj = { gentle: 'gentle', moderate: 'moderate-intensity', challenging: 'higher-intensity' };
+  const iLabel = intensityAdj[intensity] || 'moderate-intensity';
+
+  function getWhyBullets(prim, intensity, positions, accommodation) {
+    const bullets = [];
+
+    // Bullet 1: goal-specific reason
+    const goalBullets = {
+      balance:       'Chosen to target your balance and stability goals with progressive lower-body movements.',
+      pain:          'Selected to support joint health — every move is low-load and stops well before strain.',
+      routine_new:   'A great complement to your existing routine, adding variety while building on what you already do.',
+      routine_start: 'Short and structured — the ideal starting point for a routine you can actually stick to.',
+      pelvic:        'Focused on pelvic floor and core coordination in a safe, comfortable sequence.',
+      brain:         'Combines movement and focus to sharpen coordination, reaction time, and brain-body connection.',
+    };
+    bullets.push(goalBullets[prim] || goalBullets.balance);
+
+    // Bullet 2: position/intensity note
+    if (seatOnly) {
+      bullets.push('All exercises performed seated — no standing or floor work required.');
+    } else if (standOnly) {
+      bullets.push('Standing exercises throughout — a chair nearby is recommended for support.');
+    } else if (hasFloor) {
+      bullets.push(`${iLabel.charAt(0).toUpperCase() + iLabel.slice(1)} effort with floor work included — get up and down at your own pace.`);
+    } else {
+      bullets.push(`${iLabel.charAt(0).toUpperCase() + iLabel.slice(1)} effort, mixing seated and standing movements.`);
+    }
+
+    // Bullet 3: accommodation or personalised note
+    if (accommodation) {
+      const t = accommodation.toLowerCase();
+      if (/knee/.test(t))           bullets.push('No deep bending or high-impact moves — your knee comfort is prioritised throughout.');
+      else if (/back|spine/.test(t)) bullets.push('Spine is kept supported — no forward flexion or heavy axial load.');
+      else if (/hip/.test(t))        bullets.push('No deep hip flexion — all movements stay within a safe range for your hip.');
+      else if (/walker|cane/.test(t))bullets.push('Fully adaptable for supported standing with a walker or cane.');
+      else if (/pain/.test(t))       bullets.push('Pain-sensitive areas are avoided — you control the pace and range throughout.');
+      else                           bullets.push('Your preferences and notes have shaped the exercise selection in this class.');
+    } else {
+      bullets.push('Amanda will guide you through each movement with clear cues and modifications.');
+    }
+
+    return bullets;
+  }
+
+  const bullets = getWhyBullets(prim, intensity, positions, accommodation);
+  document.getElementById('why-bullets').innerHTML = bullets.map(b => `<li>${b}</li>`).join('');
+</script>
+
+</body>
+</html>
