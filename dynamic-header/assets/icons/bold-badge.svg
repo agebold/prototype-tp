@@ -1,0 +1,21 @@
+<svg preserveAspectRatio="none" width="100%" height="100%" overflow="visible" style="display: block;" viewBox="0 0 41 41" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id=".stepper" filter="url(#filter0_d_0_4)">
+<circle id="Bullet" cx="20.5" cy="19.5" r="18.5" fill="var(--fill-0, #FAFAFA)"/>
+<g id="Lines">
+<path id="Path" d="M24.12 24.8154L11.2991 28.8034C11.1725 28.8428 11.0444 28.747 11.0444 28.6131V25.6866C11.0444 25.5991 11.1008 25.5219 11.1834 25.4962L24.0044 21.5082C24.1309 21.4688 24.259 21.5646 24.259 21.6986V24.625C24.259 24.7125 24.2026 24.7897 24.12 24.8154Z" fill="var(--fill-0, #5200D4)"/>
+<path id="Path_2" d="M26.5568 19.4991L13.7359 23.4871C13.6093 23.5265 13.4812 23.4307 13.4812 23.2968V20.3703C13.4812 20.2828 13.5376 20.2056 13.6202 20.1799L26.4412 16.1919C26.5677 16.1525 26.6958 16.2483 26.6958 16.3823V19.3087C26.6958 19.3962 26.6394 19.4734 26.5568 19.4991Z" fill="var(--fill-0, #3366FF)"/>
+<path id="Path_3" d="M28.9944 14.1828L16.1735 18.1708C16.047 18.2102 15.9189 18.1144 15.9189 17.9805V15.054C15.9189 14.9665 15.9752 14.8893 16.0579 14.8636L28.8787 10.8756C29.0053 10.8362 29.1333 10.932 29.1333 11.066V13.9924C29.1333 14.0798 29.077 14.1571 28.9944 14.1828Z" fill="var(--fill-0, #80E8FF)"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_d_0_4" x="0" y="0" width="41" height="41" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="1"/>
+<feGaussianBlur stdDeviation="1"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.0627451 0 0 0 0 0.0941176 0 0 0 0 0.156863 0 0 0 0.05 0"/>
+<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_0_4"/>
+<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_0_4" result="shape"/>
+</filter>
+</defs>
+</svg>

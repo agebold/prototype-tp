@@ -314,6 +314,13 @@
       position: relative; border-radius: 50%;
       display: block; width: 96px; height: 96px;
     }
+    .tp-trainer-badge {
+      position: absolute;
+      bottom: 2px; right: 2px;
+      width: 28px; height: 28px;
+      z-index: 3;
+      pointer-events: none;
+    }
     .tp-trainer-overlay {
       position: absolute;
       inset: 0;
@@ -465,6 +472,7 @@
     <button class="tp-trainer-btn" onclick="openTrainerModal()" aria-label="About your trainer">
       <img class="tp-trainer-img" src="assets/images/trainer-photo.jpg" alt="Your Bold coach" />
       <div class="tp-trainer-overlay"><span>Bold trainer</span></div>
+      <img class="tp-trainer-badge" src="assets/icons/bold-badge.svg" alt="" />
     </button>
   </div>
   <p class="tp-date" id="today-date">Today</p>
@@ -614,12 +622,12 @@
 
   // Coach intro
   const intros = {
-    balance:       `I'm Amanda, your Bold coach. This ${durMin}-minute class works on balance from the ground up.`,
-    pain:          `I'm Amanda, your Bold coach. This ${durMin}-minute class is gentle on your joints and leaves you feeling better, not worse.`,
-    routine_new:   `I'm Amanda, your Bold coach. This ${durMin}-minute class is a great addition to your current routine.`,
-    routine_start: `I'm Amanda, your Bold coach. Your first class is just ${durMin} minutes — finish feeling good, not wiped out!`,
-    pelvic:        `I'm Amanda, your Bold coach. This ${durMin}-minute class is discreet and effective — you can do it anywhere.`,
-    brain:         `I'm Amanda, your Bold coach. This ${durMin}-minute class mixes movement and focus to keep your brain sharp.`,
+    balance:       `I'm Amanda, your Bold trainer. This ${durMin}-minute class works on balance from the ground up.`,
+    pain:          `I'm Amanda, your Bold trainer. This ${durMin}-minute class is gentle on your joints and leaves you feeling better, not worse.`,
+    routine_new:   `I'm Amanda, your Bold trainer. This ${durMin}-minute class is a great addition to your current routine.`,
+    routine_start: `I'm Amanda, your Bold trainer. Your first class is just ${durMin} minutes — finish feeling good, not wiped out!`,
+    pelvic:        `I'm Amanda, your Bold trainer. This ${durMin}-minute class is discreet and effective — you can do it anywhere.`,
+    brain:         `I'm Amanda, your Bold trainer. This ${durMin}-minute class mixes movement and focus to keep your brain sharp.`,
   };
   document.getElementById('coach-intro').textContent = intros[prim] || intros.routine_start;
 

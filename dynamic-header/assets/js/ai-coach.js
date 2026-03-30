@@ -108,7 +108,7 @@ Days since last session: ${ctx.daysAgo}
 ${ctx.accommodation ? `Health notes: ${ctx.accommodation}` : ''}
 
 Write two things separated by the pipe character |:
-1. A greeting (1 sentence, max 100 characters) acknowledging their current state
+1. A greeting (1 sentence, max 110 characters) acknowledging their current state.${ctx.memberState === 'new' ? ' This is their first session — start with "I\'m Amanda, your Bold trainer." then one warm sentence.' : ''}
 2. A "why this class" note (1–2 sentences, max 160 characters) connecting this specific class to their goal${ctx.accommodation ? ', acknowledging their health notes without alarm' : ''}
 
 Format: GREETING|WHY_THIS_CLASS
