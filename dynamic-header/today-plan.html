@@ -256,7 +256,16 @@
       width: 24px; height: 24px; border-radius: 50%;
       object-fit: cover; display: block; flex-shrink: 0;
     }
-    .tp-why-text { font-size: 18px; font-weight: 400; color: #171717; line-height: 1.5; }
+    .tp-why-text {
+      font-size: 18px; font-weight: 400; color: #171717; line-height: 1.5;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .tp-why-text.expanded { display: block; -webkit-line-clamp: unset; }
+    .tp-why-readmore {
+      font-size: 14px; font-weight: 600; color: #5200d4;
+      background: none; border: none; padding: 0; cursor: pointer;
+      font-family: inherit; text-align: left;
+    }
 
     /* Actions */
     .tp-actions { display: flex; flex-direction: column; gap: 12px; }
@@ -526,6 +535,7 @@
             Why this class
           </div>
           <p class="tp-why-text" id="why-text">Your first class is short and gentle — designed to build your confidence and leave you feeling great.</p>
+          <button class="tp-why-readmore" id="why-readmore" onclick="window.location.href='class.html'" style="display:none">Read more…</button>
         </div>
 
         <!-- Actions -->
@@ -567,6 +577,7 @@
   </div>
 </div>
 
+<script src="assets/js/ai-coach.js"></script>
 <script>
   const name          = localStorage.getItem('boldUserName') || '';
   const focus         = JSON.parse(localStorage.getItem('boldFocus') || '[]');
@@ -636,6 +647,35 @@
     return map[prim] || map.routine_start;
   }
   document.getElementById('why-text').textContent = whyText(accommodation, prim, intensity);
+
+  // Show "Read more" if why-text is clamped
+  function checkWhyClamped() {
+    const el = document.getElementById('why-text');
+    const btn = document.getElementById('why-readmore');
+    if (el.scrollHeight > el.clientHeight) {
+      btn.style.display = 'block';
+    }
+  }
+  requestAnimationFrame(() => requestAnimationFrame(checkWhyClamped));
+
+  // ── AI-generated coach message ──────────────────────
+  (async () => {
+    const ctx = getBoldContext();
+    const coachEl = document.getElementById('coach-intro');
+    const whyEl = document.getElementById('why-text');
+    coachEl.style.opacity = '0.4';
+    whyEl.style.opacity = '0.4';
+    try {
+      const msg = await generateCoachMessage(ctx);
+      if (msg?.greeting) coachEl.textContent = msg.greeting;
+      if (msg?.why) whyEl.textContent = msg.why;
+    } catch (e) {
+      console.warn('Bold AI:', e);
+    }
+    coachEl.style.opacity = '';
+    whyEl.style.opacity = '';
+    requestAnimationFrame(() => requestAnimationFrame(checkWhyClamped));
+  })();
 
   // ── Trainer modal ───────────────────────────────────
   function openTrainerModal() {

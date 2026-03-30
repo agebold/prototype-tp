@@ -277,6 +277,7 @@
   </div>
 </div>
 
+<script src="assets/js/ai-coach.js"></script>
 <script>
   const name         = localStorage.getItem('boldUserName') || '';
   const focus        = JSON.parse(localStorage.getItem('boldFocus') || '[]');
@@ -365,6 +366,21 @@
 
   const bullets = getWhyBullets(prim, intensity, positions, accommodation);
   document.getElementById('why-bullets').innerHTML = bullets.map(b => `<li>${b}</li>`).join('');
+
+  // ── AI-generated about text ─────────────────────────
+  (async () => {
+    const ctx = getBoldContext();
+    const el = document.getElementById('about-text');
+    el.style.opacity = '0.4';
+    try {
+      const msg = await generateCoachMessage(ctx);
+      if (msg?.why) el.textContent = msg.why;
+      else if (msg?.greeting) el.textContent = msg.greeting;
+    } catch (e) {
+      console.warn('Bold AI:', e);
+    }
+    el.style.opacity = '';
+  })();
 </script>
 
 </body>

@@ -229,6 +229,7 @@
   <a href="today-plan.html">See today's plan</a>
 </div>
 
+<script src="assets/js/ai-coach.js"></script>
 <script>
   // ── Read onboarding answers ───────────────────────────
   const name           = localStorage.getItem('boldUserName') || '';
@@ -379,6 +380,20 @@
   }
 
   document.getElementById('plan-movements').textContent = cap(accom, 95);
+
+  // ── AI-generated subtitle ───────────────────────────
+  (async () => {
+    const ctx = getBoldContext();
+    const el = document.querySelector('.results-subtitle');
+    el.style.opacity = '0.4';
+    try {
+      const msg = await generateCoachMessage(ctx);
+      if (msg?.greeting) el.textContent = msg.greeting;
+    } catch (e) {
+      console.warn('Bold AI:', e);
+    }
+    el.style.opacity = '';
+  })();
 </script>
 </body>
 </html>
