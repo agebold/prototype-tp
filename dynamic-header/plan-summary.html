@@ -134,10 +134,11 @@
     .ps-pain-card { display: none; }
     .ps-pain-card.visible { display: block; }
 
+    /* Baseline row */
     .ps-pain-baseline {
       display: flex; align-items: center; gap: 12px;
       background: #fafafa; border-radius: 10px; padding: 12px 16px;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
     }
     .ps-pain-score-badge {
       width: 48px; height: 48px; border-radius: 50%;
@@ -149,46 +150,65 @@
     .ps-pain-baseline-label { font-size: 13px; font-weight: 400; color: #737373; }
     .ps-pain-baseline-area  { font-size: 15px; font-weight: 600; color: #171717; margin-top: 1px; }
 
+    /* Check-in label */
     .ps-checkin-label {
-      font-size: 15px; font-weight: 600; color: #171717; margin-bottom: 10px;
+      font-size: 15px; font-weight: 600; color: #171717; margin-bottom: 12px;
     }
+
+    /* Grid: numbers */
     .ps-pain-grid {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
       gap: 4px; width: 100%;
     }
     .ps-pain-btn {
-      padding: 12px 0;
+      padding: 14px 0;
       background: #fff; border: 1px solid #e5e5e5;
       border-radius: 8px;
-      font-size: 17px; font-weight: 600; color: #140d26;
+      box-shadow: 0 1px 2px rgba(16,24,40,0.05);
+      font-size: 18px; font-weight: 600; color: #140d26;
       cursor: pointer; font-family: var(--font);
       display: flex; align-items: center; justify-content: center;
       transition: background .15s, border-color .15s, color .15s;
+      width: 100%;
     }
     .ps-pain-btn:hover { border-color: #5200d4; background: #f5f0ff; }
     .ps-pain-btn.selected { background: #5200d4; border-color: #5200d4; color: #fff; }
 
+    /* Face scale below grid */
+    .ps-pain-faces {
+      display: flex; justify-content: space-between;
+      margin-top: 8px; padding: 0 2px;
+    }
+    .ps-pain-face {
+      display: flex; flex-direction: column; align-items: center; gap: 2px;
+    }
+    .ps-pain-face span:first-child { font-size: 22px; line-height: 1; }
+    .ps-pain-face span:last-child  { font-size: 10px; font-weight: 500; color: #737373; }
+
+    /* Saved confirmation */
     .ps-checkin-saved {
       display: none; align-items: center; gap: 8px;
       background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px;
-      padding: 10px 14px; margin-top: 12px; font-size: 14px; color: #15803d;
+      padding: 10px 14px; margin-top: 14px; font-size: 14px; color: #15803d;
     }
     .ps-checkin-saved.show { display: flex; }
 
+    /* History */
     .ps-history-title { font-size: 14px; font-weight: 600; color: #737373; margin-top: 20px; margin-bottom: 8px; }
-    .ps-history-list  { display: flex; flex-direction: column; gap: 6px; }
+    .ps-history-list  { display: flex; flex-direction: column; gap: 8px; }
     .ps-history-row {
-      display: flex; align-items: center; justify-content: space-between;
+      display: flex; align-items: center;
       font-size: 14px; color: #404040;
     }
     .ps-history-dot {
-      width: 28px; height: 28px; border-radius: 50%;
+      width: 32px; height: 32px; border-radius: 50%;
       background: #f5f0ff; border: 1px solid #d8b4fe;
       display: flex; align-items: center; justify-content: center;
-      font-size: 13px; font-weight: 700; color: #5200d4; flex-shrink: 0;
+      font-size: 14px; font-weight: 700; color: #5200d4; flex-shrink: 0;
     }
-    .ps-history-date { flex: 1; margin-left: 10px; color: #737373; }
+    .ps-history-face { font-size: 16px; margin-left: 8px; }
+    .ps-history-date { flex: 1; margin-left: 8px; color: #737373; }
 
     /* ── Desktop ── */
     @media (min-width: 768px) {
@@ -259,6 +279,13 @@
       <!-- Check-in -->
       <p class="ps-checkin-label" id="checkin-prompt">How's your pain today?</p>
       <div class="ps-pain-grid" id="checkin-grid"></div>
+      <div class="ps-pain-faces">
+        <div class="ps-pain-face"><span>😊</span><span>No pain</span></div>
+        <div class="ps-pain-face"><span>🙂</span><span>Mild</span></div>
+        <div class="ps-pain-face"><span>😐</span><span>Moderate</span></div>
+        <div class="ps-pain-face"><span>😟</span><span>Severe</span></div>
+        <div class="ps-pain-face"><span>😢</span><span>Worst</span></div>
+      </div>
 
       <div class="ps-checkin-saved" id="checkin-saved">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#16a34a" stroke-width="1.5"/><path d="M5 8l2 2 4-4" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -409,7 +436,17 @@
 
   const p = phases[prim] || phases.balance;
   // Step 1 is day-one onboarding — override with motivating copy
-  document.getElementById('past-desc').textContent  = dayOneDesc[prim] || dayOneDesc.balance;
+  let pastDesc = dayOneDesc[prim] || dayOneDesc.balance;
+  // For pain: mention their starting score in the journey
+  if (prim === 'pain') {
+    const painRatingJourney = localStorage.getItem('boldPainRating');
+    const painAreaJourney   = JSON.parse(localStorage.getItem('boldPainArea') || '[]');
+    const areaJourney = painAreaJourney.length ? painAreaJourney[0].replace(/_/g, ' ') : 'pain';
+    if (painRatingJourney) {
+      pastDesc = `You started with a ${areaJourney} pain level of ${painRatingJourney}/10. Choosing to move through that took courage — your body will thank you for it.`;
+    }
+  }
+  document.getElementById('past-desc').textContent  = pastDesc;
   document.getElementById('now-title').textContent  = p.now.title;
   document.getElementById('now-desc').textContent   = p.now.desc;
   document.getElementById('next-title').textContent = p.next.title;
@@ -490,9 +527,17 @@
     document.getElementById('baseline-badge').textContent = painRating;
     document.getElementById('baseline-area').textContent  = areaLabel.charAt(0).toUpperCase() + areaLabel.slice(1);
 
+    // Map score to face emoji
+    function scoreToFace(n) {
+      if (n <= 1)  return '😊';
+      if (n <= 3)  return '🙂';
+      if (n <= 5)  return '😐';
+      if (n <= 7)  return '😟';
+      return '😢';
+    }
+
     // Build check-in grid
     const grid = document.getElementById('checkin-grid');
-    let selectedScore = null;
     grid.innerHTML = Array.from({ length: 11 }, (_, i) => `
       <button class="ps-pain-btn" data-val="${i}">${i}</button>`).join('');
 
@@ -500,8 +545,7 @@
       btn.addEventListener('click', () => {
         grid.querySelectorAll('.ps-pain-btn').forEach(b => b.classList.remove('selected'));
         btn.classList.add('selected');
-        selectedScore = parseInt(btn.dataset.val);
-        saveCheckin(selectedScore);
+        saveCheckin(parseInt(btn.dataset.val));
       });
     });
 
@@ -517,24 +561,23 @@
     function renderHistory() {
       const history = JSON.parse(localStorage.getItem('boldPainCheckins') || '[]');
       if (!history.length) return;
-      const wrap = document.getElementById('checkin-history-wrap');
-      const list = document.getElementById('checkin-history');
-      wrap.style.display = 'block';
-      list.innerHTML = history.slice(0, 5).map(h => {
-        const d = new Date(h.date);
+      document.getElementById('checkin-history-wrap').style.display = 'block';
+      document.getElementById('checkin-history').innerHTML = history.slice(0, 5).map(h => {
+        const d     = new Date(h.date);
         const label = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
         const time  = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
         return `<div class="ps-history-row">
           <div class="ps-history-dot">${h.score}</div>
+          <span class="ps-history-face">${scoreToFace(h.score)}</span>
           <span class="ps-history-date">${label} · ${time}</span>
         </div>`;
       }).join('');
     }
 
-    // Restore today's check-in selection if already done
+    // Restore today's check-in if already logged
     const existing = JSON.parse(localStorage.getItem('boldPainCheckins') || '[]');
     if (existing.length) {
-      const todayStr = new Date().toDateString();
+      const todayStr   = new Date().toDateString();
       const todayEntry = existing.find(h => new Date(h.date).toDateString() === todayStr);
       if (todayEntry !== undefined) {
         grid.querySelector(`[data-val="${todayEntry.score}"]`)?.classList.add('selected');
