@@ -462,11 +462,10 @@
     }
     .footer-legal a:hover { color: #99b3fe; }
 
-/* ── MOBILE RESPONSIVE ─────────────────────────────── */
-@media (max-width: 767px) {
+/* ── NAV: switch to hamburger at ≤1023px ───────────── */
+@media (max-width: 1023px) {
   body { min-width: 0; }
 
-  /* NAV */
   .nav-wrap {
     position: fixed; top: 0; left: 0; right: 0; width: 100%;
     transform: none;
@@ -500,7 +499,6 @@
   }
   .nav-hamburger img { width: 30px; height: 30px; }
 
-  /* MOBILE MENU */
   .mobile-menu {
     position: fixed; top: 50px; left: 0; right: 0; bottom: 0;
     background: #fff; z-index: 99; padding: 24px 20px;
@@ -523,6 +521,12 @@
     font-size: 16px; font-weight: 600; color: #171717;
   }
   .mobile-menu .btn-blue { height: 48px; font-size: 16px; width: 100%; border-radius: 10px; }
+  /* Push hero down to clear the flat nav bar */
+  .hero { margin-top: 50px; }
+}
+
+/* ── MOBILE LAYOUT ──────────────────────────────────── */
+@media (max-width: 767px) {
 
   /* HERO */
   .hero { height: 592px; margin-top: 50px; background: #2a2118; }

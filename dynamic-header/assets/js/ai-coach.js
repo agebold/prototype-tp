@@ -45,7 +45,7 @@ function getBoldContext() {
   const accommodation = localStorage.getItem('boldAccommodations') || '';
   const lastSession   = localStorage.getItem('boldLastSession') || '';
   const weekNumber    = parseInt(localStorage.getItem('boldWeekNumber') || '1');
-  const prim          = focus[0] || 'balance';
+  const prim          = localStorage.getItem('boldPrimaryFocus') || focus[0] || 'balance';
 
   const h = new Date().getHours();
   const timeOfDay = h < 12 ? 'morning' : h < 17 ? 'afternoon' : 'evening';
@@ -132,6 +132,129 @@ async function generateCoachMessage(ctx) {
   if (!text) return null;
   const [greeting, why] = text.split('|').map(s => s.trim());
   return { greeting: greeting || null, why: why || null };
+}
+
+// ── Plan bullets prompt ────────────────────────────────────
+function buildPlanBulletsPrompt() {
+  const focus        = JSON.parse(localStorage.getItem('boldFocus') || '[]');
+  const duration     = localStorage.getItem('boldDuration') || '20 minutes';
+  const intensity    = localStorage.getItem('boldIntensity') || 'moderate';
+  const positions    = JSON.parse(localStorage.getItem('boldPosition') || '[]');
+  const accommodation = localStorage.getItem('boldAccommodations') || '';
+  const painArea     = JSON.parse(localStorage.getItem('boldPainArea') || '[]');
+  const painRating   = localStorage.getItem('boldPainRating') || '';
+  const fallHistory  = localStorage.getItem('boldFallHistory') || '';
+  const fallFear     = localStorage.getItem('boldFallFear') || '';
+  const prim         = localStorage.getItem('boldPrimaryFocus') || focus[0] || 'balance';
+
+  const clinicalGoals = {
+    balance:       'improve balance confidence and reduce fear of falling',
+    pain:          `reduce ${painArea.length ? painArea.map(a => a.replace('_',' ')).join(' and ') + ' ' : ''}pain`,
+    routine_new:   'build sustainable movement habits',
+    routine_start: 'build sustainable movement habits',
+    pelvic:        'improve pelvic floor strength and bladder control',
+    brain:         'maintain mental sharpness and support cognitive health',
+  };
+  const functionalGoals = {
+    balance:       fallHistory === 'multiple' ? 'feel safer and more confident in daily life after previous falls' : fallFear === 'very_worried' ? 'move through daily life without fear of falling' : 'stay independent and confident on your feet',
+    pain:          'feel better and move more freely in daily life',
+    routine_new:   'make movement a natural part of your week',
+    routine_start: 'build consistency and feel stronger over time',
+    pelvic:        'feel confident and in control in everyday activities',
+    brain:         'stay sharp and engaged as you age',
+  };
+
+  const durationMap = {
+    '10 minutes': '10 to 15 min', '20 minutes': '15 to 20 min',
+    '30 minutes': '25 to 35 min', '45+ minutes': '30 to 40 min',
+  };
+
+  const therapeuticApproach = {
+    balance:       'progressive balance training and leg strengthening',
+    pain:          'building core stability and joint mobility',
+    routine_new:   'full-body functional strength and mobility',
+    routine_start: 'foundational strength and flexibility',
+    pelvic:        'pelvic floor strengthening and bladder control',
+    brain:         'supporting cognitive wellness through varied movement patterns',
+  };
+  const modalities = {
+    balance:       'balance drills, stability work, and coordination exercises',
+    pain:          'low-impact strength and gentle mobility exercises',
+    routine_new:   'strength, cardio, and mobility work',
+    routine_start: 'beginner-friendly strength and flexibility',
+    pelvic:        'gentle progressive pelvic floor and core exercises',
+    brain:         'coordination, rhythm, and Tai Chi-inspired movement',
+  };
+
+  const posLabel = positions.includes('any') ? 'seated and standing with floor options' :
+    positions.includes('floor') ? 'seated, standing, and floor work' :
+    positions.includes('seated') && positions.includes('standing') ? 'seated and standing' :
+    positions.includes('seated') ? 'fully seated' :
+    positions.includes('standing') ? 'standing' : 'mixed';
+
+  const painContext = painArea.length ? `Pain areas: ${painArea.map(a => a.replace('_',' ')).join(', ')}. Pain rating: ${painRating}/10.` : '';
+  const fallContext = fallHistory ? `Fall history: ${fallHistory}. Fear of falling: ${fallFear || 'not specified'}.` : '';
+  const symptomsContext = prim === 'pelvic' ? 'Symptoms: pelvic floor weakness.' : prim === 'brain' ? 'Cognitive health focus.' : '';
+
+  return `Generate plan summary bullets for this member of an online fitness platform for adults 65+.
+
+MEMBER DATA:
+- Primary focus: ${prim}
+- Program: ${prim}
+
+GOALS:
+- Clinical: ${clinicalGoals[prim] || clinicalGoals.balance}
+- Functional: ${functionalGoals[prim] || functionalGoals.balance}
+
+PREFERENCES:
+- Duration: ${durationMap[duration] || duration}
+- Intensity: ${intensity}
+- Position: ${posLabel}
+
+PROGRAM DETAILS:
+- Therapeutic approach: ${therapeuticApproach[prim] || therapeuticApproach.balance}
+- Modalities: ${modalities[prim] || modalities.balance}
+
+ACCOMMODATIONS:
+- Free text comment: "${accommodation}"
+- Movement constraints: ${posLabel}
+${painContext}
+${fallContext}
+${symptomsContext}
+
+Generate exactly 4 bullets in this format (each 10-25 words, plain text, no markdown):
+GOAL: [combine clinical + functional goal naturally]
+DURATION: [duration preference formatted as "X to Y min sessions"]
+FOCUS: [therapeutic approach] through [intensity] [position] [modalities]
+ACCOMMODATIONS: [reference comment or symptoms if present, then position info and modifications]
+
+Return only the 4 lines starting with GOAL:, DURATION:, FOCUS:, ACCOMMODATIONS: — nothing else.`;
+}
+
+async function generatePlanBullets() {
+  const response = await fetch(WORKER_URL, {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({
+      model: 'claude-haiku-4-5-20251001',
+      max_tokens: 300,
+      messages: [{ role: 'user', content: buildPlanBulletsPrompt() }],
+    }),
+  });
+
+  if (!response.ok) throw new Error(`API error ${response.status}`);
+  const data = await response.json();
+  const text = data.content?.[0]?.text?.trim() || null;
+  if (!text) return null;
+
+  const result = {};
+  text.split('\n').forEach(line => {
+    if (line.startsWith('GOAL:'))           result.goal     = line.replace('GOAL:', '').trim();
+    else if (line.startsWith('DURATION:'))  result.duration = line.replace('DURATION:', '').trim();
+    else if (line.startsWith('FOCUS:'))     result.focus    = line.replace('FOCUS:', '').trim();
+    else if (line.startsWith('ACCOMMODATIONS:')) result.accommodations = line.replace('ACCOMMODATIONS:', '').trim();
+  });
+  return result;
 }
 
 // Track last session on first load

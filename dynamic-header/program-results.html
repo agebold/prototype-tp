@@ -229,7 +229,6 @@
   <a href="today-plan.html">See today's plan</a>
 </div>
 
-<script src="assets/js/ai-coach.js"></script>
 <script>
   // ── Read onboarding answers ───────────────────────────
   const name           = localStorage.getItem('boldUserName') || '';
@@ -381,19 +380,19 @@
 
   document.getElementById('plan-movements').textContent = cap(accom, 95);
 
-  // ── AI-generated subtitle ───────────────────────────
-  (async () => {
-    const ctx = getBoldContext();
-    const el = document.querySelector('.results-subtitle');
-    el.style.opacity = '0.4';
-    try {
-      const msg = await generateCoachMessage(ctx);
-      if (msg?.greeting) el.textContent = msg.greeting;
-    } catch (e) {
-      console.warn('Bold AI:', e);
-    }
-    el.style.opacity = '';
-  })();
+  // ── Apply pre-computed AI results from loading screen ──
+  const savedBullets = JSON.parse(localStorage.getItem('boldAIBullets') || 'null');
+  const savedMsg     = JSON.parse(localStorage.getItem('boldAIMessage') || 'null');
+
+  if (savedBullets?.goal)           document.getElementById('plan-goal').textContent      = savedBullets.goal;
+  if (savedBullets?.duration)       document.getElementById('plan-duration').textContent  = savedBullets.duration;
+  if (savedBullets?.focus)          document.getElementById('plan-focus').textContent     = savedBullets.focus;
+  if (savedBullets?.accommodations) document.getElementById('plan-movements').textContent = savedBullets.accommodations;
+  if (savedMsg?.greeting)           document.querySelector('.results-subtitle').textContent = savedMsg.greeting;
+
+  // Clear so a re-visit regenerates via loading screen
+  localStorage.removeItem('boldAIBullets');
+  localStorage.removeItem('boldAIMessage');
 </script>
 </body>
 </html>

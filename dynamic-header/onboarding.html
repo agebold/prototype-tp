@@ -204,6 +204,41 @@
       box-shadow: 0 0 0 3px rgba(82,0,212,0.10);
     }
 
+    /* Pain rating grid */
+    .ob-pain-scale { display: flex; flex-direction: column; gap: 8px; width: 100%; }
+    .ob-pain-labels-top {
+      display: flex; align-items: center; gap: 4px;
+      font-size: 16px; font-weight: 600; color: #404040;
+    }
+    .ob-pain-labels-bottom {
+      display: flex; justify-content: flex-end; align-items: center; gap: 4px;
+      font-size: 16px; font-weight: 600; color: #262626;
+    }
+    /* Mobile: 2 rows via CSS grid (6 cols so 0-5 top, 6-10 bottom) */
+    .ob-pain-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 4px;
+      width: 100%;
+    }
+    .ob-pain-btn {
+      padding: 14px 0;
+      background: #fff; border: 1px solid #e5e5e5;
+      border-radius: 8px;
+      box-shadow: 0 1px 2px rgba(16,24,40,0.05);
+      font-size: 18px; font-weight: 600; color: #140d26;
+      cursor: pointer; font-family: var(--font);
+      display: flex; align-items: center; justify-content: center;
+      transition: background .15s, border-color .15s, color .15s;
+      width: 100%;
+    }
+    .ob-pain-btn:hover { border-color: #5200d4; background: #f5f0ff; }
+    .ob-pain-btn.selected { background: #5200d4; border-color: #5200d4; color: #fff; }
+    /* Desktop: single row of 11 */
+    @media (min-width: 768px) {
+      .ob-pain-grid { grid-template-columns: repeat(11, 1fr); }
+    }
+
     /* Continue button */
     .ob-continue {
       width: 100%;
@@ -288,6 +323,96 @@
         <button class="ob-option" data-value="brain" onclick="toggleCheck(this,'q1')">
           <span class="ob-check"></span>Enhance my brain health and memory
         </button>
+      </div>
+      <button class="ob-continue" onclick="nextStep()">Continue</button>
+    </div>
+
+    <!-- Step 1-focus: Primary focus (shown only if multiple selected) -->
+    <div class="ob-step" id="step-1-focus">
+      <div class="ob-q-header">
+        <p class="ob-q-num">Question 1b</p>
+        <h2 class="ob-q-title">Which would you like to focus on first?</h2>
+        <p class="ob-q-sub">You can work on all of them — let's start with one</p>
+      </div>
+      <div class="ob-options" id="focus-options"></div>
+      <button class="ob-continue" onclick="nextStep()">Continue</button>
+    </div>
+
+    <!-- Step 1a: Pain area (shown only if pain selected) -->
+    <div class="ob-step" id="step-1a">
+      <div class="ob-q-header">
+        <p class="ob-q-num">Question 1 of 2 – Pain</p>
+        <h2 class="ob-q-title">Where are you experiencing pain?</h2>
+        <p class="ob-q-sub">Choose all that apply</p>
+      </div>
+      <div class="ob-options">
+        <button class="ob-option" data-value="lower_back" onclick="toggleCheck(this,'q1a')"><span class="ob-check"></span>Lower back</button>
+        <button class="ob-option" data-value="upper_back" onclick="toggleCheck(this,'q1a')"><span class="ob-check"></span>Upper back or neck</button>
+        <button class="ob-option" data-value="knee" onclick="toggleCheck(this,'q1a')"><span class="ob-check"></span>Knee</button>
+        <button class="ob-option" data-value="hip" onclick="toggleCheck(this,'q1a')"><span class="ob-check"></span>Hip</button>
+        <button class="ob-option" data-value="shoulder" onclick="toggleCheck(this,'q1a')"><span class="ob-check"></span>Shoulder or arm</button>
+        <button class="ob-option" data-value="ankle_foot" onclick="toggleCheck(this,'q1a')"><span class="ob-check"></span>Ankle or foot</button>
+        <button class="ob-option" data-value="other" onclick="toggleCheck(this,'q1a')"><span class="ob-check"></span>Other</button>
+      </div>
+      <button class="ob-continue" onclick="nextStep()">Continue</button>
+    </div>
+
+    <!-- Step 1b: Pain rating (shown only if pain selected) -->
+    <div class="ob-step" id="step-1b">
+      <div class="ob-q-header">
+        <p class="ob-q-num">Question 2 of 2 – Pain</p>
+        <h2 class="ob-q-title">How would you rate your <span id="pain-area-label">pain</span> on average over the last 7 days?</h2>
+      </div>
+      <div class="ob-pain-scale">
+        <div class="ob-pain-labels-top">
+          <span>0 - No pain</span>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="10" stroke="#16a34a" stroke-width="1.5"/>
+            <circle cx="9" cy="10" r="1.2" fill="#16a34a"/>
+            <circle cx="15" cy="10" r="1.2" fill="#16a34a"/>
+            <path d="M8.5 14.5c1 1.5 5.5 1.5 7 0" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="ob-pain-grid" id="pain-grid"></div>
+        <div class="ob-pain-labels-bottom">
+          <span>10 - Worst pain</span>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <circle cx="12" cy="12" r="10" stroke="#dc2626" stroke-width="1.5"/>
+            <circle cx="9" cy="10" r="1.2" fill="#dc2626"/>
+            <circle cx="15" cy="10" r="1.2" fill="#dc2626"/>
+            <path d="M8.5 16c1-1.5 5.5-1.5 7 0" stroke="#dc2626" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+      </div>
+      <button class="ob-continue" onclick="nextStep()">Continue</button>
+    </div>
+
+    <!-- Step 1c: Fall history (shown only if balance selected) -->
+    <div class="ob-step" id="step-1c">
+      <div class="ob-q-header">
+        <p class="ob-q-num">Question 1 of 2 – Balance</p>
+        <h2 class="ob-q-title">Have you had a fall in the past 12 months?</h2>
+        <p class="ob-q-sub">Choose one</p>
+      </div>
+      <div class="ob-options">
+        <button class="ob-option radio" data-value="no" onclick="selectOne(this,'q1c')"><span class="ob-check"></span>No, I haven't fallen</button>
+        <button class="ob-option radio" data-value="once" onclick="selectOne(this,'q1c')"><span class="ob-check"></span>Yes, once</button>
+        <button class="ob-option radio" data-value="multiple" onclick="selectOne(this,'q1c')"><span class="ob-check"></span>Yes, more than once</button>
+      </div>
+      <button class="ob-continue" onclick="nextStep()">Continue</button>
+    </div>
+
+    <!-- Step 1d: Fear of falling (shown only if balance selected) -->
+    <div class="ob-step" id="step-1d">
+      <div class="ob-q-header">
+        <p class="ob-q-num">Question 2 of 2 – Balance</p>
+        <h2 class="ob-q-title">How worried are you about falling?</h2>
+        <p class="ob-q-sub">Choose one</p>
+      </div>
+      <div class="ob-options">
+        <button class="ob-option radio" data-value="not_worried" onclick="selectOne(this,'q1d')"><span class="ob-check"></span>Not worried – I feel steady and confident</button>
+        <button class="ob-option radio" data-value="somewhat" onclick="selectOne(this,'q1d')"><span class="ob-check"></span>Somewhat worried – I'm cautious in certain situations</button>
+        <button class="ob-option radio" data-value="very_worried" onclick="selectOne(this,'q1d')"><span class="ob-check"></span>Very worried – I limit activities because of this concern</button>
       </div>
       <button class="ob-continue" onclick="nextStep()">Continue</button>
     </div>
@@ -405,32 +530,90 @@
 </div>
 
 <script>
-  const TOTAL = 6;
-  let step = 1;
-  const answers = { q1:[], q2:null, q3:null, q4:null, q5:[], q6:'' };
+  const FOCUS_LABELS = {
+    balance:       'Strengthen my balance & stability',
+    pain:          'Manage my pain',
+    routine_new:   'Add something new to my exercise routine',
+    routine_start: 'Start an exercise routine I can stick to',
+    pelvic:        'Improve my pelvic health',
+    brain:         'Enhance my brain health and memory',
+  };
 
-  function updateNav() {
-    const pct = Math.round((step - 1) / TOTAL * 100);
-    document.getElementById('pct-label').textContent = pct + '% Completed';
-    const back = document.getElementById('back-btn');
-    back.style.visibility = step === 1 ? 'hidden' : 'visible';
-    back.classList.toggle('hidden-mobile', step === 1);
+  let stepId = '1';
+  const answers = { q1:[], q1focus:null, q1a:[], q1b:'5', q1c:null, q1d:null, q2:null, q3:null, q4:null, q5:[], q6:'' };
+
+  // Define the navigation sequence dynamically
+  function getSequence() {
+    const seq = ['1'];
+    if (answers.q1.length > 1) seq.push('1-focus');
+    const prim = answers.q1focus || answers.q1[0];
+    if (prim === 'pain') { seq.push('1a'); seq.push('1b'); }
+    if (prim === 'balance') { seq.push('1c'); seq.push('1d'); }
+    seq.push('2','3','4','5','6');
+    return seq;
   }
 
-  function showStep(n) {
+  // Populate the focus-first step with only the selected options
+  function buildFocusOptions() {
+    const container = document.getElementById('focus-options');
+    container.innerHTML = answers.q1.map(val => `
+      <button class="ob-option radio" data-value="${val}" onclick="selectOne(this,'q1focus')">
+        <span class="ob-check"></span>${FOCUS_LABELS[val] || val}
+      </button>`).join('');
+  }
+
+  function updateNav() {
+    const seq = getSequence();
+    const idx = seq.indexOf(stepId);
+    const pct = Math.round(idx / seq.length * 100);
+    document.getElementById('pct-label').textContent = pct + '% Completed';
+    const back = document.getElementById('back-btn');
+    back.style.visibility = stepId === '1' ? 'hidden' : 'visible';
+    back.classList.toggle('hidden-mobile', stepId === '1');
+  }
+
+  const PAIN_AREA_LABELS = {
+    lower_back: 'lower back', upper_back: 'neck & upper back',
+    knee: 'knee', hip: 'hip', shoulder: 'shoulder', ankle_foot: 'ankle & foot', other: 'pain',
+  };
+
+  function buildPainGrid() {
+    const grid = document.getElementById('pain-grid');
+    grid.innerHTML = Array.from({length: 11}, (_, i) => `
+      <button class="ob-pain-btn${answers.q1b === String(i) ? ' selected' : ''}"
+        onclick="selectPainRating(this, ${i})">${i}</button>`).join('');
+    // Update question label with selected pain area
+    const area = answers.q1a[0];
+    const label = area ? PAIN_AREA_LABELS[area] || 'pain' : 'pain';
+    document.getElementById('pain-area-label').textContent = label;
+  }
+
+  function selectPainRating(btn, val) {
+    document.querySelectorAll('.ob-pain-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    answers.q1b = String(val);
+  }
+
+  function showStep(id) {
     document.querySelectorAll('.ob-step').forEach(s => s.classList.remove('active'));
-    document.getElementById('step-' + n).classList.add('active');
-    step = n;
+    document.getElementById('step-' + id).classList.add('active');
+    stepId = id;
+    if (id === '1-focus') buildFocusOptions();
+    if (id === '1b') buildPainGrid();
     updateNav();
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   function nextStep() {
-    if (step < TOTAL) showStep(step + 1);
+    const seq = getSequence();
+    const idx = seq.indexOf(stepId);
+    if (idx < seq.length - 1) showStep(seq[idx + 1]);
   }
 
   function goBack() {
-    if (step > 1) showStep(step - 1);
+    const seq = getSequence();
+    const idx = seq.indexOf(stepId);
+    if (idx > 0) showStep(seq[idx - 1]);
     else history.back();
   }
 
@@ -452,18 +635,24 @@
     answers.q6 = document.getElementById('q6-text').value.trim();
 
     localStorage.setItem('boldFocus',          JSON.stringify(answers.q1));
+    localStorage.setItem('boldPrimaryFocus',   answers.q1focus || answers.q1[0] || '');
     localStorage.setItem('boldActivity',       answers.q2 || '');
     localStorage.setItem('boldDuration',       answers.q3 || '');
     localStorage.setItem('boldIntensity',      answers.q4 || '');
     localStorage.setItem('boldPosition',       JSON.stringify(answers.q5));
     localStorage.setItem('boldAccommodations', answers.q6);
+    // Pain-specific
+    localStorage.setItem('boldPainArea',       JSON.stringify(answers.q1a));
+    localStorage.setItem('boldPainRating',     answers.q1b !== null ? answers.q1b : '');
+    // Balance/fall-specific
+    localStorage.setItem('boldFallHistory',    answers.q1c || '');
+    localStorage.setItem('boldFallFear',       answers.q1d || '');
 
-    // Legacy key used by program-results.html
-    if (answers.q1.includes('pain'))    localStorage.setItem('boldGoal', 'pain');
+    if (answers.q1.includes('pain'))         localStorage.setItem('boldGoal', 'pain');
     else if (answers.q1.includes('balance')) localStorage.setItem('boldGoal', 'balance');
     else                                     localStorage.setItem('boldGoal', 'strength');
 
-    window.location.href = 'program-results.html';
+    window.location.href = 'loading.html';
   }
 
   updateNav();
