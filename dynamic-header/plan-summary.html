@@ -130,9 +130,14 @@
     .ps-class-title { font-size: 15px; font-weight: 600; color: #171717; line-height: 1.3; }
     .ps-class-trainer { font-size: 13px; font-weight: 400; color: #737373; margin-top: 3px; }
 
-    /* ── Pain tracker (pain program only) ── */
+    /* ── Pain tracker (pain program only, lives inside journey) ── */
     .ps-pain-card { display: none; }
     .ps-pain-card.visible { display: block; }
+
+    .ps-pain-divider {
+      border: none; border-top: 1px solid #e5e5e5;
+      margin: 8px 0 20px;
+    }
 
     /* Baseline row */
     .ps-pain-baseline {
@@ -260,47 +265,6 @@
 <!-- Page -->
 <div class="ps-page">
 
-  <!-- Pain tracker (pain program only) -->
-  <div class="ps-card ps-pain-card" id="pain-tracker-card">
-    <div class="ps-card-header">
-      <h2 class="ps-card-title">Pain tracker</h2>
-    </div>
-    <div class="ps-card-body">
-
-      <!-- Baseline score -->
-      <div class="ps-pain-baseline">
-        <div class="ps-pain-score-badge" id="baseline-badge">—</div>
-        <div class="ps-pain-baseline-info">
-          <p class="ps-pain-baseline-label">Your starting pain level</p>
-          <p class="ps-pain-baseline-area" id="baseline-area">Pain area</p>
-        </div>
-      </div>
-
-      <!-- Check-in -->
-      <p class="ps-checkin-label" id="checkin-prompt">How's your pain today?</p>
-      <div class="ps-pain-grid" id="checkin-grid"></div>
-      <div class="ps-pain-faces">
-        <div class="ps-pain-face"><span>😊</span><span>No pain</span></div>
-        <div class="ps-pain-face"><span>🙂</span><span>Mild</span></div>
-        <div class="ps-pain-face"><span>😐</span><span>Moderate</span></div>
-        <div class="ps-pain-face"><span>😟</span><span>Severe</span></div>
-        <div class="ps-pain-face"><span>😢</span><span>Worst</span></div>
-      </div>
-
-      <div class="ps-checkin-saved" id="checkin-saved">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#16a34a" stroke-width="1.5"/><path d="M5 8l2 2 4-4" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Check-in saved
-      </div>
-
-      <!-- History -->
-      <div id="checkin-history-wrap" style="display:none">
-        <p class="ps-history-title">Recent check-ins</p>
-        <div class="ps-history-list" id="checkin-history"></div>
-      </div>
-
-    </div>
-  </div>
-
   <!-- Your goal -->
   <div class="ps-card">
     <div class="ps-card-header">
@@ -358,6 +322,42 @@
             <p class="ps-step-title" id="next-title">Full integration & confidence</p>
             <p class="ps-step-desc"><span id="next-desc" class="ps-desc-text">The final phase brings everything together into fluid, confident movement you'll carry for life.</span></p>
             <button class="ps-read-more" id="next-rm" hidden>Read more</button>
+          </div>
+        </div>
+
+        <!-- Pain tracker (pain program only) -->
+        <div class="ps-pain-card" id="pain-tracker-card">
+          <div class="ps-pain-divider"></div>
+
+          <!-- Baseline score -->
+          <div class="ps-pain-baseline">
+            <div class="ps-pain-score-badge" id="baseline-badge">—</div>
+            <div class="ps-pain-baseline-info">
+              <p class="ps-pain-baseline-label">Your starting pain level</p>
+              <p class="ps-pain-baseline-area" id="baseline-area">Pain area</p>
+            </div>
+          </div>
+
+          <!-- Check-in -->
+          <p class="ps-checkin-label" id="checkin-prompt">How's your pain today?</p>
+          <div class="ps-pain-grid" id="checkin-grid"></div>
+          <div class="ps-pain-faces">
+            <div class="ps-pain-face"><span>😊</span><span>No pain</span></div>
+            <div class="ps-pain-face"><span>🙂</span><span>Mild</span></div>
+            <div class="ps-pain-face"><span>😐</span><span>Moderate</span></div>
+            <div class="ps-pain-face"><span>😟</span><span>Severe</span></div>
+            <div class="ps-pain-face"><span>😢</span><span>Worst</span></div>
+          </div>
+
+          <div class="ps-checkin-saved" id="checkin-saved">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#16a34a" stroke-width="1.5"/><path d="M5 8l2 2 4-4" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Check-in saved
+          </div>
+
+          <!-- History -->
+          <div id="checkin-history-wrap" style="display:none">
+            <p class="ps-history-title">Recent check-ins</p>
+            <div class="ps-history-list" id="checkin-history"></div>
           </div>
         </div>
 
