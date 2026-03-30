@@ -134,10 +134,13 @@
     .ps-pain-card { display: none; }
     .ps-pain-card.visible { display: block; }
 
-    .ps-pain-divider {
-      border: none; border-top: 1px solid #e5e5e5;
-      margin: 8px 0 20px;
+    /* Pain step sits inline in the timeline */
+    .ps-pain-step { padding-bottom: 16px; }
+    .ps-pain-dot {
+      border: 2px solid #d8b4fe;
+      background: #f5f0ff;
     }
+    .ps-pain-inner { padding-top: 2px; }
 
     /* Baseline row */
     .ps-pain-baseline {
@@ -314,6 +317,47 @@
           </div>
         </div>
 
+        <!-- Pain tracker (pain program only) — nested between Now and What's Ahead -->
+        <div class="ps-pain-card ps-step ps-pain-step" id="pain-tracker-card">
+          <div class="ps-step-dot ps-pain-dot">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="4" fill="#5200d4"/></svg>
+          </div>
+          <div class="ps-step-info ps-pain-inner">
+            <p class="ps-step-label">Pain check-in</p>
+
+            <!-- Baseline score -->
+            <div class="ps-pain-baseline">
+              <div class="ps-pain-score-badge" id="baseline-badge">—</div>
+              <div class="ps-pain-baseline-info">
+                <p class="ps-pain-baseline-label">Starting level · <span id="baseline-date"></span></p>
+                <p class="ps-pain-baseline-area" id="baseline-area">Pain area</p>
+              </div>
+            </div>
+
+            <!-- Check-in -->
+            <p class="ps-checkin-label" id="checkin-prompt">How's your pain today?</p>
+            <div class="ps-pain-grid" id="checkin-grid"></div>
+            <div class="ps-pain-faces">
+              <div class="ps-pain-face"><span>😊</span><span>No pain</span></div>
+              <div class="ps-pain-face"><span>🙂</span><span>Mild</span></div>
+              <div class="ps-pain-face"><span>😐</span><span>Moderate</span></div>
+              <div class="ps-pain-face"><span>😟</span><span>Severe</span></div>
+              <div class="ps-pain-face"><span>😢</span><span>Worst</span></div>
+            </div>
+
+            <div class="ps-checkin-saved" id="checkin-saved">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#16a34a" stroke-width="1.5"/><path d="M5 8l2 2 4-4" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Check-in saved
+            </div>
+
+            <!-- History -->
+            <div id="checkin-history-wrap" style="display:none">
+              <p class="ps-history-title">Recent check-ins</p>
+              <div class="ps-history-list" id="checkin-history"></div>
+            </div>
+          </div>
+        </div>
+
         <!-- Step 3: What's Ahead -->
         <div class="ps-step">
           <div class="ps-step-dot future"></div>
@@ -322,42 +366,6 @@
             <p class="ps-step-title" id="next-title">Full integration & confidence</p>
             <p class="ps-step-desc"><span id="next-desc" class="ps-desc-text">The final phase brings everything together into fluid, confident movement you'll carry for life.</span></p>
             <button class="ps-read-more" id="next-rm" hidden>Read more</button>
-          </div>
-        </div>
-
-        <!-- Pain tracker (pain program only) -->
-        <div class="ps-pain-card" id="pain-tracker-card">
-          <div class="ps-pain-divider"></div>
-
-          <!-- Baseline score -->
-          <div class="ps-pain-baseline">
-            <div class="ps-pain-score-badge" id="baseline-badge">—</div>
-            <div class="ps-pain-baseline-info">
-              <p class="ps-pain-baseline-label">Your starting pain level</p>
-              <p class="ps-pain-baseline-area" id="baseline-area">Pain area</p>
-            </div>
-          </div>
-
-          <!-- Check-in -->
-          <p class="ps-checkin-label" id="checkin-prompt">How's your pain today?</p>
-          <div class="ps-pain-grid" id="checkin-grid"></div>
-          <div class="ps-pain-faces">
-            <div class="ps-pain-face"><span>😊</span><span>No pain</span></div>
-            <div class="ps-pain-face"><span>🙂</span><span>Mild</span></div>
-            <div class="ps-pain-face"><span>😐</span><span>Moderate</span></div>
-            <div class="ps-pain-face"><span>😟</span><span>Severe</span></div>
-            <div class="ps-pain-face"><span>😢</span><span>Worst</span></div>
-          </div>
-
-          <div class="ps-checkin-saved" id="checkin-saved">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="7" stroke="#16a34a" stroke-width="1.5"/><path d="M5 8l2 2 4-4" stroke="#16a34a" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Check-in saved
-          </div>
-
-          <!-- History -->
-          <div id="checkin-history-wrap" style="display:none">
-            <p class="ps-history-title">Recent check-ins</p>
-            <div class="ps-history-list" id="checkin-history"></div>
           </div>
         </div>
 
@@ -526,6 +534,13 @@
 
     document.getElementById('baseline-badge').textContent = painRating;
     document.getElementById('baseline-area').textContent  = areaLabel.charAt(0).toUpperCase() + areaLabel.slice(1);
+
+    // Baseline date — save once on first visit, show formatted
+    if (!localStorage.getItem('boldBaselineDate')) {
+      localStorage.setItem('boldBaselineDate', new Date().toISOString());
+    }
+    const baselineDate = new Date(localStorage.getItem('boldBaselineDate'));
+    document.getElementById('baseline-date').textContent = baselineDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
     // Map score to face emoji
     function scoreToFace(n) {
