@@ -186,49 +186,48 @@ function buildPlanBulletsPrompt() {
     brain:         'coordination, rhythm, and Tai Chi-inspired movement',
   };
 
-  const posLabel = positions.includes('any') ? 'seated and standing with floor options' :
-    positions.includes('floor') ? 'seated, standing, and floor work' :
-    positions.includes('seated') && positions.includes('standing') ? 'seated and standing' :
-    positions.includes('seated') ? 'fully seated' :
-    positions.includes('standing') ? 'standing' : 'mixed';
+  // Determine position label — used in exactly ONE bullet (bullet 2 or 3, never both)
+  const seatOnly  = positions.includes('seated') && !positions.includes('standing') && !positions.includes('floor') && !positions.includes('any');
+  const standOnly = positions.includes('standing') && !positions.includes('seated') && !positions.includes('floor') && !positions.includes('any');
+  const hasFloor  = positions.includes('floor') || positions.includes('any');
+  const posLabel  = seatOnly ? 'fully seated' : standOnly ? 'standing' : hasFloor ? 'seated, standing, and floor' : 'seated and standing';
 
-  const painContext = painArea.length ? `Pain areas: ${painArea.map(a => a.replace('_',' ')).join(', ')}. Pain rating: ${painRating}/10.` : '';
-  const fallContext = fallHistory ? `Fall history: ${fallHistory}. Fear of falling: ${fallFear || 'not specified'}.` : '';
-  const symptomsContext = prim === 'pelvic' ? 'Symptoms: pelvic floor weakness.' : prim === 'brain' ? 'Cognitive health focus.' : '';
+  // Decide where position lives: bullet 2 if it's a safety constraint (seat-only), else bullet 3
+  const posInBullet2 = seatOnly;
+  const posInBullet3 = !seatOnly;
 
-  return `Generate plan summary bullets for this member of an online fitness platform for adults 65+.
+  const painContext  = painArea.length ? `Pain areas: ${painArea.map(a => a.replace('_',' ')).join(', ')}. Severity: ${painRating}/10.` : '';
+  const fallContext  = fallHistory && fallHistory !== 'no' ? `Fall history: ${fallHistory}. Fear: ${fallFear || 'not specified'}.` : '';
+  const hasConstraint = accommodation || painArea.length || (fallHistory && fallHistory !== 'no') || prim === 'pelvic' || prim === 'brain' || seatOnly;
 
-MEMBER DATA:
-- Primary focus: ${prim}
-- Program: ${prim}
+  return `Generate exactly 4 plan summary bullets for an adult 65+ on a fitness platform.
 
-GOALS:
-- Clinical: ${clinicalGoals[prim] || clinicalGoals.balance}
-- Functional: ${functionalGoals[prim] || functionalGoals.balance}
-
-PREFERENCES:
+MEMBER:
+- Goal: ${clinicalGoals[prim] || clinicalGoals.balance} — so they can ${functionalGoals[prim] || functionalGoals.balance}
 - Duration: ${durationMap[duration] || duration}
 - Intensity: ${intensity}
 - Position: ${posLabel}
-
-PROGRAM DETAILS:
 - Therapeutic approach: ${therapeuticApproach[prim] || therapeuticApproach.balance}
 - Modalities: ${modalities[prim] || modalities.balance}
-
-ACCOMMODATIONS:
-- Free text comment: "${accommodation}"
-- Movement constraints: ${posLabel}
+${accommodation ? `- Accommodation note: "${accommodation}"` : ''}
 ${painContext}
 ${fallContext}
-${symptomsContext}
 
-Generate exactly 4 bullets in this format (each 10-25 words, plain text, no markdown):
-GOAL: [combine clinical + functional goal naturally]
-DURATION: [duration preference formatted as "X to Y min sessions"]
-FOCUS: [therapeutic approach] through [intensity] [position] [modalities]
-ACCOMMODATIONS: [reference comment or symptoms if present, then position info and modifications]
+STRICT RULES — follow exactly:
+1. GOAL: 8–12 words. Combine clinical + functional goal. No filler. Hard cap: 70 characters.
+2. DURATION: "X to Y min [${posInBullet2 ? posLabel + ' ' : ''}sessions, building gradually" — 8–12 words. Position appears here ONLY if seat-only (safety reason).
+3. FOCUS: 12–18 words. Therapeutic approach + intensity + modalities.${posInBullet3 ? ' Include position label here (NOT in bullet 2).' : ' Do NOT repeat position here — already in bullet 2.'} Hard cap: 110 characters.
+4. ACCOMMODATIONS: 12–18 words. Hard cap: 110 characters.
+   - If there is a specific constraint (accommodation note, pain area, fall history, pelvic/brain symptoms): address it directly and concisely.
+   - If there is NO constraint and position is already clear: write one sentence about how the plan adapts to their feedback week over week.
+   - NEVER use generic filler like "modifications available" or "move at your own pace" unless a real safety reason exists.
+   - Must add something new — do NOT restate goal, duration, or modality from bullets 1–3.
 
-Return only the 4 lines starting with GOAL:, DURATION:, FOCUS:, ACCOMMODATIONS: — nothing else.`;
+Format — output only these 4 lines, no markdown, no labels other than the prefixes:
+GOAL: ...
+DURATION: ...
+FOCUS: ...
+ACCOMMODATIONS: ...`;
 }
 
 async function generatePlanBullets() {
