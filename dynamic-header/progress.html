@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Progress – Bold</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font, 'Inter', sans-serif); background: #fafafa; min-height: 100vh; display: flex; flex-direction: column; color: #171717; -webkit-font-smoothing: antialiased; }
+
+    /* ── Nav ── */
+    .pg-nav {
+      background: #fff; border-bottom: 1px solid #e5e5e5;
+      height: 64px; display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px; position: sticky; top: 0; z-index: 20;
+      box-shadow: 0 1px 2px rgba(16,24,40,.05);
+    }
+    .pg-nav-logo { position: relative; width: 100px; height: 30px; flex-shrink: 0; display: block; overflow: hidden; }
+    .pg-nav-logo .logo-lines { position: absolute; top: 0; left: 0; right: 69.76%; bottom: 0; }
+    .pg-nav-logo .logo-text  { position: absolute; top: 20.94%; left: 36.57%; right: 0; bottom: 20.53%; }
+    .pg-nav-logo .logo-lines img, .pg-nav-logo .logo-text img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: contain; }
+    .pg-nav-right { display: flex; align-items: center; gap: 8px; }
+    .pg-btn-app { background: #ffcc1a; color: #000; border: none; border-radius: 9999px; height: 40px; padding: 0 16px; font-size: 16px; font-weight: 600; cursor: pointer; font-family: var(--font); white-space: nowrap; }
+    .pg-avatar { width: 40px; height: 40px; border-radius: 50%; background: #5200d4; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: #fff; flex-shrink: 0; }
+
+    /* ── Page ── */
+    .pg-page { flex: 1; padding: 0 16px 64px; display: flex; flex-direction: column; gap: 20px; max-width: 600px; margin: 0 auto; width: 100%; }
+
+    /* ── Header ── */
+    .pg-header { padding: 28px 0 8px; }
+    .pg-header-eyebrow { font-size: 14px; font-weight: 500; color: #737373; letter-spacing: 0.02em; margin-bottom: 4px; }
+    .pg-header-title { font-size: 30px; font-weight: 700; color: #140d26; letter-spacing: -0.5px; line-height: 1.2; margin-bottom: 8px; }
+    .pg-header-sub { font-size: 17px; font-weight: 400; color: #404040; line-height: 1.5; }
+
+    /* ── Cards (shared) ── */
+    .pg-card { background: #fff; border: 1px solid #e5e5e5; border-radius: 16px; overflow: hidden; }
+    .pg-card-label { font-size: 13px; font-weight: 600; color: #737373; letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 10px; }
+
+    /* ── Functional Win Card ── */
+    .pg-win {
+      background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%);
+      border: none; border-radius: 16px;
+      padding: 28px 24px;
+      position: relative; overflow: hidden;
+    }
+    .pg-win::before {
+      content: '';
+      position: absolute; top: -40px; right: -40px;
+      width: 160px; height: 160px; border-radius: 50%;
+      background: rgba(255,255,255,0.07);
+    }
+    .pg-win::after {
+      content: '';
+      position: absolute; bottom: -60px; left: -20px;
+      width: 200px; height: 200px; border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+    }
+    .pg-win-label { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.7); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px; }
+    .pg-win-headline { font-size: 24px; font-weight: 700; color: #fff; line-height: 1.25; letter-spacing: -0.3px; margin-bottom: 12px; position: relative; z-index: 1; }
+    .pg-win-body { font-size: 16px; font-weight: 400; color: rgba(255,255,255,0.88); line-height: 1.6; position: relative; z-index: 1; }
+
+    /* ── Comfort Trend ── */
+    .pg-trend { padding: 24px; }
+    .pg-trend-header { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 24px; }
+    .pg-trend-title { font-size: 18px; font-weight: 600; color: #140d26; }
+    .pg-trend-change {
+      display: flex; align-items: center; gap: 6px;
+      background: #f0fdf4; border: 1px solid #bbf7d0;
+      border-radius: 9999px; padding: 4px 12px;
+      font-size: 14px; font-weight: 600; color: #15803d;
+      white-space: nowrap;
+    }
+
+    /* Dot progression */
+    .pg-dots-track {
+      display: flex; align-items: flex-end; gap: 0;
+      position: relative; margin-bottom: 12px;
+    }
+    .pg-dots-track::before {
+      content: '';
+      position: absolute;
+      top: 50%; left: 0; right: 0; height: 2px;
+      background: linear-gradient(to right, #5200d4 0%, #5200d4 var(--progress, 70%), #e5e5e5 var(--progress, 70%));
+      transform: translateY(-50%);
+      z-index: 0;
+    }
+    .pg-dot-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; position: relative; z-index: 1; }
+    .pg-dot {
+      width: 20px; height: 20px; border-radius: 50%;
+      background: #5200d4;
+      border: 3px solid #fff;
+      box-shadow: 0 0 0 2px #5200d4;
+      transition: all .2s;
+    }
+    .pg-dot.future { background: #e5e5e5; box-shadow: 0 0 0 2px #e5e5e5; }
+    .pg-dot.now {
+      width: 26px; height: 26px;
+      background: #fff; box-shadow: 0 0 0 3px #5200d4;
+    }
+    .pg-dot.now::after { content: ''; width: 10px; height: 10px; border-radius: 50%; background: #5200d4; position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+    .pg-dot-label { font-size: 12px; font-weight: 500; color: #737373; text-align: center; }
+    .pg-dot-score { font-size: 13px; font-weight: 700; color: #140d26; }
+    .pg-dot-score.past { color: #737373; }
+
+    .pg-trend-faces {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-top: 8px; padding-top: 16px; border-top: 1px solid #f0f0f0;
+    }
+    .pg-trend-face-item { display: flex; align-items: center; gap: 8px; }
+    .pg-trend-face-item span:first-child { font-size: 24px; }
+    .pg-trend-face-copy { display: flex; flex-direction: column; }
+    .pg-trend-face-label { font-size: 13px; font-weight: 400; color: #737373; }
+    .pg-trend-face-val { font-size: 16px; font-weight: 600; color: #140d26; }
+    .pg-trend-arrow { font-size: 20px; color: #15803d; }
+
+    /* ── Journey Arc ── */
+    .pg-journey { padding: 24px; }
+    .pg-journey-title { font-size: 18px; font-weight: 600; color: #140d26; margin-bottom: 20px; }
+    .pg-arc {
+      display: flex; flex-direction: column; gap: 0;
+    }
+    .pg-arc-step { display: flex; gap: 16px; align-items: flex-start; padding-bottom: 20px; position: relative; }
+    .pg-arc-step:not(:last-child)::before {
+      content: '';
+      position: absolute; left: 15px; top: 34px; bottom: 0;
+      width: 2px; background: #e5e5e5;
+    }
+    .pg-arc-step.done:not(:last-child)::before { background: #5200d4; }
+    .pg-arc-step.active:not(:last-child)::before { background: linear-gradient(to bottom, #5200d4, #e5e5e5); }
+
+    .pg-arc-dot {
+      width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      margin-top: 2px;
+    }
+    .pg-arc-dot.done { background: #5200d4; }
+    .pg-arc-dot.active { background: #fff; border: 2.5px solid #5200d4; box-shadow: 0 0 0 4px rgba(82,0,212,0.12); }
+    .pg-arc-dot.active::after { content: ''; width: 10px; height: 10px; border-radius: 50%; background: #5200d4; }
+    .pg-arc-dot.upcoming { background: #fff; border: 2px solid #d4d4d4; }
+
+    .pg-arc-info { flex: 1; }
+    .pg-arc-state { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px; }
+    .pg-arc-dot.done  ~ .pg-arc-info .pg-arc-state { color: #5200d4; }
+    .pg-arc-dot.active ~ .pg-arc-info .pg-arc-state { color: #5200d4; }
+    .pg-arc-dot.upcoming ~ .pg-arc-info .pg-arc-state { color: #a3a3a3; }
+    .pg-arc-name { font-size: 17px; font-weight: 600; color: #140d26; line-height: 1.3; }
+    .pg-arc-dot.upcoming ~ .pg-arc-info .pg-arc-name { color: #a3a3a3; }
+    .pg-arc-desc { font-size: 15px; font-weight: 400; color: #737373; line-height: 1.5; margin-top: 3px; }
+    .pg-arc-dot.upcoming ~ .pg-arc-info .pg-arc-desc { display: none; }
+
+    /* ── Recent Activity ── */
+    .pg-activity { padding: 24px; }
+    .pg-activity-title { font-size: 18px; font-weight: 600; color: #140d26; margin-bottom: 16px; }
+    .pg-sessions { display: flex; flex-direction: column; gap: 12px; }
+    .pg-session {
+      display: flex; align-items: flex-start; gap: 14px;
+      background: #fafafa; border-radius: 12px; padding: 14px;
+    }
+    .pg-session-day {
+      width: 44px; flex-shrink: 0;
+      display: flex; flex-direction: column; align-items: center;
+      background: #fff; border: 1px solid #e5e5e5;
+      border-radius: 10px; padding: 6px 4px;
+    }
+    .pg-session-dow { font-size: 11px; font-weight: 600; color: #737373; text-transform: uppercase; letter-spacing: 0.04em; }
+    .pg-session-date { font-size: 18px; font-weight: 700; color: #140d26; line-height: 1.1; }
+    .pg-session-info { flex: 1; }
+    .pg-session-type { font-size: 15px; font-weight: 600; color: #140d26; margin-bottom: 3px; }
+    .pg-session-note { font-size: 14px; font-weight: 400; color: #737373; line-height: 1.4; font-style: italic; }
+
+    /* ── Coach Note ── */
+    .pg-coach { padding: 24px; }
+    .pg-coach-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .pg-coach-avatar {
+      width: 48px; height: 48px; border-radius: 50%; overflow: hidden; flex-shrink: 0;
+      border: 2px solid #e5e5e5;
+      background: #f5f0ff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+    }
+    .pg-coach-avatar img { width: 100%; height: 100%; object-fit: cover; }
+    .pg-coach-meta { flex: 1; }
+    .pg-coach-name { font-size: 16px; font-weight: 600; color: #140d26; }
+    .pg-coach-role { font-size: 14px; font-weight: 400; color: #737373; }
+    .pg-coach-note { font-size: 17px; font-weight: 400; color: #262626; line-height: 1.7; }
+    .pg-coach-note p + p { margin-top: 12px; }
+
+    /* ── Desktop ── */
+    @media (min-width: 768px) {
+      .pg-page { padding: 0 40px 80px; max-width: 680px; }
+      .pg-header { padding: 40px 0 8px; }
+      .pg-header-title { font-size: 36px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="pg-nav">
+  <a href="today-plan.html" class="pg-nav-logo">
+    <div class="logo-lines"><img src="assets/logos/nav-logo-lines.svg" alt="" /></div>
+    <div class="logo-text"><img src="assets/logos/nav-logo-text.svg" alt="BOLD" /></div>
+  </a>
+  <div class="pg-nav-right">
+    <button class="pg-btn-app">Use app</button>
+    <div class="pg-avatar" id="nav-initials">?</div>
+  </div>
+</nav>
+
+<!-- Page -->
+<div class="pg-page">
+
+  <!-- Header -->
+  <div class="pg-header">
+    <p class="pg-header-eyebrow">Your Progress</p>
+    <h1 class="pg-header-title" id="page-title">How far you've come</h1>
+    <p class="pg-header-sub" id="page-sub">Here's how far you've come, Carol.</p>
+  </div>
+
+  <!-- Functional Win Card -->
+  <div class="pg-win">
+    <p class="pg-win-label">Something real changed</p>
+    <h2 class="pg-win-headline" id="win-headline">Climbing stairs feels easier than it did three weeks ago.</h2>
+    <p class="pg-win-body" id="win-body">The leg and balance work you've been doing builds exactly the strength that makes stairs feel lighter. That's not a coincidence — that's your effort showing up in real life.</p>
+  </div>
+
+  <!-- How your body feels -->
+  <div class="pg-card">
+    <div class="pg-trend">
+      <div class="pg-trend-header">
+        <p class="pg-trend-title">How your body feels</p>
+        <div class="pg-trend-change">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 11V3M3 7l4-4 4 4" stroke="#15803d" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Improving
+        </div>
+      </div>
+
+      <!-- Dot progression -->
+      <div class="pg-dots-track" style="--progress: 60%;" id="comfort-track"></div>
+
+      <!-- Then vs Now -->
+      <div class="pg-trend-faces">
+        <div class="pg-trend-face-item">
+          <span>😟</span>
+          <div class="pg-trend-face-copy">
+            <span class="pg-trend-face-label">When you started</span>
+            <span class="pg-trend-face-val" id="pain-start">7 out of 10</span>
+          </div>
+        </div>
+        <span class="pg-trend-arrow">→</span>
+        <div class="pg-trend-face-item">
+          <span>🙂</span>
+          <div class="pg-trend-face-copy">
+            <span class="pg-trend-face-label">Most recently</span>
+            <span class="pg-trend-face-val" id="pain-now">4 out of 10</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Journey Arc -->
+  <div class="pg-card">
+    <div class="pg-journey">
+      <p class="pg-journey-title">Your journey so far</p>
+      <div class="pg-arc" id="journey-arc">
+
+        <div class="pg-arc-step done">
+          <div class="pg-arc-dot done">
+            <svg width="14" height="12" viewBox="0 0 14 12" fill="none"><path d="M1.5 6l4 4L12.5 1.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="pg-arc-info">
+            <p class="pg-arc-state">Completed</p>
+            <p class="pg-arc-name">Getting started</p>
+            <p class="pg-arc-desc">You built the habit, found your rhythm, and showed up — even on the hard days.</p>
+          </div>
+        </div>
+
+        <div class="pg-arc-step done">
+          <div class="pg-arc-dot done">
+            <svg width="14" height="12" viewBox="0 0 14 12" fill="none"><path d="M1.5 6l4 4L12.5 1.5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="pg-arc-info">
+            <p class="pg-arc-state">Completed</p>
+            <p class="pg-arc-name" id="arc-phase2">Foundation & joint care</p>
+            <p class="pg-arc-desc" id="arc-phase2-desc">Low-impact movement to calm inflammation and start rebuilding strength around affected areas.</p>
+          </div>
+        </div>
+
+        <div class="pg-arc-step active">
+          <div class="pg-arc-dot active"></div>
+          <div class="pg-arc-info">
+            <p class="pg-arc-state">Where you are now</p>
+            <p class="pg-arc-name" id="arc-phase3">Building strength in motion</p>
+            <p class="pg-arc-desc" id="arc-phase3-desc">Expanding pain-free range and adding load tolerance — so daily tasks feel lighter.</p>
+          </div>
+        </div>
+
+        <div class="pg-arc-step upcoming">
+          <div class="pg-arc-dot upcoming"></div>
+          <div class="pg-arc-info">
+            <p class="pg-arc-state">Coming up</p>
+            <p class="pg-arc-name" id="arc-phase4">Active maintenance</p>
+            <p class="pg-arc-desc" id="arc-phase4-desc"></p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Activity -->
+  <div class="pg-card">
+    <div class="pg-activity">
+      <p class="pg-activity-title">Recent sessions</p>
+      <div class="pg-sessions" id="sessions-list">
+
+        <div class="pg-session">
+          <div class="pg-session-day">
+            <span class="pg-session-dow">Mon</span>
+            <span class="pg-session-date">28</span>
+          </div>
+          <div class="pg-session-info">
+            <p class="pg-session-type">20 min Gentle Joint Relief</p>
+            <p class="pg-session-note">Took it easy on the right knee — still finished strong.</p>
+          </div>
+        </div>
+
+        <div class="pg-session">
+          <div class="pg-session-day">
+            <span class="pg-session-dow">Sat</span>
+            <span class="pg-session-date">26</span>
+          </div>
+          <div class="pg-session-info">
+            <p class="pg-session-type">20 min Core & Stability Flow</p>
+            <p class="pg-session-note">Felt noticeably better than the first time you tried this one.</p>
+          </div>
+        </div>
+
+        <div class="pg-session">
+          <div class="pg-session-day">
+            <span class="pg-session-dow">Thu</span>
+            <span class="pg-session-date">24</span>
+          </div>
+          <div class="pg-session-info">
+            <p class="pg-session-type">20 min Joint Support Flow</p>
+            <p class="pg-session-note">You showed up even when it wasn't easy. That's the whole game.</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Coach Note -->
+  <div class="pg-card">
+    <div class="pg-coach">
+      <div class="pg-coach-header">
+        <div class="pg-coach-avatar">
+          <img src="assets/images/trainer-photo.jpg" alt="Amanda" onerror="this.style.display='none'; this.parentElement.textContent='👋'" />
+        </div>
+        <div class="pg-coach-meta">
+          <p class="pg-coach-name">Amanda</p>
+          <p class="pg-coach-role">Your Bold trainer</p>
+        </div>
+      </div>
+      <div class="pg-coach-note" id="coach-note">
+        <p id="coach-note-text">You've done something a lot of people talk about and very few actually do — you kept going past the first week. The work you've put in is starting to show up in the places that matter most: how your body moves through the day, how stairs feel, how much energy you have left at the end of it.</p>
+        <p id="coach-note-next">What's coming next is going to build on everything you've already put in. You're not starting over — you're just going deeper.</p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end pg-page -->
+
+<script>
+  const name       = localStorage.getItem('boldUserName') || '';
+  const focus      = JSON.parse(localStorage.getItem('boldFocus') || '[]');
+  const prim       = localStorage.getItem('boldPrimaryFocus') || focus[0] || 'balance';
+  const painArea   = JSON.parse(localStorage.getItem('boldPainArea') || '[]');
+  const painRating = parseInt(localStorage.getItem('boldPainRating') || '7');
+  const checkins   = JSON.parse(localStorage.getItem('boldPainCheckins') || '[]');
+
+  // Nav initials
+  if (name) document.getElementById('nav-initials').textContent = name.slice(0, 2).toUpperCase();
+
+  // Header
+  if (name) {
+    document.getElementById('page-sub').textContent = `Here's how far you've come, ${name}.`;
+  }
+
+  // ── Functional win — keyed by focus ──────────────
+  const wins = {
+    balance: {
+      headline: 'Moving through your day feels steadier than it used to.',
+      body: 'The balance and leg strength work you\'ve been doing builds exactly the stability that makes daily movement feel more confident. That shift is real — and it came from you showing up.',
+    },
+    pain: {
+      headline: 'Climbing stairs feels easier than it did three weeks ago.',
+      body: 'The joint-supportive work you\'ve been doing builds exactly the strength that makes stairs feel lighter. That\'s not a coincidence — that\'s your effort showing up in real life.',
+    },
+    routine_new: {
+      headline: 'Movement is starting to feel like part of your week, not a chore.',
+      body: 'You\'ve done the harder thing — you built a habit. The consistency you\'ve created is what makes every session from here easier to show up for.',
+    },
+    routine_start: {
+      headline: 'You\'re moving in ways that felt out of reach a few weeks ago.',
+      body: 'The foundation you\'ve built is real. Your body has been adapting quietly, session by session — and it shows in how you move.',
+    },
+    pelvic: {
+      headline: 'You\'re noticing more control and confidence in everyday moments.',
+      body: 'The subtle, consistent work you\'ve put into pelvic floor strength is exactly what creates those real-life shifts. What you\'re feeling isn\'t coincidence.',
+    },
+    brain: {
+      headline: 'Staying focused through complex movement is getting noticeably easier.',
+      body: 'Your brain is adapting right alongside your body. The coordination and rhythm work you\'ve been doing creates real neurological change — and you\'re feeling it.',
+    },
+  };
+  const win = wins[prim] || wins.balance;
+  document.getElementById('win-headline').textContent = win.headline;
+  document.getElementById('win-body').textContent = win.body;
+
+  // ── Comfort trend ─────────────────────────────────
+  // Use checkin history if available, else show baseline → implied improvement
+  function scoreToFace(n) {
+    if (n <= 1) return '😊';
+    if (n <= 3) return '🙂';
+    if (n <= 5) return '😐';
+    if (n <= 7) return '😟';
+    return '😢';
+  }
+  function scoreToLabel(n) {
+    if (n <= 1) return 'No pain';
+    if (n <= 3) return 'Mild';
+    if (n <= 5) return 'Moderate';
+    if (n <= 7) return 'Uncomfortable';
+    return 'Very painful';
+  }
+
+  // Build dot track
+  const track = document.getElementById('comfort-track');
+  let startScore = painRating;
+  let currentScore = checkins.length ? checkins[0].score : Math.max(painRating - 3, 1);
+
+  // Generate 5 sample points between start and current
+  const numDots = 5;
+  const points = [];
+  for (let i = 0; i < numDots; i++) {
+    const t = i / (numDots - 1);
+    // Slight curve downward (improving)
+    const score = Math.round(startScore + t * (currentScore - startScore));
+    points.push(score);
+  }
+
+  track.innerHTML = points.map((score, i) => {
+    const isLast = i === numDots - 1;
+    const isPast = i < numDots - 1;
+    const cls = isLast ? 'now' : 'done';
+    return `<div class="pg-dot-wrap">
+      <div class="pg-dot ${cls}" ${isLast ? 'style="position:relative"' : ''}></div>
+    </div>`;
+  }).join('');
+
+  // Update start/now labels
+  document.getElementById('pain-start').textContent = `${startScore} out of 10`;
+  document.getElementById('pain-now').textContent   = `${currentScore} out of 10`;
+
+  // Update faces
+  const startFace = scoreToFace(startScore);
+  const nowFace   = scoreToFace(currentScore);
+  document.querySelector('.pg-trend-faces .pg-trend-face-item:first-child span:first-child').textContent = startFace;
+  document.querySelector('.pg-trend-faces .pg-trend-face-item:last-child span:first-child').textContent = nowFace;
+
+  // Progress line %
+  const progress = Math.round((1 - (numDots - 1) / numDots) * 100 + (4 / numDots) * 100);
+  track.style.setProperty('--progress', `${Math.round((numDots - 1) / numDots * 100)}%`);
+
+  // ── Journey arc — keyed by focus ─────────────────
+  const arcs = {
+    balance: {
+      p2: 'Balance foundations', p2d: 'Hip stability, core activation, and the groundwork for confident movement.',
+      p3: 'Balance in motion',   p3d: 'Dynamic balance and real-world movement patterns — stairs, turning, reaching.',
+      p4: 'Full-body integration',
+    },
+    pain: {
+      p2: 'Foundation & joint care', p2d: 'Low-impact movement to calm inflammation and start rebuilding around affected areas.',
+      p3: 'Building strength in motion', p3d: 'Expanding pain-free range and adding load tolerance so daily tasks feel lighter.',
+      p4: 'Active maintenance',
+    },
+    routine_new: {
+      p2: 'Building the habit',   p2d: 'Establishing consistent movement as a natural part of your week.',
+      p3: 'Adding challenge',     p3d: 'Layering variety and progressive challenge to keep your body adapting.',
+      p4: 'Long-term progression',
+    },
+    routine_start: {
+      p2: 'First steps',          p2d: 'Foundational classes — form, breathing, and body awareness taking shape.',
+      p3: 'Building your base',   p3d: 'Beginner work is paying off — volume increases and new patterns emerge.',
+      p4: 'Consistency & growth',
+    },
+    pelvic: {
+      p2: 'Pelvic floor awareness', p2d: 'Foundational breathing, bracing, and relaxation patterns established.',
+      p3: 'Strength & coordination', p3d: 'Coordination between breath, core, and floor coming together.',
+      p4: 'Functional integration',
+    },
+    brain: {
+      p2: 'Neuromotor foundations', p2d: 'Coordination, rhythm, and dual-task movement introduced consistently.',
+      p3: 'Cognitive-movement challenge', p3d: 'Reaction time, sequencing, and coordination under load improving.',
+      p4: 'Advanced integration',
+    },
+  };
+  const arc = arcs[prim] || arcs.balance;
+  document.getElementById('arc-phase2').textContent      = arc.p2;
+  document.getElementById('arc-phase2-desc').textContent = arc.p2d;
+  document.getElementById('arc-phase3').textContent      = arc.p3;
+  document.getElementById('arc-phase3-desc').textContent = arc.p3d;
+  document.getElementById('arc-phase4').textContent      = arc.p4;
+
+  // ── Coach note — keyed by focus ───────────────────
+  const notes = {
+    balance: {
+      main: `You've done something a lot of people talk about and very few actually do — you kept going past the first week. The steadiness you're building isn't just physical. It's a kind of quiet confidence that starts to show up in how you move through the day.`,
+      next: `What's ahead is going to build on everything you've already put in. You're not starting over — you're going deeper.`,
+    },
+    pain: {
+      main: `What you've done over these past weeks takes real courage — choosing to move when movement is hard. Your body has been responding, even on the days it didn't feel like it.`,
+      next: `The next phase is about building on that. More strength, more range, more of those moments where you notice things feel easier than they used to.`,
+    },
+    routine_new: {
+      main: `You've added something real to your life. That's harder than it sounds — and you've done it. The consistency you've built is the foundation that makes everything else possible.`,
+      next: `Now we get to build on it. The sessions ahead will challenge you in new ways, but you'll have the habit and the base to handle them.`,
+    },
+    routine_start: {
+      main: `Starting is always the hardest part — and you've cleared it. The work you've put into these early sessions is shaping how your body moves and recovers in ways you might not even notice yet.`,
+      next: `Keep showing up. The progress compounds quietly, and one day soon you'll look back and feel exactly how far you've come.`,
+    },
+    pelvic: {
+      main: `What you've been doing takes patience and consistency — and you've brought both. The work is subtle, but the results it creates are anything but.`,
+      next: `The next phase integrates everything into full-body movement. The strength you're building will start to show up in all the right moments.`,
+    },
+    brain: {
+      main: `You've been doing something that matters long-term — investing in your brain and body at the same time. The coordination and focus work you've done creates real change, even when it's hard to see.`,
+      next: `What's coming will push that further. More complexity, more challenge — but you'll have the foundation to meet it.`,
+    },
+  };
+  const note = notes[prim] || notes.balance;
+  document.getElementById('coach-note-text').textContent = note.main;
+  document.getElementById('coach-note-next').textContent = note.next;
+</script>
+
+</body>
+</html>
