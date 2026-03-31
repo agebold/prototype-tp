@@ -182,26 +182,6 @@
     }
 
     /* Textarea */
-    .ob-input {
-      width: 100%;
-      border: 1px solid #e5e5e5;
-      border-radius: 8px;
-      box-shadow: 0 1px 2px rgba(16,24,40,0.05);
-      padding: 14px 16px;
-      font-size: 18px;
-      font-family: var(--font);
-      color: #140d26;
-      background: #fff;
-      outline: none;
-      line-height: 1.5;
-      transition: border-color .15s;
-    }
-    .ob-input::placeholder { color: #9ca3af; }
-    .ob-input:focus {
-      border-color: #5200d4;
-      box-shadow: 0 0 0 3px rgba(82,0,212,0.10);
-    }
-
     .ob-textarea {
       width: 100%;
       min-height: 130px;
@@ -318,25 +298,7 @@
   <div class="ob-card">
 
     <!-- Step 1: Focus -->
-    <!-- Step 0: Name -->
-    <div class="ob-step active" id="step-0">
-      <div class="ob-q-header">
-        <p class="ob-q-num">Let's get started</p>
-        <h2 class="ob-q-title">What's your first name?</h2>
-      </div>
-      <input
-        class="ob-input"
-        id="q0-name"
-        type="text"
-        placeholder="First name"
-        autocomplete="given-name"
-        oninput="answers.q0 = this.value.trim()"
-        onkeydown="if(event.key==='Enter' && answers.q0) nextStep()"
-      />
-      <button class="ob-continue" onclick="if(answers.q0) nextStep()">Continue</button>
-    </div>
-
-    <div class="ob-step" id="step-1">
+    <div class="ob-step active" id="step-1">
       <div class="ob-q-header">
         <p class="ob-q-num">Question 1</p>
         <h2 class="ob-q-title">What are you looking for from your Bold Program</h2>
@@ -577,12 +539,12 @@
     brain:         'Enhance my brain health and memory',
   };
 
-  let stepId = '0';
-  const answers = { q0:'', q1:[], q1focus:null, q1a:[], q1b:'5', q1c:null, q1d:null, q2:null, q3:null, q4:null, q5:[], q6:'' };
+  let stepId = '1';
+  const answers = { q1:[], q1focus:null, q1a:[], q1b:'5', q1c:null, q1d:null, q2:null, q3:null, q4:null, q5:[], q6:'' };
 
   // Define the navigation sequence dynamically
   function getSequence() {
-    const seq = ['0', '1'];
+    const seq = ['1'];
     if (answers.q1.length > 1) seq.push('1-focus');
     const prim = answers.q1focus || answers.q1[0];
     if (prim === 'pain') { seq.push('1a'); seq.push('1b'); }
@@ -606,8 +568,8 @@
     const pct = Math.round(idx / seq.length * 100);
     document.getElementById('pct-label').textContent = pct + '% Completed';
     const back = document.getElementById('back-btn');
-    back.style.visibility = stepId === '0' ? 'hidden' : 'visible';
-    back.classList.toggle('hidden-mobile', stepId === '0');
+    back.style.visibility = stepId === '1' ? 'hidden' : 'visible';
+    back.classList.toggle('hidden-mobile', stepId === '1');
   }
 
   const PAIN_AREA_LABELS = {
@@ -672,7 +634,6 @@
   function finish() {
     answers.q6 = document.getElementById('q6-text').value.trim();
 
-    localStorage.setItem('boldUserName',       answers.q0);
     localStorage.setItem('boldFocus',          JSON.stringify(answers.q1));
     localStorage.setItem('boldPrimaryFocus',   answers.q1focus || answers.q1[0] || '');
     localStorage.setItem('boldActivity',       answers.q2 || '');
