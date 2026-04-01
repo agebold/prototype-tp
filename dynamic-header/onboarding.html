@@ -648,9 +648,10 @@
     localStorage.setItem('boldFallHistory',    answers.q1c || '');
     localStorage.setItem('boldFallFear',       answers.q1d || '');
 
-    if (answers.q1.includes('pain'))         localStorage.setItem('boldGoal', 'pain');
-    else if (answers.q1.includes('balance')) localStorage.setItem('boldGoal', 'balance');
-    else                                     localStorage.setItem('boldGoal', 'strength');
+    const primFocus = answers.q1focus || answers.q1[0] || '';
+    if (primFocus === 'pain')         localStorage.setItem('boldGoal', 'pain');
+    else if (primFocus === 'balance') localStorage.setItem('boldGoal', 'balance');
+    else                              localStorage.setItem('boldGoal', 'strength');
 
     window.location.href = 'loading.html';
   }
