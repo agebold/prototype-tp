@@ -251,7 +251,7 @@
   const name         = localStorage.getItem('boldUserName') || '';
   const focus        = JSON.parse(localStorage.getItem('boldFocus') || '[]');
   const duration     = localStorage.getItem('boldDuration') || '20 minutes';
-  const prim         = focus[0] || 'balance';
+  const prim         = localStorage.getItem('boldPrimaryFocus') || focus[0] || 'balance';
   const durMin       = parseInt(duration) || 20;
 
   // Nav initials

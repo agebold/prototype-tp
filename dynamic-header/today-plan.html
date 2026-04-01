@@ -551,7 +551,7 @@
   const intensity     = localStorage.getItem('boldIntensity') || 'moderate';
   const duration      = localStorage.getItem('boldDuration') || '20 minutes';
   const accommodation = localStorage.getItem('boldAccommodations') || '';
-  const prim          = focus[0] || 'balance';
+  const prim          = localStorage.getItem('boldPrimaryFocus') || focus[0] || 'balance';
 
   // Name + nav initials
   if (name) {
