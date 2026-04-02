@@ -653,6 +653,8 @@
     else if (primFocus === 'balance') localStorage.setItem('boldGoal', 'balance');
     else                              localStorage.setItem('boldGoal', 'strength');
 
+    localStorage.removeItem('boldSelectedClass');
+
     window.location.href = 'loading.html';
   }
 
