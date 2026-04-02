@@ -29,6 +29,29 @@
     .ps-nav-btn:hover { background: #f9f9f9; }
     .ps-nav-badge { position: absolute; top: 4px; right: 4px; background: #ef4444; color: #fff; width: 16px; height: 16px; border-radius: 50%; font-size: 10px; font-weight: 600; display: flex; align-items: center; justify-content: center; pointer-events: none; }
     .ps-avatar { width: 24px; height: 24px; border-radius: 50%; background: #5200d4; color: #fff; font-size: 10px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .ps-nav-useapp {
+      display: none; align-items: center; justify-content: center;
+      background: #ffcc1a; border: none; border-radius: 360px;
+      height: 48px; padding: 0 16px;
+      font-size: 16px; font-weight: 600; color: #000;
+      cursor: pointer; font-family: var(--font); white-space: nowrap;
+    }
+    .ps-streak-count { display: none; align-items: center; gap: 3px; }
+    @media (max-width: 767px) {
+      .ps-nav { padding: 0 16px; }
+      .ps-nav-logo { width: 34px; }
+      .ps-nav-logo .logo-text { display: none; }
+      .ps-nav-links { display: none; }
+      .ps-nav-useapp { display: inline-flex; }
+      .ps-nav-btn-mail { display: none; }
+      .ps-streak-label { display: none; }
+      .ps-streak-count { display: flex; }
+      .ps-nav-btn-streak {
+        background: linear-gradient(246.6deg, #c99434 22.7%, #e5ca56 56%, #e6d168 91.6%);
+        border-color: #d5c874; padding: 0 12px; gap: 4px; color: #fff;
+      }
+      .ps-avatar { width: 36px; height: 36px; font-size: 12px; }
+    }
 
     /* ── Breadcrumb ── */
     .ps-breadcrumb {
@@ -183,11 +206,13 @@
     </a>
   </div>
   <div class="ps-nav-right">
-    <button class="ps-nav-btn" aria-label="Bold Streak">
+    <button class="ps-nav-useapp">Use app</button>
+    <button class="ps-nav-btn ps-nav-btn-streak" aria-label="Bold Streak">
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 17.5c-3.31 0-6-2.57-6-5.75 0-3 3-6 4-8 .25 2.5 2 3.5 2 5.5a2.5 2.5 0 0 0 2.75-2.5C14 9 15 10 15 11.75c0 3.18-2.69 5.75-5 5.75Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
-      Bold Streak
+      <span class="ps-streak-label">Bold Streak</span>
+      <span class="ps-streak-count">1</span>
     </button>
-    <button class="ps-nav-btn" aria-label="Notifications (1 unread)">
+    <button class="ps-nav-btn ps-nav-btn-mail" aria-label="Notifications (1 unread)">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M3 8l9 5.5L21 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
       <span class="ps-nav-badge">1</span>
     </button>

@@ -71,6 +71,29 @@
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
     }
+    .tp-nav-useapp {
+      display: none; align-items: center; justify-content: center;
+      background: #ffcc1a; border: none; border-radius: 360px;
+      height: 48px; padding: 0 16px;
+      font-size: 16px; font-weight: 600; color: #000;
+      cursor: pointer; font-family: var(--font); white-space: nowrap;
+    }
+    .tp-streak-count { display: none; align-items: center; gap: 3px; }
+    @media (max-width: 767px) {
+      .tp-nav { padding: 0 16px; }
+      .tp-nav-logo { width: 34px; }
+      .tp-nav-logo .logo-text { display: none; }
+      .tp-nav-links { display: none; }
+      .tp-nav-useapp { display: inline-flex; }
+      .tp-nav-btn-mail { display: none; }
+      .tp-streak-label { display: none; }
+      .tp-streak-count { display: flex; }
+      .tp-nav-btn-streak {
+        background: linear-gradient(246.6deg, #c99434 22.7%, #e5ca56 56%, #e6d168 91.6%);
+        border-color: #d5c874; padding: 0 12px; gap: 4px; color: #fff;
+      }
+      .tp-avatar { width: 36px; height: 36px; font-size: 12px; }
+    }
 
     /* ═══════════════════════════════════════
        HERO — trainer + blob animation
@@ -629,15 +652,18 @@
 
   <!-- Right: profile area -->
   <div class="tp-nav-right">
+    <!-- Use app (mobile only) -->
+    <button class="tp-nav-useapp">Use app</button>
     <!-- Bold Streak -->
-    <button class="tp-nav-btn" aria-label="Bold Streak">
+    <button class="tp-nav-btn tp-nav-btn-streak" aria-label="Bold Streak">
       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
         <path d="M10 17.5c-3.31 0-6-2.57-6-5.75 0-3 3-6 4-8 .25 2.5 2 3.5 2 5.5a2.5 2.5 0 0 0 2.75-2.5C14 9 15 10 15 11.75c0 3.18-2.69 5.75-5 5.75Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
       </svg>
-      Bold Streak
+      <span class="tp-streak-label">Bold Streak</span>
+      <span class="tp-streak-count">1</span>
     </button>
     <!-- Mail -->
-    <button class="tp-nav-btn" aria-label="Notifications (1 unread)">
+    <button class="tp-nav-btn tp-nav-btn-mail" aria-label="Notifications (1 unread)">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
         <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/>
         <path d="M3 8l9 5.5L21 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
