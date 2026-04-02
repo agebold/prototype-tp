@@ -94,6 +94,7 @@ Rules:
 - Always reference their specific class or goal
 - No fitness jargon, no calories, no weight, no performance metrics
 - If pain is flagged, acknowledge it without alarm
+- Do NOT use the member's name in the greeting — it is already displayed as the page heading
 
 Member details:
 Name: ${ctx.name}

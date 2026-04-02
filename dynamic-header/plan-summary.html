@@ -283,7 +283,8 @@
   const durMin       = parseInt(duration) || 20;
 
   // Nav initials
-  if (name) document.getElementById('nav-initials').textContent = name.slice(0, 2).toUpperCase();
+  const avatarEl = document.querySelector('.ps-avatar');
+  if (name && avatarEl) avatarEl.textContent = name.slice(0, 2).toUpperCase();
 
   // ── Goal label ────────────────────────────────────
   const goalLabels = {
