@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -341,6 +342,19 @@
       flex-shrink: 0;
     }
 
+    /* ── Card drop indicator ── */
+    .card-sorted.drop-above { border-top: 2px solid #1B6B5A; }
+    .card-sorted.drop-below { border-bottom: 2px solid #1B6B5A; }
+
+    /* ── Export button ── */
+    .btn-export {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: #fff; border: 1px solid #e5e5e5; border-radius: 8px;
+      padding: 8px 14px; font-size: 12px; font-weight: 500; color: #525252;
+      cursor: pointer; transition: background 0.15s;
+    }
+    .btn-export:hover { background: #f5f5f5; }
+
     /* ── Empty state ── */
     .empty-state {
       text-align: center;
@@ -460,6 +474,7 @@ const state = {
 // Module-level drag variables (no re-render on dragover)
 let dragCardId = null;
 let dragGroupId = null;
+let dragOverCardId = null; // for in-group reorder indicator
 
 // ── State helpers ──────────────────────────────────────────────────
 function addGroup() {
@@ -555,6 +570,16 @@ function toggleGroupCollapse(gid) {
   render();
 }
 
+function reorderCardInGroup(groupId, fromCardId, toCardId) {
+  const group = state.groups.find(g => g.id === groupId);
+  if (!group) return;
+  const fromIdx = group.cards.findIndex(c => c.id === fromCardId);
+  const toIdx   = group.cards.findIndex(c => c.id === toCardId);
+  if (fromIdx === -1 || toIdx === -1 || fromIdx === toIdx) return;
+  const [card] = group.cards.splice(fromIdx, 1);
+  group.cards.splice(toIdx, 0, card);
+}
+
 function reorderGroup(fromId, toId) {
   if (fromId === toId) return;
   const fromIdx = state.groups.findIndex(g => g.id === fromId);
@@ -638,17 +663,31 @@ function renderResults() {
   `).join('');
 
   return `
-    <div style="padding-top:8px;">
-      <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#1B6B5A;font-weight:500;margin-bottom:8px;">
-        Card sort results
+    <div style="padding-top:8px;" id="export-target">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+        <div>
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#1B6B5A;font-weight:500;margin-bottom:4px;">Card sort results</div>
+          <h2 style="font-size:20px;font-weight:500;color:#171717;">Your groups vs. proposed IA</h2>
+        </div>
+        <button class="btn-export" id="btn-export">
+          <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v7M3.5 5.5l3 3 3-3M1.5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Export as image
+        </button>
       </div>
-      <h2 style="font-size:20px;font-weight:500;color:#171717;margin-bottom:16px;">
-        Your groups vs. proposed IA
-      </h2>
       ${groupsHtml}
       <button class="btn-secondary" id="btn-reset">Reset and try again</button>
     </div>
   `;
+}
+
+function exportAsImage() {
+  const target = document.getElementById('export-target') || document.getElementById('app');
+  html2canvas(target, { scale: 2, backgroundColor: '#f5f5f5', useCORS: true }).then(canvas => {
+    const a = document.createElement('a');
+    a.download = 'card-sort-results.png';
+    a.href = canvas.toDataURL('image/png');
+    a.click();
+  });
 }
 
 function renderSort() {
@@ -728,7 +767,7 @@ function renderSort() {
             <button data-delete-card="${card.id}" title="Delete" style="background:none;border:none;cursor:pointer;padding:1px 3px;font-size:10px;color:#dc2626;opacity:0.5;border-radius:3px;line-height:1;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.5'">✕</button>` : `
             <button class="card-remove-btn" data-remove-card="${card.id}" title="Remove from group">✕</button>`;
           return `
-            <div class="card-sorted" draggable="true" data-card-id="${card.id}">
+            <div class="card-sorted" draggable="true" data-card-id="${card.id}" data-group-parent="${group.id}">
               <span style="flex:1;">${escHtml(card.text)}</span>
               ${extraActions}
             </div>`;
@@ -765,9 +804,13 @@ function renderSort() {
           <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:#1B6B5A;font-weight:500;">Card sort</div>
           <div style="font-size:13px;color:#525252;margin-top:2px;">${totalPlaced} of ${CARDS_DATA.length} cards sorted · ${state.groups.length} group${state.groups.length !== 1 ? 's' : ''}</div>
         </div>
-        <div style="display:flex;gap:8px;">
+        <div style="display:flex;gap:8px;align-items:center;">
           <button class="btn-sm-green" id="btn-add-group">+ Add group</button>
           ${sorted ? `<button class="btn-sm-purple" id="btn-view-results">View results</button>` : ''}
+          <button class="btn-export" id="btn-export">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1v7M3.5 5.5l3 3 3-3M1.5 10h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Export
+          </button>
         </div>
       </div>
       <div class="progress-bar-wrap">
@@ -829,20 +872,64 @@ function attachEvents() {
   const btnResults = document.getElementById('btn-view-results');
   if (btnResults) btnResults.addEventListener('click', () => { state.phase = 'results'; render(); });
 
+  // Export button
+  const btnExport = document.getElementById('btn-export');
+  if (btnExport) btnExport.addEventListener('click', exportAsImage);
+
   // Draggable cards (unsorted + sorted)
   document.querySelectorAll('[data-card-id][draggable]').forEach(el => {
     el.addEventListener('dragstart', (e) => {
       dragCardId = parseInt(el.dataset.cardId, 10);
       dragGroupId = null;
+      dragOverCardId = null;
       el.classList.add('is-dragging');
       e.dataTransfer.effectAllowed = 'move';
-      e.stopPropagation(); // don't trigger group header dragstart
+      e.stopPropagation();
     });
     el.addEventListener('dragend', () => {
       document.querySelectorAll('.group-drop.drag-over').forEach(d => d.classList.remove('drag-over'));
+      document.querySelectorAll('.card-sorted.drop-above,.card-sorted.drop-below').forEach(d => { d.classList.remove('drop-above'); d.classList.remove('drop-below'); });
       dragCardId = null;
+      dragOverCardId = null;
       render();
     });
+
+    // In-group card reorder: dragover on a sorted card
+    if (el.dataset.groupParent) {
+      el.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const targetCardId = parseInt(el.dataset.cardId, 10);
+        if (dragCardId === null || dragCardId === targetCardId) return;
+        // Determine above/below based on mouse position
+        const rect = el.getBoundingClientRect();
+        const isAbove = e.clientY < rect.top + rect.height / 2;
+        document.querySelectorAll('.card-sorted.drop-above,.card-sorted.drop-below').forEach(d => { d.classList.remove('drop-above'); d.classList.remove('drop-below'); });
+        el.classList.add(isAbove ? 'drop-above' : 'drop-below');
+        dragOverCardId = { cardId: targetCardId, above: isAbove };
+      });
+
+      el.addEventListener('drop', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        document.querySelectorAll('.card-sorted.drop-above,.card-sorted.drop-below').forEach(d => { d.classList.remove('drop-above'); d.classList.remove('drop-below'); });
+        const groupId = parseInt(el.dataset.groupParent, 10);
+        const targetCardId = parseInt(el.dataset.cardId, 10);
+        if (dragCardId !== null && dragCardId !== targetCardId) {
+          // Check if dragging within same group
+          const group = state.groups.find(g => g.id === groupId);
+          const isInGroup = group && group.cards.some(c => c.id === dragCardId);
+          if (isInGroup && dragOverCardId) {
+            reorderCardInGroup(groupId, dragCardId, targetCardId);
+          } else {
+            moveCardToGroup(dragCardId, groupId);
+          }
+          dragCardId = null;
+          dragOverCardId = null;
+          render();
+        }
+      });
+    }
   });
 
   // Group header drag (reorder groups)
