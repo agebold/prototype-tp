@@ -321,10 +321,10 @@
 
   <!-- Video column -->
   <div class="cl-video-col">
-    <div class="cl-video-wrap">
-      <img src="assets/images/class-thumbnail.jpg" alt="Class video" />
-      <div class="cl-video-overlay"></div>
-      <button class="cl-start-btn" onclick="alert('Starting class!')">
+    <div class="cl-video-wrap" id="cl-video-wrap">
+      <img src="assets/images/class-thumbnail.jpg" alt="Class video" id="cl-thumb" />
+      <div class="cl-video-overlay" id="cl-video-overlay"></div>
+      <button class="cl-start-btn" id="cl-start-btn" onclick="startVideo()">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3.5 2L13.5 8L3.5 14V2Z" fill="#140d26"/></svg>
         Start class
       </button>
@@ -638,6 +638,20 @@
   }
 
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeChangeClass(); });
+
+  // ── Video playback ──────────────────────────────────
+  function startVideo() {
+    const wrap = document.getElementById('cl-video-wrap');
+    document.getElementById('cl-thumb').style.display = 'none';
+    document.getElementById('cl-video-overlay').style.display = 'none';
+    document.getElementById('cl-start-btn').style.display = 'none';
+    const iframe = document.createElement('iframe');
+    iframe.src = 'https://www.youtube.com/embed/h_XBYgfl9C8?autoplay=1&rel=0';
+    iframe.allow = 'autoplay; fullscreen';
+    iframe.allowFullscreen = true;
+    iframe.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:none;';
+    wrap.appendChild(iframe);
+  }
 </script>
 
 </body>
